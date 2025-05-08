@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function(Blueprint $table) {
-            $table->string('fullName')->nullable()->change();
+            $table->renameColumn('name', 'fullName');
             $table->string('email')->nullable()->change();
             $table->string('address')->nullable();
             $table->date('birth_date')->nullable()->after('address'); // ✅ tambahkan kolom tanggal lahir

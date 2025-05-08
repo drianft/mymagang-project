@@ -23,7 +23,6 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable()->change(); // ✅ bukan string
             $table->enum('status', ['active', 'inactive'])->default('active')->after('email_verified_at'); // ✅ tambahkan kolom status
             $table->enum('role', ['applier', 'superadmin', 'hr'])->default('applier')->after('status'); // ✅ tambahkan kolom role
-
         });
     }
 

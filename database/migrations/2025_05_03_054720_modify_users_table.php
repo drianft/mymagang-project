@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function(Blueprint $table) {
-            $table->string('fullName')->nullable()->change();
+            $table->renameColumn('name', 'fullName');
             $table->string('email')->nullable()->change();
             $table->string('address')->nullable();
             $table->date('birth_date')->nullable()->after('address'); // ✅ tambahkan kolom tanggal lahir
@@ -23,7 +23,6 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable()->change(); // ✅ bukan string
             $table->enum('status', ['active', 'inactive'])->default('active')->after('email_verified_at'); // ✅ tambahkan kolom status
             $table->enum('role', ['applier', 'superadmin', 'hr'])->default('applier')->after('status'); // ✅ tambahkan kolom role
-
         });
     }
 

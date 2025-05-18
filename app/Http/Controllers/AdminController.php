@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\Company;
+
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,6 +14,7 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
+
 public function index(Request $request)
 {
      $search = $request->input('search');
@@ -24,6 +27,7 @@ public function index(Request $request)
         ->get();
     return view('admin.user', compact('users'));
 }
+
 
 
     /**
@@ -45,7 +49,9 @@ public function index(Request $request)
     /**
      * Display the specified resource.
      */
+
     public function show(Admin $admin)
+
     {
         //
     }
@@ -53,7 +59,9 @@ public function index(Request $request)
     /**
      * Show the form for editing the specified resource.
      */
+
     public function edit(Admin $admin)
+
     {
         //
     }
@@ -61,6 +69,7 @@ public function index(Request $request)
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, Admin $admin)
     {
         //
@@ -69,6 +78,7 @@ public function index(Request $request)
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Admin $admin)
     {
         //
@@ -90,5 +100,6 @@ public function index(Request $request)
     return view('admin.company', compact('companies'));
 
     }
+
 
 }

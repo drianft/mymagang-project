@@ -29,7 +29,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::get('/admin/company', [AdminController::class, 'showCompanys'])->name('admin.companies');
 
-require __DIR__.'/auth.php';
+
 
 
 

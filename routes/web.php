@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('dashboard');
+})->name('guestdash');
 
 Route::middleware([
     'auth:sanctum',
@@ -15,3 +15,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('/warnguest/{page}', function ($page) {
+    return view('guestwarning', ['page' => $page]);
+})->name('warnguest');

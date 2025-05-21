@@ -33,4 +33,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::get('/admin/company', [AdminController::class, 'showCompanys'])->name('admin.companies');
 
+Route::get('/admin/application', [AdminController::class, 'showApplicant'])->name('admin.Application');
+
+
 require __DIR__.'/auth.php';

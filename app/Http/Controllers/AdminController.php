@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\application;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -91,4 +92,12 @@ public function index(Request $request)
 
     }
 
+    public function showApplicant()
+    {
+    // $users = User::all();
+    // return view('admin.user', compact('user'));
+     $application = application::all(); // ambil semua data user dari database
+    return view('admin.application', compact('application'));
+
+    }
 }

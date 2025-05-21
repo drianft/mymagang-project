@@ -3,7 +3,7 @@
     <head>
           <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin/company</title>
+    <title>Admin/User</title>
     @vite('resources/css/app.css') {{-- untuk project Laravel + Vite --}}
     </head>
 <body class="bg-white">
@@ -80,100 +80,147 @@
                         Application
                     </a>
 
-            <!-- User Profile -->
-            <div class="mt-auto p-4 border-t border-gray-800">
+                
+              <!-- User Profile -->
+               <div class="mt-auto p-4 border-t border-gray-800">
                      <p class="text-xs text-gray-400">SETTINGS</p>
-                      <!-- Settings Admin at Sidebar -->
+                      <!-- Settings Admin Sidebar -->
                            <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white group transition-all duration-200">
                               <img src="{{ asset('images/settings.png') }}" alt="Job Logo" class="h-5 w-5 mr-3 inline-block">
 
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                                  </svg>
-                                 Settings
+                                Settings
                              </a>
-                            
-                             <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white group transition-all duration-200">
+
+                             <!-- Settings Admin Sidebar -->
+                           <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white group transition-all duration-200">
                               <img src="{{ asset('images/logout.png') }}" alt="Job Logo" class="h-5 w-5 mr-3 inline-block">
 
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                                  </svg>
-                                 Logout
+                                Logout
                              </a>
+                
+              </div>
 
-            </div>
-        </aside>
+         </aside>
 
         <!-- Main Content -->
- <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
-             <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
-                <h1 class="text-2xl font-semibold text-gray-900">Companies Account</h1>
-              </div>
-        <!-- searching companies -->
-        <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
-             <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
-                 <!-- Search + Filter Form -->
-                  <div class="flex justify-start mt-6 mb-4">
-                     <form method="GET" action="{{ route('admin.companies') }}">
-                      <div class="flex space-x-8">
-                       <!-- Search Input -->
-                        <div class="relative">
-                          <input type="text"  name="search" placeholder="Search..."  class="pl-10 pr-4 py-2 text-sm rounded-full bg-white text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 border border-gray-300"  value="{{ request('search') }}">
-                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-4.35-4.35M10.5 17a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
-                       </svg>
-                    </div>
-                 </div>
-                 <!-- Filter Dropdown -->
-                 <div>
-                  <select name="sector" class="pl-4 pr-4 py-2 text-sm rounded-full bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 border border-gray-300"  style="width: 130px">
-                    <option value="">All Sector</option>
-                    <option value="IT" {{ request('sector') == 'IT' ? 'selected' : '' }}>IT</option>
-                    <option value="Finance" {{ request('sector') == 'Finance' ? 'selected' : '' }}>Finance</option>
-                    <option value="Education" {{ request('sector') == 'Education' ? 'selected' : '' }}>Education</option>
-                    <!-- Tambahkan pilihan lain sesuai kebutuhan -->
-                </select>
-            </div>
-        </div>
-    </form>
-</div>
+           <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
+               <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
+                 <h1 class="text-2xl font-semibold text-gray-900">Recent Application</h1>
+                  </div>
+              
 
-<div class="p-6 bg-white rounded-xl shadow max-h-[500px] overflow-y-auto">
-    <!-- Tabel -->
-    <div class="overflow-x-auto">
-        <table class="min-w-full text-sm text-left text-gray-700">
-            <thead class="border-b border-gray-300 text-gray-500">
-                <tr>
-                    <th class="px-4 py-2">Name</th>
-                    <th class="px-4 py-2">Email</th>
-                    <th class="px-4 py-2">Role</th>
-                    <th class="px-4 py-2">Joining Date</th>
-                    <th class="px-4 py-2">Status</th>
+             <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
+               <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
+                  <div class="overflow-x-auto">
+               <table class="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr class="text-left">
+                    <th class="pb-3 font-medium text-gray-500">Applicant</th>
+                    <th class="pb-3 font-medium text-gray-500">Job Post</th>
+                    <th class="pb-3 font-medium text-gray-500">Status</th>
+                    <th class="pb-3 font-medium text-gray-500">Date</th>
+                    <th class="pb-3 font-medium text-gray-500">Post</th>
                 </tr>
-            </thead>
-            <tbody>
+                <tr><td colspan="5" class="border-b border-gray-200"></td></tr>
+              </thead>
+             <tbody class="divide-y divide-gray-200">
 
-             @foreach ($companies as $index => $company)
-         <tr>
-            <td>{{ $index + 1 }}</td>
-           <td>{{ $company->name }}</td>
-           <td>{{ $company->email }}</td>
-             <td>{{ $company->sector }}</td>
-            <td>{{ $company->status }}</td>
-             </tr>
-              @endforeach
+              @foreach($application as $application)
+               <tr class="hover:bg-gray-50">
+               <td class="py-4 text-sm font-medium text-gray-900">{{ $application->applicant_name }}</td>
+               <td class="py-4 text-sm text-gray-600">{{ $application->job_title }}</td>
+               <td class="py-4">
+               <span class="px-2 py-1 text-xs font-medium rounded 
+               @if($application->status == 'Pending') bg-yellow-100 text-yellow-800
+               @elseif($application->status == 'Interview') bg-blue-100 text-blue-800
+               @elseif($application->status == 'Rejected') bg-red-100 text-red-800
+               @else bg-green-100 text-green-800 @endif">
+               {{ $application->status }}
+               </span>
+                </td>
+                  <td class="py-4 text-sm text-gray-600">
+                    {{ $application->date ? $application->date->format('d/m/Y') : '——' }}
+                      </td>
+                     <td class="py-4">
+                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
+                              </td>
+                        </tr>
+                @endforeach
+                
+                <!-- <tr class="hover:bg-gray-50">
+                    <td class="py-4 text-sm font-medium text-gray-900">Jhon Piter</td>
+                    <td class="py-4 text-sm text-gray-600">Accounting Intern</td>
+                    <td class="py-4">
+                        <span class="px-2 py-1 text-xs font-medium rounded bg-yellow-100 text-yellow-800">Pending</span>
+                    </td>
+                    <td class="py-4 text-sm text-gray-600">23/04/2025</td>
+                    <td class="py-4">
+                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
+                    </td>
+                </tr>
+              
+                <tr class="hover:bg-gray-50">
+                    <td class="py-4 text-sm font-medium text-gray-900">James Smith</td>
+                    <td class="py-4 text-sm text-gray-600">Software Engineer</td>
+                    <td class="py-4">
+                        <span class="px-2 py-1 text-xs font-medium rounded bg-blue-100 text-blue-800">Interview</span>
+                    </td>
+                    <td class="py-4 text-sm text-gray-600">22/04/2025</td>
+                    <td class="py-4">
+                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
+                    </td>
+                </tr>
+                
+                
+                <tr class="hover:bg-gray-50">
+                    <td class="py-4 text-sm font-medium text-gray-900">Barca</td>
+                    <td class="py-4 text-sm text-gray-600">Graphic Designer</td>
+                    <td class="py-4">
+                        <span class="px-2 py-1 text-xs font-medium rounded bg-red-100 text-red-800">Rejected</span>
+                    </td>
+                    <td class="py-4 text-sm text-gray-600">——</td>
+                    <td class="py-4">
+                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
+                    </td>
+                </tr>
+                
+                
+                <tr class="hover:bg-gray-50">
+                    <td class="py-4 text-sm font-medium text-gray-900">Garnacho</td>
+                    <td class="py-4 text-sm text-gray-600">Sales & Marketing</td>
+                    <td class="py-4">
+                        <span class="px-2 py-1 text-xs font-medium rounded bg-yellow-100 text-yellow-800">Pending</span>
+                    </td>
+                    <td class="py-4 text-sm text-gray-600">20/04/2025</td>
+                    <td class="py-4">
+                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
+                    </td>
+                </tr>
+                
+                
+                <tr class="hover:bg-gray-50">
+                    <td class="py-4 text-sm font-medium text-gray-900">Pedri</td>
+                    <td class="py-4 text-sm text-gray-600">Accounting</td>
+                    <td class="py-4">
+                        <span class="px-2 py-1 text-xs font-medium rounded bg-green-100 text-green-800">Accepted</span>
+                    </td>
+                    <td class="py-4 text-sm text-gray-600">20/04/2025</td>
+                    <td class="py-4">
+                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
+                    </td>
+                </tr>
+                </tbody>
+                </table> -->
 
-          </tbody>
-       </table>
-    </div>
-</div>
-
-
-
-           
-        </main>
+                         </div>
+                      </div>
+                </div>
+               </div>           
+            </main>
     </div>
 
     <script>

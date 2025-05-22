@@ -32,7 +32,7 @@ Route::get('/admin/company', [AdminController::class, 'showCompanys'])->name('ad
 Route::get('/admin/application', [AdminController::class, 'showApplicant'])->name('admin.Application');
 
 
-require __DIR__.'/auth.php';
+
 
 
 
@@ -47,3 +47,4 @@ Route::middleware([
     })->name('dashboard');
 });
 
+// require __DIR__.'/auth.php';

@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\posts;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return view('admin.post', compact('posts'));
     }
 
     /**
@@ -34,7 +36,7 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(posts $posts)
+    public function show(Post $posts)
     {
         //
     }
@@ -42,7 +44,7 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(posts $posts)
+    public function edit(post $posts)
     {
         //
     }
@@ -50,7 +52,7 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, posts $posts)
+    public function update(Request $request, post $posts)
     {
         //
     }
@@ -58,7 +60,7 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(posts $posts)
+    public function destroy(post $posts)
     {
         //
     }

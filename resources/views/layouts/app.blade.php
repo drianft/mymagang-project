@@ -15,31 +15,103 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Styles -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+        <style>
+            .swiper-slide {
+            width: auto !important;
+            }
+        </style>
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
         <x-banner />
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
-
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+        <div class="min-h-screen bg-white">
+            @include('components.navbar')
 
             <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
+
+            @if(!request()->routeIs('profile.show'))
+                @include('components.footer')
+            @endif
         </div>
 
         @stack('modals')
 
         @livewireScripts
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const userMenuButton = document.getElementById("user-menu-button");
+                const dropdownMenu = document.querySelector(".absolute.right-0.z-10.mt-2");
+
+                if (dropdownMenu) {
+                dropdownMenu.classList.add("hidden");
+                }
+
+                let timeoutId;
+
+                if (userMenuButton && dropdownMenu) {
+                userMenuButton.addEventListener("mouseenter", function () {
+                    clearTimeout(timeoutId);
+                    dropdownMenu.classList.remove("hidden");
+                });
+
+                userMenuButton.addEventListener("mouseleave", function () {
+                    timeoutId = setTimeout(function () {
+                    dropdownMenu.classList.add("hidden");
+                    }, 200);
+                });
+
+                dropdownMenu.addEventListener("mouseenter", function () {
+                    clearTimeout(timeoutId);
+                    dropdownMenu.classList.remove("hidden");
+                });
+
+                dropdownMenu.addEventListener("mouseleave", function () {
+                    timeoutId = setTimeout(function () {
+                    dropdownMenu.classList.add("hidden");
+                    }, 200);
+                });
+                }
+
+                const mobileMenuButton = document.querySelector("[aria-controls='mobile-menu']");
+                const mobileMenu = document.getElementById("mobile-menu");
+
+                if (mobileMenu) {
+                    mobileMenu.classList.add("hidden");
+                }
+
+                mobileMenuButton.addEventListener("click", function () {
+                    if (mobileMenu) {
+                    mobileMenu.classList.toggle("hidden");
+                    }
+                });
+                });
+                new Swiper('.saved-swiper', {
+                slidesPerView: 1.2,
+                spaceBetween: 16,
+                breakpoints: {
+                640: { slidesPerView: 2.2 },
+                768: { slidesPerView: 3.5 },
+                1024: { slidesPerView: 5 },
+                },
+            });
+
+            new Swiper('.new-swiper', {
+                slidesPerView: 1.2,
+                spaceBetween: 16,
+                breakpoints: {
+                640: { slidesPerView: 2.2 },
+                768: { slidesPerView: 3.5 },
+                1024: { slidesPerView: 5 },
+                },
+            });
+        </script>
     </body>
+
 </html>

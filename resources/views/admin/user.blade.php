@@ -146,7 +146,7 @@
             <tbody>
                 @foreach ($users as $user)
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
-                    <td class="px-4 py-2">{{ $user->fullName }}</td>
+                    <td class="px-4 py-2">{{ $user->name }}</td>
                     <td class="px-4 py-2">{{ $user->email }}</td>
 
                     <!-- <td class="px-4 py-2">{{ ucfirst($user->role) }}</td> -->

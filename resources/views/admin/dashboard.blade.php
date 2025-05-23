@@ -61,7 +61,7 @@
                     <tbody>
                         @foreach ($users as $user)
                     <tr class="border-b border-gray-200 hover:bg-gray-50">
-                        <td class="px-4 py-2">{{ $user->fullName }}</td>
+                        <td class="px-4 py-2">{{ $user->name }}</td>
                         <td class="px-4 py-2">{{ $user->email }}</td>
 
                         <!-- <td class="px-4 py-2">{{ ucfirst($user->role) }}</td> -->
@@ -126,7 +126,7 @@
                 <!-- Textual Content -->
                 <div class="flex-1">
                     <div class="flex justify-between items-start">
-                        <h3 class="text-lg font-semibold text-gray-800">Frontend Developer</h3>
+                        <h3 class="text-lg font-semibold text-gray-800">{{$posts->job_description}}</h3>
                         <span class="bg-orange-200 text-orange-800 text-xs px-2 py-1 rounded">Part Time</span>
                     </div>
 

@@ -49,6 +49,7 @@ return new class extends Migration
             $table->decimal('salary', 12, 2)->nullable();
             $table->enum('status', ['open', 'closed', 'draft'])->default('open');
             $table->string('job_category')->nullable();
+            $table->string('image-post_url')->nullable();
             $table->timestamps();
         });
 

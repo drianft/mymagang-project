@@ -18,11 +18,11 @@ class Bookmark extends Pivot
 
     public function setCreatedAt($value)
     {
-        // override supaya gak set created_at
+
     }
 
     public function setUpdatedAt($value)
     {
-        // override supaya gak set updated_at
+
     }
 }

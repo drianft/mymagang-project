@@ -9,6 +9,11 @@ class Interview extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'date',
+        'location',
+    ];
+
     public function application()
     {
         return $this->belongsTo(Application::class);

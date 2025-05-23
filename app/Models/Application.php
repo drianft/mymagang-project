@@ -9,6 +9,11 @@ class Application extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'status',
+        'application_date',
+    ];
+
     public function applier()
     {
         return $this->belongsTo(Applier::class);

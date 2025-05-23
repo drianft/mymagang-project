@@ -31,12 +31,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'full_name',
         'address',
         'phone_number',
         'birth_date',
         'roles',
-        'is_admin',
         'status',
     ];
 

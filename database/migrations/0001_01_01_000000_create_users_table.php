@@ -19,8 +19,7 @@ return new class extends Migration
             $table->date('birth_date')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->enum('roles', ['applier', 'hr'])->default('applier');
-            $table->boolean('isAdmin')->default(false);
+            $table->enum('roles', ['applier', 'hr', 'company', 'admin'])->default('applier');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('password');
             $table->rememberToken();

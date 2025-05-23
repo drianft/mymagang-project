@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Admin;
-use App\Models\application;
+use App\Models\Application;
 use App\Models\User;
 use App\Models\Company;
+use App\Models\Post;
 
 use Illuminate\Http\Request;
 
@@ -26,7 +27,16 @@ public function index(Request $request)
                   ->orWhere('email', 'like', "%{$search}%");
         })
         ->get();
-    return view('admin.dashboard', compact('users'));
+        $posts = Post::all(); // ambil 5 postingan terbaru
+
+        $postCount = Post::count();
+        $userCount = User::count();
+        $companyCount = Company::count();
+        $applicationCount = Application::count();
+
+        return view('admin.dashboard', compact('users' , 'posts' , 'postCount', 'userCount', 'companyCount', 'applicationCount'));
+
+
 }
 
 

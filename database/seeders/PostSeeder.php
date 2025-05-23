@@ -20,7 +20,7 @@ class PostSeeder extends Seeder
         Post::create([
             'user_id' => $faker->numberBetween(3, 10), // ID user acak antara 1 dan 10
             'company_id' => $faker->numberBetween(1, 10), // ID company acak antara 1 dan 10
-            'job_description' => $faker->sentence(10), // Deskripsi pekerjaan acak
+            'job_description' => $faker->sentence(1), // Deskripsi pekerjaan acak
             'working_hour' => $faker->randomElement(['Full Time', 'Part Time']), // Jam kerja acak
             'salary' => $faker->numberBetween(5000000, 20000000), // Gaji acak antara 5 juta dan 20 juta
             'status' => $faker->randomElement(['active', 'inactive']), // Status acak

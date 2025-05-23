@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sidebar with Tailwind</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=description" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=groups" />
-</head>
-<body class="flex bg-gray-100 min-h-screen">
-
-  <!-- Sidebar -->
-  <aside class="w-64 bg-[#3A3C49] text-white">
+ <!-- Sidebar -->
+      <aside class="w-64 bg-[#3A3C49] text-white">
             <div class="p-2 border-b border-gray-800">
                 <div class="flex items-center justify-between">
                     <img src="{{ asset('images/logo2.png') }}" alt="Logo" class="h-24 w-auto">
@@ -104,39 +91,3 @@
                              </a>
                    </div>
          </aside>
-
-  <!-- Main Content -->
-  <div class="flex-1 p-6 bg-[#E8EAEE]">
-    @yield('content')
-  </div>
-
-  <!-- Mobile Sidebar (hidden by default) -->
-  <div id="mobileSidebar" class="fixed top-0 left-0 w-64 h-full bg-white shadow-md z-50 hidden">
-    <div class="p-4 text-xl font-semibold border-b flex justify-between items-center">
-      My Dashboard
-      <button id="closeBtn" class="text-gray-500 text-xl">&times;</button>
-    </div>
-    <nav class="p-4 space-y-2">
-      <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">🏠 Home</a>
-      <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">📁 Projects</a>
-      <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">📊 Reports</a>
-      <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">⚙️ Settings</a>
-    </nav>
-  </div>
-
-  <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileSidebar = document.getElementById('mobileSidebar');
-    const closeBtn = document.getElementById('closeBtn');
-
-    menuBtn.addEventListener('click', () => {
-      mobileSidebar.classList.remove('hidden');
-    });
-
-    closeBtn.addEventListener('click', () => {
-      mobileSidebar.classList.add('hidden');
-    });
-  </script>
-</body>
-</html>
-

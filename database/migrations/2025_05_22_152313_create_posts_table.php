@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('company_id');
-            $table->string('job-description');
+            $table->string('job_description');
             $table->string('working_hour');
             $table->string('salary');
             $table->enum('status', ['active', 'inactive'])->default('active');

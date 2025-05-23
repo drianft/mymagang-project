@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(CompaniesSeeder::class);
         $this->call(PostSeeder::class);
-        $this->call(ApplicationSeeder::class);
         $this->call(BookmarkSeeder::class);
+        $this->call(ApplicationSeeder::class);
         $this->call(InterviewSeeder::class);
     }
 }

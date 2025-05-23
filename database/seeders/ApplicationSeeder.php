@@ -19,8 +19,8 @@ class ApplicationSeeder extends Seeder
         // Buat 10 data aplikasi
         for ($i = 0; $i < 10; $i++) {
             Application::create([
-                'user_id' => $faker->numberBetween(3, 10), // ID user acak antara 1 dan 10
-                'post_id' => $faker->numberBetween(1, 14), // ID post acak antara 1 dan 10
+                'user_id' => $faker->numberBetween(1, 10), // ID user acak antara 1 dan 10
+                'post_id' => $faker->numberBetween(1, 10), // ID post acak antara 1 dan 10
                 'status' => $faker->randomElement(['pending', 'accepted', 'rejected']), // Status acak
                 'application_date' => $faker->dateTimeBetween('-1 year', 'now'),
             ]);

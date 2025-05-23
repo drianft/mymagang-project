@@ -19,8 +19,9 @@ class BookmarkSeeder extends Seeder
         // Buat 10 data bookmark
         for ($i = 0; $i < 10; $i++) {
             Bookmark::create([
-                'user_id' => $faker->numberBetween(3, 10), // ID user acak antara 1 dan 10
-                'post_id' => $faker->numberBetween(1, 14), // ID post acak antara 1 dan 10
+                'user_id' => $faker->numberBetween(1, 10), // ID user acak antara 1 dan 10
+                'post_id' => $faker->numberBetween(1, 10), // ID post acak antara 1 dan 10
+                'bookmarked_at' => $faker->dateTimeBetween('-1 year', 'now'), // Tanggal bookmark acak dalam 1 tahun terakhir
             ]);
         }
     }

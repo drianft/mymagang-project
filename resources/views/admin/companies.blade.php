@@ -14,12 +14,12 @@
 
         <!-- Main Content -->
  <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
-             <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
+             <div class="mt-4 p-6 bg-white rounded-lg shadow-md">
                 <h1 class="text-2xl font-semibold text-gray-900">Companies Account</h1>
               </div>
         <!-- searching companies -->
-        <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
-             <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
+        <main class="flex-1 p-6  bg-[#E8EBEE] overflow-y-auto">
+             <div class="mt-4 p-6  rounded-lg shadow-md bg-[#E8EBEE]">
                  <!-- Search + Filter Form -->
                   <div class="flex justify-start mt-6 mb-4">
                      <form method="GET" action="{{ route('admin.companies') }}">
@@ -52,31 +52,30 @@
 <div class="p-6 bg-white rounded-xl shadow max-h-[500px] overflow-y-auto">
     <!-- Tabel -->
     <div class="overflow-x-auto">
-        <table class="min-w-full text-sm text-left text-gray-700">
-            <thead class="border-b border-gray-300 text-gray-500">
-                <tr>
-                    <th class="px-4 py-2">Name</th>
-                    <th class="px-4 py-2">Email</th>
-                    <th class="px-4 py-2">Role</th>
-                    <th class="px-4 py-2">Joining Date</th>
-                    <th class="px-4 py-2">Status</th>
+    <table class="min-w-full text-sm text-left text-gray-700">
+        <thead class="border-b border-gray-300 text-gray-500 bg-gray-100">
+            <tr>
+                <th class="px-4 py-2">No</th>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Industry</th>
+                <th class="px-4 py-2">Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($companies as $index => $company)
+                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                    <td class="px-4 py-2">{{ $index + 1 }}</td>
+                    <td class="px-4 py-2">{{ $company->company_name }}</td>
+                    <td class="px-4 py-2">{{ $company->company_email }}</td>
+                    <td class="px-4 py-2">{{ $company->industry }}</td>
+                    <td class="px-4 py-2">{{ $company->company_address }}</td> {{-- Ganti ini kalau status bukan email --}}
                 </tr>
-            </thead>
-            <tbody>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
-             @foreach ($companies as $index => $company)
-         <tr>
-            <td>{{ $index + 1 }}</td>
-           <td>{{ $company->name }}</td>
-           <td>{{ $company->email }}</td>
-             <td>{{ $company->sector }}</td>
-            <td>{{ $company->status }}</td>
-             </tr>
-              @endforeach
-
-          </tbody>
-       </table>
-    </div>
 </div>
 
 

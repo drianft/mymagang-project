@@ -28,11 +28,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::get('/admin/user', [AdminController::class, 'showUsers'])->name('admin.users');
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+// Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/admin/posts', [PostController::class, 'index'])->name('admin.posts');
-
-Route::get('/admin/company', [AdminController::class, 'showCompanys'])->name('admin.companies');
+Route::delete('/admin/posts/{id}', [AdminController::class, 'destroy'])->name('admin.posts.destroy');
+Route::get('/admin/companies', [AdminController::class, 'showCompanies'])->name('admin.companies');
 
 Route::get('/admin/application', [AdminController::class, 'showApplicant'])->name('admin.Application');
+
+
 
 
 // require __DIR__.'/auth.php';

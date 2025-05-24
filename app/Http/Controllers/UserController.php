@@ -19,7 +19,7 @@ class UserController extends Controller
     public function updateRole(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->role = $request->input('role');
+        $user->roles = $request->input('roles');
         $user->save();
 
         return redirect()->back()->with('success', 'User role updated.');

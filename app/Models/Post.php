@@ -10,12 +10,13 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
+        'job_title',
         'job_description',
         'working-hours',
         'salary',
         'status',
         'job_category',
-        'image-post_url'
+        'image_post_url'
     ];
 
     public function hr()
@@ -39,6 +40,19 @@ class Post extends Model
                     ->using(Bookmark::class)
                     ->withTimestamps()
                     ->withPivot('saved_at');
+    }
+
+    public function getImagePostUrlAttribute($value)
+    {
+        return asset('storage/' . $value);
+    }
+    public function setImagePostUrlAttribute($value)
+    {
+        $this->attributes['image_post_url'] = $value->store('posts', 'public');
+    }
+    public function getCreatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 
 }

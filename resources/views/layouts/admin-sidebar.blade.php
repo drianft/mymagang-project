@@ -49,7 +49,7 @@
 
                      <p class="text-xs text-gray-400">MANAGEMENT</p>
                       <!-- Job Posting -->
-                    <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white group transition-all duration-200">
+                    <a href="admin.posts" class="flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white group transition-all duration-200">
                         <img src="{{ asset('images/JOB.png') }}" alt="Job Logo" class="h-5 w-5 mr-3 inline-block">
 
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />

@@ -38,19 +38,19 @@
 
               @foreach($application as $application)
                <tr class="hover:bg-gray-50">
-               <td class="py-4 text-sm font-medium text-gray-900">{{ $application->applicant_name }}</td>
-               <td class="py-4 text-sm text-gray-600">{{ $application->job_title }}</td>
+               <td class="py-4 text-sm font-medium text-gray-900">{{ $application->applier->user->name }}</td>
+               <td class="py-4 text-sm text-gray-600">{{ $application->post->job_title }}</td>
                <td class="py-4">
                <span class="px-2 py-1 text-xs font-medium rounded
                @if($application->status == 'Pending') bg-yellow-100 text-yellow-800
                @elseif($application->status == 'Interview') bg-blue-100 text-blue-800
                @elseif($application->status == 'Rejected') bg-red-100 text-red-800
                @else bg-green-100 text-green-800 @endif">
-               {{ $application->status }}
+               {{ $application->application_status }}
                </span>
                 </td>
                   <td class="py-4 text-sm text-gray-600">
-                    {{ $application->date ? $application->date->format('d/m/Y') : '——' }}
+                    {{ $application->applied_at }}
                       </td>
                      <td class="py-4">
                         <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>

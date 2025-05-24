@@ -43,17 +43,24 @@
                         <th class="px-4 py-2">Salary</th>
                         <th class="px-4 py-2">Type</th>
                         <th class="px-4 py-2">Companies</th>
-                        <th class="px-4 py-2">Date</th>
+                        <th class="px-4 py-2">Action</th>
+                        {{-- <th class="px-4 py-2">Date</th> --}}
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($posts as $post)
                     <tr class="border-b border-gray-200 hover:bg-gray-50">
-                        <td class="px-4 py-2">{{ $post->job_description }}</td>
+                        <td class="px-4 py-2">{{ $post->job_title }}</td>
                         <td class="px-4 py-2">{{ Str::limit($post->salary, 50) }}</td>
                         <td class="px-4 py-2">{{ $post->working_hour }}</td>
-                        <td class="px-4 py-2">{{ $post->company->email }}</td>
-                        <td class="px-4 py-2">{{ $post->created_at->format('d/m/Y') }}</td>
+                        <td class="px-4 py-2">{{ $post->company->company_name }}</td>
+                        <td class="px-4 py-2">
+                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus post ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:text-red-800 font-semibold">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

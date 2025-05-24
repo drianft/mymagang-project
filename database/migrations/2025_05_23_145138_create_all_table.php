@@ -44,12 +44,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('hr_id')->constrained('hrs')->onDelete('cascade');
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->string('job_title');
             $table->text('job_description');
             $table->string('working_hour')->nullable();
             $table->decimal('salary', 12, 2)->nullable();
             $table->enum('status', ['open', 'closed', 'draft'])->default('open');
             $table->string('job_category')->nullable();
-            $table->string('image-post_url')->nullable();
+            $table->string('image_post_url')->nullable();
             $table->timestamps();
         });
 

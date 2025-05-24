@@ -11,9 +11,7 @@ return new class extends Migration
         // Companies
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name');
-            $table->string('company_email')->unique();
-            $table->string('company_address');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('industry')->nullable();
             $table->text('company_description')->nullable();
             $table->date('joined_at')->nullable();
@@ -44,12 +42,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('hr_id')->constrained('hrs')->onDelete('cascade');
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
+            $table->text('job_title');
             $table->text('job_description');
             $table->string('working_hour')->nullable();
             $table->decimal('salary', 12, 2)->nullable();
             $table->enum('status', ['open', 'closed', 'draft'])->default('open');
             $table->string('job_category')->nullable();
-            $table->string('image-post_url')->nullable();
+            $table->string('image_post_url')->nullable();
             $table->timestamps();
         });
 

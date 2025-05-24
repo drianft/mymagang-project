@@ -10,12 +10,13 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
+        'job_title',
         'job_description',
         'working-hours',
         'salary',
         'status',
         'job_category',
-        'image-post_url'
+        'image_post_url'
     ];
 
     public function hr()

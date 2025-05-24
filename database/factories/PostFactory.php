@@ -16,6 +16,7 @@ class PostFactory extends Factory
         return [
             'hr_id' => Hr::factory(),
             'company_id' => Company::factory(),
+            'job_title' => $this->faker->jobTitle,
             'job_description' => $this->faker->paragraph,
             'working_hour' => '9-5',
             'salary' => $this->faker->numberBetween(3000000, 15000000),

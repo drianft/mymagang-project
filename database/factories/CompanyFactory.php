@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CompanyFactory extends Factory
@@ -12,9 +13,7 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            'company_name' => $this->faker->company,
-            'company_email' => $this->faker->unique()->companyEmail,
-            'company_address' => $this->faker->address,
+            'user_id' => User::factory()->company(),
             'industry' => $this->faker->word,
             'company_description' => $this->faker->paragraph,
             'joined_at' => now(),

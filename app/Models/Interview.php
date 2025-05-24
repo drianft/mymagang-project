@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Interview extends Model
 {
@@ -13,13 +13,14 @@ class Interview extends Model
         'date',
         'location',
     ];
+
     public function application()
     {
-        return $this->belongsTo(application::class);
+        return $this->belongsTo(Application::class);
     }
 
-    public function user()
+    public function hr()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Hr::class);
     }
 }

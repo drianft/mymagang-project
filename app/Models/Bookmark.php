@@ -2,24 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Bookmark extends Model
+class Bookmark extends Pivot
 {
-    use HasFactory;
+    public $timestamps = false;
+
+    protected $table = 'bookmarks';
 
     protected $fillable = [
-        'bookmarked_at',
+        'applier_id',
+        'post_id',
+        'saved_at',
     ];
 
+    public function setCreatedAt($value)
+    {
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
-    public function post()
+
+    public function setUpdatedAt($value)
     {
-        return $this->belongsTo(Post::class);
+
     }
 }

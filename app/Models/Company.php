@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    //
-     use HasFactory;
+    use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'address',
-        'password',
-        'description',
-    ];
+    public function hrs()
+    {
+        return $this->hasMany(Hr::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

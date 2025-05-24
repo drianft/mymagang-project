@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Application extends Model
 {
@@ -14,16 +14,18 @@ class Application extends Model
         'application_date',
     ];
 
-    public function user()
+    public function applier()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Applier::class);
     }
+
     public function post()
     {
         return $this->belongsTo(Post::class);
     }
+
     public function interview()
     {
-        return $this->hasMany(interview::class);
+        return $this->hasOne(Interview::class);
     }
 }

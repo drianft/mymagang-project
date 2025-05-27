@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('industry')->nullable();
+            $table->enum('industry', ['tech', 'finance', 'healthcare', 'education', 'sales', 'engineering', 'law', 'fnb', 'logistic', 'freelance'])->default('freelance');
             $table->text('company_description')->nullable();
             $table->date('joined_at')->nullable();
             $table->timestamps();

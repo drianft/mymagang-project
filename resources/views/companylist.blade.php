@@ -6,10 +6,10 @@
                 {{-- Left Content --}}
                 <div class="lg:max-w-xl z-10">
                     <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
-                        The Smarter Way to Find Your Next Job
+                        Get To Know Companies Like Never Before
                     </h1>
                     <p class="text-gray-500 mb-6">
-                        All the job insights you need, right at your fingertips.
+                        Quick, clear insights to help you choose wisely.
                     </p>
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center">
                         <input type="text"
@@ -48,40 +48,55 @@
                 </div>
             </div>
 
-            {{-- Job Cards --}}
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                @foreach($posts as $post)
-                    <div class="bg-white rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between">
-                        <div>
-                            {{-- Gambar --}}
-                            <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
-                                @if ($post->image)
-                                    <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
-                                @else
-                                    <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
-                                @endif
-                            </div>
-                                            <div class="mb-2 font-semibold text-sm text-gray-800">
-                                {{ $post->job_title }}
-                            </div>
-                            <span class="text-xs px-2 py-1 rounded font-medium
-                                {{ $post->job_type === 'full-time' ? ' bg-green-100 text-green-700' : ($post->job_type === 'part-time' ? ' bg-orange-100 text-orange-700' : ' bg-gray-300 text-gray-700') }}">
-                                {{ ucfirst($post->job_type) }}
-                            </span>
-                        </div>
-
-                        {{-- Stat --}}
-                        <div class="mt-3 text-xs text-gray-500 flex justify-between">
-                            <div>{{ $post->total_appliers }}👥 Applicants</div>
-                            <div>{{ $post->total_views }}👁️ Views</div>
-                        </div>
-
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+                @foreach($companies as $user)
+                <div class="bg-gray-100 rounded-xl p-3 flex items-center space-x-4 hover:shadow-md transition-all">
+                    {{-- Logo perusahaan --}}
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                        <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="object-cover w-full h-full">
                     </div>
+
+                    {{-- Detail perusahaan --}}
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-sm text-gray-900">
+                            {{ $user->name }}
+                        </div>
+
+                        <div class="flex items-center space-x-2 mt-1">
+                            <span class="text-xs font-medium px-2 py-0.5 rounded
+                                {{ match($user->industry) {
+                                    'tech' => 'bg-blue-100 text-blue-700',
+                                    'finance' => 'bg-indigo-100 text-indigo-700',
+                                    'healthcare' => 'bg-green-100 text-green-700',
+                                    'education' => 'bg-purple-100 text-purple-700',
+                                    'sales' => 'bg-pink-100 text-pink-700',
+                                    'engineering' => 'bg-orange-100 text-orange-700',
+                                    'law' => 'bg-gray-300 text-gray-800',
+                                    'fnb' => 'bg-yellow-100 text-yellow-700',
+                                    'logistic' => 'bg-amber-100 text-amber-700',
+                                    default => 'bg-slate-100 text-slate-700',
+                                } }}">
+                                {{ ucfirst($user->industry) }}
+                            </span>
+
+
+                        </div>
+                        {{-- Lokasi atau info tambahan --}}
+                        <p class="text-xs text-gray-500 mt-1">
+                            {{ $user->address ?? 'Alamat tidak tersedia' }}
+                        </p>
+                    </div>
+                </div>
+
                 @endforeach
             </div>
 
+            <div class="mt-4">
+                {{ $companies->links() }}
+            </div>
 
-            <div class="max-w-screen-xl mx-auto flex items-center justify-center gap-8 mt-10 text-base font-semibold" x-data="{ page: {{ $posts->currentPage() }} }">
+
+            <div class="max-w-screen-xl mx-auto flex items-center justify-center gap-8 mt-10 text-base font-semibold" x-data="{ page: {{ $companies->currentPage() }} }">
                 {{-- Prev Button --}}
             <button
                 x-on:click="page = Math.max(1, page - 1); $refs['page' + page]?.click()"
@@ -95,8 +110,8 @@
                 <div class="flex items-center gap-7">
                     <div class="flex items-center gap-4 w-[400px] justify-center">
                         @php
-                            $current = $posts->currentPage();
-                            $last = $posts->lastPage();
+                            $current = $companies->currentPage();
+                            $last = $companies->lastPage();
                             if ($current >= $last - 3) {
                                 $start = $last - 4;
                                 $end = $last;
@@ -111,7 +126,7 @@
 
                         {{-- Always show page 1 --}}
                         @if ($start > 1)
-                            <a href="{{ $posts->url(1) }}"
+                            <a href="{{ $companies->url(1) }}"
                             class="text-gray-700 hover:text-black"
                             x-ref="page1">1</a>
                             <span class="text-gray-400 text-xl font-bold px-2">. . .</span>
@@ -120,7 +135,7 @@
                         {{-- Dynamic range --}}
                         @for ($i = $start; $i <= $end; $i++)
                             @if ($i >= 1 && $i <= $last)
-                                <a href="{{ $posts->url($i) }}" x-ref="page{{ $i }}" class="{{ $current == $i ? 'bg-gray-800 text-white rounded-full px-4 py-2 min-w-[44px] text-center' : 'text-gray-700 hover:text-black px-4 py-2 min-w-[44px] text-center' }}">
+                                <a href="{{ $companies->url($i) }}" x-ref="page{{ $i }}" class="{{ $current == $i ? 'bg-gray-800 text-white rounded-full px-4 py-2 min-w-[44px] text-center' : 'text-gray-700 hover:text-black px-4 py-2 min-w-[44px] text-center' }}">
                                     {{ $i }}
                                 </a>
                             @endif

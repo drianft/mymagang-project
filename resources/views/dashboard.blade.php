@@ -174,7 +174,7 @@
     <div class="flex justify-between items-center mb-2">
       <h2 class="font-semibold text-lg">Explore Companies</h2>
       @auth
-        <a href="#" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Companies →</a>
+        <a href="{{ route('companies') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Companies →</a>
       @endauth
       @guest
         <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Companies →</a>

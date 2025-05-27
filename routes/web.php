@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -26,3 +27,8 @@ Route::get('/jobs', function() {
     $posts = Post::paginate(25);
     return view('jobpost', compact('posts'));
 })->name('jobs');
+
+Route::get('/companies', function() {
+    $companies = User::with('company')->where('roles', 'company')->paginate(5);
+    return view('companylist', compact('companies'));
+})->name('companies');

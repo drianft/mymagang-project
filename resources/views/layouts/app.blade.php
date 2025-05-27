@@ -26,16 +26,24 @@
     </head>
     <body class="font-sans antialiased">
         <x-banner />
+        @php
+            $user = Auth::user();
+        @endphp
 
-        <div class="min-h-screen bg-white">
-            @include('components.navbar')
+        <div class=" {{ (!$user) ? 'min-h-screen bg-white' : ($user->roles == 'admin' ? 'flex min-h-screen bg-gray-100' : 'min-h-screen bg-white') }}">
+
+            @if(!$user || $user && $user->roles != 'applier')
+                @include('components.navbar')
+            @elseif($user && $user->roles == 'admin')
+                @include('components.admin-sidebar')
+            @endif
 
             <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
 
-            @if(!request()->routeIs('profile.show'))
+            @if(!request()->routeIs('profile.show') || $user->roles != 'admin')
                 @include('components.footer')
             @endif
         </div>

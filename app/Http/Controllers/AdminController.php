@@ -37,7 +37,7 @@ public function index(Request $request)
 
         $companies = Company::all(); // ambil semua data company dari database
 
-        return view('admin.dashboard', compact('users' , 'posts' , 'postCount', 'userCount', 'companyCount', 'applicationCount'));
+        return view('dashboard', compact('users' , 'posts' , 'postCount', 'userCount', 'companyCount', 'applicationCount'));
 
 
 }

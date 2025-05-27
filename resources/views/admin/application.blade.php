@@ -8,7 +8,7 @@
     </head>
 <body class="bg-white">
 
-    <div class="flex h-screen">
+<div class="flex h-screen">
   <!-- Sidebar -->
 @include('components.admin-sidebar')
 

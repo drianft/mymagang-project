@@ -19,15 +19,17 @@ class DatabaseSeeder extends Seeder
         Company::factory(5)->create()->each(function ($company) {
 
             // Buat 2 HR untuk tiap company
-            Hr::factory(2)->create([
+            $hrs = Hr::factory(5)->create([
                 'company_id' => $company->id
             ]);
 
             // Buat 3 post tiap company dari HR random
-            Post::factory(3)->create([
-                'company_id' => $company->id,
-                'hr_id' => $company->hrs->random()->id // Make sure you define relation
-            ]);
+            foreach($hrs as $hr) {
+                Post::factory(10)->create([
+                    'company_id' => $company->id,
+                    'hr_id' => $hr->id
+                ]);
+            }
         });
 
         // Buat 10 applier

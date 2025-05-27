@@ -6,7 +6,7 @@
       <div class="ml-6">
         <h1 class="text-5xl font-bold mb-6">2000+ Jobs<br>Available</h1>
         @auth
-          <a href="#" class="inline-block border border-gray-700 px-4 py-2 rounded-md hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm hover:border-2">EXPLORE NOW</a>
+          <a href="{{ route('jobs') }}" class="inline-block border border-gray-700 px-4 py-2 rounded-md hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm hover:border-2">EXPLORE NOW</a>
         @endauth
         @guest
           <a href="{{ route('warnguest', ['page' => 'explore']) }}" class="inline-block border border-gray-700 px-4 py-2 rounded-md hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm hover:border-2">EXPLORE NOW</a>
@@ -64,7 +64,7 @@
         <p class="text-lg text-center text-neutral-700 mt-auto cursor-pointer hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">Show more</p>
       </div>
     @endauth
-      
+
     @guest
       <div class="lg:col-span-4 bg-gray-200 rounded-xl p-6 flex flex-col h-full items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 mb-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -72,7 +72,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 19c-4 0-7-1.79-7-4v-1a4 4 0 018 0v1c0 2.21-3 4-7 4z" />
         </svg>
         <p class="mb-4 text-gray-600 text-center">Log in or sign up to check the status of your job application.</p>
-        
+
         <!-- Tombol login dan register sejajar -->
         <div class="flex gap-4">
           <button onclick="window.location='{{ route('login') }}'" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
@@ -91,7 +91,7 @@
     <div class="flex justify-between items-center mb-2">
       <h2 class="font-semibold text-lg">Saved Jobs</h2>
       @auth
-        <a href="#" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Saved Jobs →</a>
+        <a href="{{ route('jobs') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Saved Jobs →</a>
       @endauth
       @guest
         <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Saved Jobs →</a>
@@ -103,51 +103,51 @@
         <a href="#" class="swiper-slide bg-gray-100 rounded-xl p-4 w-64 shadow block">
           <!-- Gambar -->
           <div class="w-full h-40 bg-white rounded-lg mb-3"></div>
-        
+
           <p class="font-semibold">Frontend Developer</p>
-          <span class="bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded inline-block mt-1">Part Time</span>            
+          <span class="bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded inline-block mt-1">Part Time</span>
           <div class="text-xs text-gray-500 mt-2 flex gap-5">
             <span>👥 420 Applicants</span>
             <span>👁️ 4200 Views</span>
           </div>
-        </a>         
+        </a>
 
         <a href="#" class="swiper-slide bg-gray-100 rounded-xl p-4 w-64 shadow block">
           <!-- Gambar -->
           <img src="images/test1.png" class="w-full h-40 object-cover rounded-lg mb-3" alt="Job image">
-                
+
           <p class="font-semibold">Frontend Developer</p>
           <span class="bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded inline-block mt-1">Part Time</span>
             <div class="text-xs text-gray-500 mt-2 flex gap-5">
             <span>👥 420 Applicants</span>
             <span>👁️ 4200 Views</span>
           </div>
-        </a>          
+        </a>
 
         <a href="#" class="swiper-slide bg-gray-100 rounded-xl p-4 w-64 shadow block">
           <!-- Gambar -->
-          <img src="images/test2.png" 
-          class="w-full h-40 object-cover rounded-lg mb-3" 
+          <img src="images/test2.png"
+          class="w-full h-40 object-cover rounded-lg mb-3"
           alt="Job image">
-                
+
           <p class="font-semibold">Frontend Developer</p>
           <span class="bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded inline-block mt-1">Part Time</span>
           <div class="text-xs text-gray-500 mt-2 flex gap-5">
             <span>👥 420 Applicants</span>
             <span>👁️ 4200 Views</span>
           </div>
-        </a>          
+        </a>
         <!-- Sisa tambahin saja, di tampilan maks hanya muncul 5 -->
       </div>
     </div>
   </div>
-  
+
   <!-- New Jobs -->
   <div class="max-w-7xl mx-auto px-6 mt-6">
     <div class="flex justify-between items-center mb-2">
       <h2 class="font-semibold text-lg">New Jobs</h2>
       @auth
-        <a href="#" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Jobs →</a>
+        <a href="{{ route('jobs') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Jobs →</a>
       @endauth
       @guest
         <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Jobs →</a>
@@ -168,7 +168,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Explore Companies -->
   <div class="max-w-7xl mx-auto px-6 mt-6">
     <div class="flex justify-between items-center mb-2">

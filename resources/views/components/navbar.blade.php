@@ -48,7 +48,7 @@
                     <span class="absolute -inset-1.5"></span>
                     <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75v13.5L12 16.5l-5.25 3.75V6.75a2.25 2.25 0 0 1 2.25-2.25h6a2.25 2.25 0 0 1 2.25 2.25z" />
-                    </svg>            
+                    </svg>
                 </a>
 
                 <!-- Profile dropdown -->
@@ -66,7 +66,7 @@
                             <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 px-4 py-2 ease-in-out text-sm" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
                             <form method="POST" action="{{ route('logout') }}" id="custom-logout-form">
                                 @csrf
-                                <a href="#" 
+                                <a href="#"
                                     onclick="event.preventDefault(); document.getElementById('custom-logout-form').submit();"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 px-4 py-2 ease-in-out text-sm" role="menuitem" tabindex="-1" id="user-menu-item-1">
                                     Sign out
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 @endauth
-                @guest  
+                @guest
                 <div class="relative ml-3">
                     <div>
                     <button type="button" class="relative flex rounded-full bg-zinc-700 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden" id="user-menu-button" aria-expanded="false" aria-haspopup="true">

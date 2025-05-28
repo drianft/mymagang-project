@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <img src="{{ asset('images/iconhitem.png') }}" alt="MMyMagang" class="w-50 h-auto mx-auto">
         </x-slot>
 
         <x-validation-errors class="mb-4" />
@@ -10,8 +10,8 @@
             @csrf
 
             <div>
-                <x-label for="fullName" value="{{ __('Name') }}" />
-                <x-input id="fullName" class="block mt-1 w-full" type="text" name="fullName" :value="old('name')" required autofocus autocomplete="fullName" />
+                <x-label for="name" value="{{ __('Name') }}" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
             <div class="mt-4">

@@ -9,10 +9,13 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'sector',
-        'status',
-    ];
+    public function hrs()
+    {
+        return $this->hasMany(Hr::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Admin;
-use App\Models\application;
+use App\Models\Application;
 use App\Models\User;
 use App\Models\Company;
+use App\Models\Post;
 
 use Illuminate\Http\Request;
 
@@ -26,7 +27,19 @@ public function index(Request $request)
                   ->orWhere('email', 'like', "%{$search}%");
         })
         ->get();
-    return view('admin.user', compact('users'));
+        $posts = Post::all(); // ambil 5 postingan terbaru
+
+        $postCount = Post::count();
+        $userCount = User::count();
+        $companyCount = Company::count();
+        $applicationCount = Application::count();
+
+
+        $companies = Company::all(); // ambil semua data company dari database
+
+        return view('admin.dashboard', compact('users' , 'posts' , 'postCount', 'userCount', 'companyCount', 'applicationCount'));
+
+
 }
 
 
@@ -80,9 +93,12 @@ public function index(Request $request)
      * Remove the specified resource from storage.
      */
 
-    public function destroy(Admin $admin)
+    public function destroy($id ,Admin $admin)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect()->route('admin.posts')->with('success', 'Post berhasil dihapus.');
     }
     public function showUsers()
     {
@@ -93,12 +109,12 @@ public function index(Request $request)
 
     }
 
-    public function showCompanys()
+    public function showCompanies()
     {
     // $users = User::all();
     // return view('admin.user', compact('user'));
      $companies = Company::all(); // ambil semua data company dari database
-    return view('admin.company', compact('companies'));
+    return view('admin.companies', compact('companies'));
 
     }
 

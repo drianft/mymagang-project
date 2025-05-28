@@ -9,19 +9,18 @@
 <body class="bg-white">
 
     <div class="flex h-screen">
-         <!-- Sidebar -->
-     @include('components.admin-sidebar')
-
+        <!-- Sidebar -->
+        @include('components.admin-sidebar')
 
         <!-- Main Content -->
         <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
              <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
                 <h1 class="text-2xl font-semibold text-gray-900">User Account</h1>
               </div>
-              
-       
 
-    
+
+
+
     <!-- Search Form: taruh di atas tabel -->
     <div class="flex justify-end mt-6 mb-4">
         <form method="GET" action="{{ route('admin.users') }}">
@@ -54,7 +53,7 @@
             <tbody>
                 @foreach ($users as $user)
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
-                    <td class="px-4 py-2">{{ $user->fullName }}</td>
+                    <td class="px-4 py-2">{{ $user->name }}</td>
                     <td class="px-4 py-2">{{ $user->email }}</td>
 
                     <!-- <td class="px-4 py-2">{{ ucfirst($user->role) }}</td> -->
@@ -62,23 +61,24 @@
                       <form method="POST" action="{{ route('admin.users.updateRole', $user->id) }}">
                         @csrf
                         @method('PUT')
-                             <select name="role" onchange="this.form.submit()" class="px-2 py-1 bg-gray-100 rounded-md text-sm focus:outline-none">
-                             <option value="applier" {{ $user->role === 'applier' ? 'selected' : '' }}>Applier</option>
-                            <option value="hr" {{ $user->role === 'hr' ? 'selected' : '' }}>HR</option>
-                          </select>
+                             <select name="roles" onchange="this.form.submit()" required>
+                                <option disabled selected value>-- Pilih Role --</option>
+                                <option value="applier" {{ $user->roles === 'applier' ? 'selected' : '' }}>Applier</option>
+                                <option value="hr" {{ $user->roles === 'hr' ? 'selected' : '' }}>HR</option>
+                            </select>
                         </form>
                      </td>
 
 
                     <td class="px-4 py-2">{{ \Carbon\Carbon::parse($user->created_at)->format('F d, Y') }}</td>
-                   
-                   
+
+
                     <!-- <td class="px-4 py-2 capitalize">{{ $user->status }}</td> -->
                              <td class="px-4 py-2">
                            <form method="POST" action="{{ route('admin.users.updateStatus', $user->id) }}">
                                 @csrf
                                @method('PUT')
-                       <select name="status" onchange="this.form.submit()" class="px-2 py-1 bg-gray-100 rounded-md text-sm focus:outline-none">
+                       <select name="status" onchange="this.form.submit()" class="px-2 py-1 bg-white rounded-sm text-sm focus:outline-none hover:bg-gray-50">
                      <option value="active" {{ $user->status === 'active' ? 'selected' : '' }}>Active</option>
                    <option value="inactive" {{ $user->status === 'inactive' ? 'selected' : '' }}>Inactive</option>
                </select>
@@ -93,7 +93,7 @@
 
 
 
-           
+
         </main>
     </div>
 
@@ -103,7 +103,7 @@
             button.addEventListener('click', () => {
                 const isExpanded = button.getAttribute('aria-expanded') === 'true';
                 const dropdownContent = document.getElementById(button.getAttribute('aria-controls'));
-                
+
                 button.setAttribute('aria-expanded', !isExpanded);
                 dropdownContent.classList.toggle('hidden');
                 button.querySelector('svg:last-child').classList.toggle('rotate-180');

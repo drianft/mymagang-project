@@ -18,7 +18,7 @@
                <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
                  <h1 class="text-2xl font-semibold text-gray-900">Recent Application</h1>
                   </div>
-              
+
 
              <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
                <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
@@ -38,26 +38,26 @@
 
               @foreach($application as $application)
                <tr class="hover:bg-gray-50">
-               <td class="py-4 text-sm font-medium text-gray-900">{{ $application->applicant_name }}</td>
-               <td class="py-4 text-sm text-gray-600">{{ $application->job_title }}</td>
+               <td class="py-4 text-sm font-medium text-gray-900">{{ $application->applier->user->name }}</td>
+               <td class="py-4 text-sm text-gray-600">{{ $application->post->job_title }}</td>
                <td class="py-4">
-               <span class="px-2 py-1 text-xs font-medium rounded 
+               <span class="px-2 py-1 text-xs font-medium rounded
                @if($application->status == 'Pending') bg-yellow-100 text-yellow-800
                @elseif($application->status == 'Interview') bg-blue-100 text-blue-800
                @elseif($application->status == 'Rejected') bg-red-100 text-red-800
                @else bg-green-100 text-green-800 @endif">
-               {{ $application->status }}
+               {{ $application->application_status }}
                </span>
                 </td>
                   <td class="py-4 text-sm text-gray-600">
-                    {{ $application->date ? $application->date->format('d/m/Y') : '——' }}
+                    {{ $application->applied_at }}
                       </td>
                      <td class="py-4">
                         <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
                               </td>
                         </tr>
                 @endforeach
-                
+
 
                 <!-- ini data dummy  -->
                 <tr class="hover:bg-gray-50">
@@ -71,7 +71,7 @@
                         <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
                     </td>
                 </tr>
-              
+
                 <tr class="hover:bg-gray-50">
                     <td class="py-4 text-sm font-medium text-gray-900">James Smith</td>
                     <td class="py-4 text-sm text-gray-600">Software Engineer</td>
@@ -83,8 +83,8 @@
                         <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
                     </td>
                 </tr>
-                
-                
+
+
                 <tr class="hover:bg-gray-50">
                     <td class="py-4 text-sm font-medium text-gray-900">Barca</td>
                     <td class="py-4 text-sm text-gray-600">Graphic Designer</td>
@@ -96,8 +96,8 @@
                         <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
                     </td>
                 </tr>
-                
-                
+
+
                 <tr class="hover:bg-gray-50">
                     <td class="py-4 text-sm font-medium text-gray-900">Garnacho</td>
                     <td class="py-4 text-sm text-gray-600">Sales & Marketing</td>
@@ -109,8 +109,8 @@
                         <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
                     </td>
                 </tr>
-                
-                
+
+
                 <tr class="hover:bg-gray-50">
                     <td class="py-4 text-sm font-medium text-gray-900">Pedri</td>
                     <td class="py-4 text-sm text-gray-600">Accounting</td>
@@ -129,7 +129,7 @@
                          </div>
                       </div>
                 </div>
-               </div>           
+               </div>
             </main>
     </div>
 
@@ -139,7 +139,7 @@
             button.addEventListener('click', () => {
                 const isExpanded = button.getAttribute('aria-expanded') === 'true';
                 const dropdownContent = document.getElementById(button.getAttribute('aria-controls'));
-                
+
                 button.setAttribute('aria-expanded', !isExpanded);
                 dropdownContent.classList.toggle('hidden');
                 button.querySelector('svg:last-child').classList.toggle('rotate-180');

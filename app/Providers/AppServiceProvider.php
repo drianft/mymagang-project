@@ -3,8 +3,10 @@
 namespace App\Providers;
 use App\Models\User;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Contracts\LoginResponse;
+use App\Actions\Auth\CustomLoginResponse;
+
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(LoginResponse::class, CustomLoginResponse::class);
     }
 
     /**

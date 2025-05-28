@@ -42,17 +42,6 @@ class Post extends Model
                     ->withPivot('saved_at');
     }
 
-    public function getImagePostUrlAttribute($value)
-    {
-        return asset('storage/' . $value);
-    }
-    public function setImagePostUrlAttribute($value)
-    {
-        $this->attributes['image_post_url'] = $value->store('posts', 'public');
-    }
-    public function getCreatedAtAttribute($value)
-    {
-        return \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
-    }
+
 
 }

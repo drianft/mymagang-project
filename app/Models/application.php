@@ -2,18 +2,30 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class application extends Model
+class Application extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'applicant',
-        'job Post',
         'status',
-        'date',
-        'post',
+        'applied_at',
     ];
+
+    public function applier()
+    {
+        return $this->belongsTo(Applier::class);
+    }
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
+    public function interview()
+    {
+        return $this->hasOne(Interview::class);
+    }
 }

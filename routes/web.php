@@ -1,34 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Post;
-use App\Models\User;
+use App\Http\Controllers\PageController;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('guestdash');
+Route::get('/', [PageController::class, 'shownewPost'])->name('guestdash');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [PageController::class, 'shownewPost'])->name('dashboard');
 });
 
-Route::get('/warnguest/{page}', function ($page) {
-    return view('guestwarning', ['page' => $page]);
-})->name('warnguest');
-
-//Menampilkaan halaman dengan total posts yang diinginkan
-Route::get('/jobs', function() {
-    $posts = Post::paginate(25);
-    return view('jobpost', compact('posts'));
-})->name('jobs');
-
-Route::get('/companies', function() {
-    $companies = User::with('company')->where('roles', 'company')->paginate(5);
-    return view('companylist', compact('companies'));
-})->name('companies');
+Route::get('/warnguest/{page}', [PageController::class, 'guestWarning'])->name('warnguest');
+Route::get('/jobs', [PageController::class, 'showJobs'])->name('jobs');
+Route::get('/companies', [PageController::class, 'showCompanies'])->name('companies');

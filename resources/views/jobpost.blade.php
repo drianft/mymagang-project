@@ -51,7 +51,7 @@
             {{-- Job Cards --}}
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 @foreach($posts as $post)
-                    <div class="bg-white rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between">
+                    <div class="bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between">
                         <div>
                             {{-- Gambar --}}
                             <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
@@ -61,7 +61,7 @@
                                     <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
                                 @endif
                             </div>
-                                            <div class="mb-2 font-semibold text-sm text-gray-800">
+                            <div class="mb-2 font-semibold text-sm text-gray-800">
                                 {{ $post->job_title }}
                             </div>
                             <span class="text-xs px-2 py-1 rounded font-medium
@@ -72,8 +72,8 @@
 
                         {{-- Stat --}}
                         <div class="mt-3 text-xs text-gray-500 flex justify-between">
-                            <div>{{ $post->total_appliers }}👥 Applicants</div>
-                            <div>{{ $post->total_views }}👁️ Views</div>
+                            <div>{{ $post->total_appliers }} Applicants</div>
+                            <div>{{ $post->total_views }} Views</div>
                         </div>
 
                     </div>

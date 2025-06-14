@@ -27,32 +27,30 @@
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
                         @auth
-                            <a href="{{ route('dashboard') }}"
-                                class="{{ request()->routeIs('dashboard') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
+                            <a href="{{ route('hr-home') }}"
+                                class="{{ request()->routeIs('hr-home') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
                                 aria-current="page">Home</a>
-                            <a href="#"
-                                class="font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm">Jobs</a>
-                            <a href="{{ route('company') }}"
-                                class="{{ request()->routeIs('company') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">
-                                Company
+                            <a href="{{ route('jobs') }}"
+                                class="{{ request()->routeIs('jobs') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">
+                                Posts
                             </a>
                             {{-- Link Applicants --}}
-                            <a href="{{ route('applicants') }}"
-                                class="{{ request()->routeIs('applicants') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Applicants</a>
+                            <a href="{{ route('hr-dashboard') }}"
+                                class="{{ request()->routeIs('hr-dashboard') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Applicants</a>
                         @endauth
                         @guest
                             <a href="{{ route('guestdash') }}"
                                 class="{{ request()->routeIs('guestdash') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
                                 aria-current="page">Home</a>
                             <a href="{{ route('warnguest', ['page' => 'jobs']) }}"
-                                class="{{ request()->segment(2) === 'jobs' ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Jobs</a>
+                                class="{{ request()->segment(2) === 'jobs' ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Posts</a>
                             <a href="{{ route('warnguest', ['page' => 'company']) }}"
                                 class="{{ request()->segment(2) === 'company' ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Company</a>
                             <a href="{{ route('warnguest', ['page' => 'applications']) }}"
                                 class="{{ request()->segment(2) === 'applications' ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Applications</a>
                             {{-- Link Applicants --}}
-                            <a href="{{ route('warnguest', ['page' => 'applicants']) }}"
-                                class="{{ request()->segment(2) === 'applicants' ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Applicants</a>
+                            <a href="{{ route('warnguest', ['page' => 'hr-dashboard']) }}"
+                                class="{{ request()->segment(2) === 'hr-dashboard' ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Applicants</a>
                         @endguest
                     </div>
                 </div>
@@ -68,11 +66,7 @@
                             class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
                         @endguest
                         <span class="absolute -inset-1.5"></span>
-                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                            aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17.25 6.75v13.5L12 16.5l-5.25 3.75V6.75a2.25 2.25 0 0 1 2.25-2.25h6a2.25 2.25 0 0 1 2.25 2.25z" />
-                        </svg>
+                     
                     </a>
 
                     <!-- Profile dropdown -->
@@ -143,15 +137,18 @@
             <a href="{{ route('dashboard') }}"
                 class="{{ request()->routeIs('dashboard') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm' }}"
                 aria-current="page">Home</a>
-            <a href="jobs.html"
-                class="block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm">Jobs</a>
+            <a href="{{ route('jobs') }}"
+                class="{{ request()->routeIs('jobs') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm' }}">
+                Jobs
+            </a>
+
             <a href="{{ route('company') }}"
                 class="{{ request()->routeIs('company') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm' }}">
                 Company
             </a>
             {{-- Link Applicants --}}
-            <a href="{{ route('applicants') }}"
-                class="{{ request()->routeIs('applicants') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm' }}">Applicants</a>
+            <a href="{{ route('hr-dashboard') }}"
+                class="{{ request()->routeIs('hr-dashboard') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm' }}">Applicants</a>
         </div>
     </div>
 </nav>

@@ -10,4 +10,5 @@ class CompanyController extends Controller
     {
         return view('company');  // Pastikan view 'company.blade.php' sudah ada
     }
+    
 }

@@ -23,9 +23,9 @@
             <table class="min-w-full w-full table-auto border-collapse">
                 <thead class="bg-gray-100 text-gray-700 font-semibold sticky top-0 z-10">
                     <tr>
-                        <th class="px-6 py-3 border border-gray-200 text-center">Date</th>
-                        <th class="px-6 py-3 border border-gray-200 text-center">Post</th>
-                        <th class="px-6 py-3 border border-gray-200 text-center">Company</th>
+                        <th class="px-6 py-3 border border-gray-200 text-center">Applicant</th>
+                        <th class="px-6 py-3 border border-gray-200 text-center">Position</th>
+                        <th class="px-6 py-3 border border-gray-200 text-center">APPLIED</th>
                         <th class="px-6 py-3 border border-gray-200 text-center">HR Name</th>
                         <th class="px-6 py-3 border border-gray-200 text-center">Job Name</th>
                         <th class="px-6 py-3 border border-gray-200 text-center">Status</th>
@@ -35,57 +35,57 @@
                     @php
                         $applicants = [
                             [
-                                'date' => '18/05/2025',
-                                'post' => 'View Post',
-                                'company' => 'Universitas Mikroskil',
+                                'Applicant' => '18/05/2025',
+                                'Position' => 'View Position',
+                                'APPLIED' => 'Universitas Mikroskil',
                                 'hr' => 'Andrian Kuruyuk',
                                 'job' => 'UI/UX Designer',
                                 'status' => 'Accepted',
                             ],
                             [
-                                'date' => '19/05/2025',
-                                'post' => 'View Post',
-                                'company' => 'Universitas Mikroskil',
+                                'Applicant' => '19/05/2025',
+                                'Position' => 'View Position',
+                                'APPLIED' => 'Universitas Mikroskil',
                                 'hr' => 'Andrian Kuruyuk',
                                 'job' => 'UI/UX Designer',
                                 'status' => 'Pending',
                             ],
                             [
-                                'date' => '20/05/2025',
-                                'post' => 'View Post',
-                                'company' => 'Universitas Mikroskil',
+                                'Applicant' => '20/05/2025',
+                                'Position' => 'View Position',
+                                'APPLIED' => 'Universitas Mikroskil',
                                 'hr' => 'Andrian Kuruyuk',
                                 'job' => 'UI/UX Designer',
                                 'status' => 'Rejected',
                             ],
                             [
-                                'date' => '21/05/2025',
-                                'post' => 'View Post',
-                                'company' => 'Universitas Mikroskil',
+                                'Applicant' => '21/05/2025',
+                                'Position' => 'View Position',
+                                'APPLIED' => 'Universitas Mikroskil',
                                 'hr' => 'Andrian Kuruyuk',
                                 'job' => 'UI/UX Designer',
                                 'status' => 'Accepted',
                             ],
                             [
-                                'date' => '22/05/2025',
-                                'post' => 'View Post',
-                                'company' => 'Universitas Mikroskil',
+                                'Applicant' => '22/05/2025',
+                                'Position' => 'View Position',
+                                'APPLIED' => 'Universitas Mikroskil',
                                 'hr' => 'Andrian Kuruyuk',
                                 'job' => 'UI/UX Designer',
                                 'status' => 'Pending',
                             ],
                             [
-                                'date' => '23/05/2025',
-                                'post' => 'View Post',
-                                'company' => 'Universitas Mikroskil',
+                                'Applicant' => '23/05/2025',
+                                'Position' => 'View Position',
+                                'APPLIED' => 'Universitas Mikroskil',
                                 'hr' => 'Andrian Kuruyuk',
                                 'job' => 'UI/UX Designer',
                                 'status' => 'Rejected',
                             ],
                             [
-                                'date' => '24/05/2025',
-                                'post' => 'View Post',
-                                'company' => 'Universitas Mikroskil',
+                                'Applicant' => '24/05/2025',
+                                'Position' => 'View Position',
+                                'APPLIED' => 'Universitas Mikroskil',
                                 'hr' => 'Andrian Kuruyuk',
                                 'job' => 'UI/UX Designer',
                                 'status' => 'Accepted',
@@ -96,12 +96,12 @@
                     @foreach ($applicants as $applicant)
                         <tr class="border border-gray-200">
                             <td class="px-6 py-4 border border-gray-200 whitespace-nowrap text-center">
-                                {{ $applicant['date'] }}</td>
+                                {{ $applicant['Applicant'] }}</td>
                             <td
                                 class="px-6 py-4 border border-gray-200 text-blue-600 hover:underline cursor-pointer whitespace-nowrap text-center">
-                                {{ $applicant['post'] }}</td>
+                                {{ $applicant['Position'] }}</td>
                             <td class="px-6 py-4 border border-gray-200 font-semibold whitespace-nowrap text-center">
-                                {{ $applicant['company'] }}</td>
+                                {{ $applicant['APPLIED'] }}</td>
                             <td class="px-6 py-4 border border-gray-200 font-semibold whitespace-nowrap text-center">
                                 {{ $applicant['hr'] }}</td>
                             <td class="px-6 py-4 border border-gray-200 whitespace-nowrap text-center">

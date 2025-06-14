@@ -154,33 +154,45 @@
 
         <div class="swiper new-swiper">
             <div class="swiper-wrapper">
-                @foreach($newPosts as $post)
-                    <div class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between">
-                        <div class="relative">
-                            {{-- Gambar --}}
-                            <div class="h-4s0 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
-                                @if ($post->image)
-                                    <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
-                                @else
-                                    <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
-                                @endif
-                            </div>
-                            <div class="mb-2 font-semibold text-sm text-gray-800">
-                                {{ $post->job_title }}
-                            </div>
-                            <span class="text-xs px-2 py-1 mb-[40px] inline-block rounded font-medium {{ $post->job_type === 'full-time' ? ' bg-green-100 text-green-700' : ($post->job_type === 'part-time' ? ' bg-orange-100 text-orange-700' : ' bg-gray-300 text-gray-700') }}">
-                                {{ ucfirst($post->job_type) }}
-                            </span>
+                @foreach($posts as $post)
+                @auth
+                    <a href="{{ route('jobs.show', $post->id) }}" class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
+                @endauth
+                @guest
+                    <a href="{{ route('warnguest', ['page' => 'postdesc']) }}" class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
+                @endguest
+
+                        {{-- Gambar --}}
+                        <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
+                            @if ($post->image)
+                                <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
+                            @else
+                                <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
+                            @endif
                         </div>
-                        {{-- Stat --}}
+
+                        {{-- Title --}}
+                        <div class="mb-2 font-semibold text-sm text-gray-800">
+                            {{ $post->job_title }}
+                        </div>
+
+                        {{-- Job Type Badge --}}
+                        <span class="text-xs px-2 py-1 mb-[40px] inline-block rounded font-medium
+                            {{ $post->job_type === 'full-time' ? 'bg-green-100 text-green-700' :
+                               ($post->job_type === 'part-time' ? 'bg-orange-100 text-orange-700' : 'bg-gray-300 text-gray-700') }}">
+                            {{ ucfirst($post->job_type) }}
+                        </span>
+
+                        {{-- Stats --}}
                         <div class="mt-3 text-xs text-gray-500 flex justify-between absolute bottom-5 left-4 right-4">
                             <div>{{ $post->total_appliers }} Applicants</div>
                             <div>{{ $post->total_views }} Views</div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
+
     </div>
 
   <!-- Explore Companies -->
@@ -194,19 +206,53 @@
         <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Companies →</a>
       @endguest
     </div>
-    <div class="flex flex-wrap gap-4">
-      <div class="bg-white flex items-center gap-2 px-4 py-2 rounded-md shadow text-sm">
-        <img src="images/test1.png" class="w-5 h-5 object-contain rounded-full" /> Universitas Sumatera Utara
-      </div>
-      <div class="bg-white flex items-center gap-2 px-4 py-2 rounded-md shadow text-sm">
-        <img src="images/logo2.png" class="w-5 h-5 object-contain rounded-full" /> Universitas Mikroskil
-      </div>
-      <div class="bg-white flex items-center gap-2 px-4 py-2 rounded-md shadow text-sm">
-        <img src="images/logo3.png" class="w-5 h-5 object-contain rounded-full" /> PT Wilmar Nabati Indonesia
-      </div>
-      <div class="bg-white flex items-center gap-2 px-4 py-2 rounded-md shadow text-sm">
-        <img src="images/logo4.png" class="w-5 h-5 object-contain rounded-full" /> PT Bank Mandiri Tbk
-      </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        @foreach($companies as $user)
+            @auth
+                <a href="{{ route('company.show', $user->id) }}" class="block">
+            @endauth
+            @guest
+                <a href="{{ route('warnguest', ['page' => 'desc']) }}" class="block">
+            @endguest
+                <div class="w-full bg-gray-100 rounded-xl p-3 flex items-center space-x-4 hover:shadow-md transition-all">
+                    {{-- Logo perusahaan --}}
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                        <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="object-cover w-full h-full">
+                    </div>
+
+                    {{-- Detail perusahaan --}}
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-sm text-gray-900 truncate">
+                            {{ $user->name }}
+                        </div>
+
+                        <div class="flex items-center space-x-2 mt-1">
+                            <span class="text-xs font-medium px-2 py-0.5 rounded
+                                {{ match($user->industry) {
+                                    'tech' => 'bg-blue-100 text-blue-700',
+                                    'finance' => 'bg-indigo-100 text-indigo-700',
+                                    'healthcare' => 'bg-green-100 text-green-700',
+                                    'education' => 'bg-purple-100 text-purple-700',
+                                    'sales' => 'bg-pink-100 text-pink-700',
+                                    'engineering' => 'bg-orange-100 text-orange-700',
+                                    'law' => 'bg-gray-300 text-gray-800',
+                                    'fnb' => 'bg-yellow-100 text-yellow-700',
+                                    'logistic' => 'bg-amber-100 text-amber-700',
+                                    default => 'bg-slate-100 text-slate-700',
+                                } }}">
+                                {{ ucfirst($user->industry) }}
+                            </span>
+                        </div>
+
+                        {{-- Lokasi atau info tambahan --}}
+                        <p class="text-xs text-gray-500 mt-1 truncate">
+                            {{ $user->address ?? 'Alamat tidak tersedia' }}
+                        </p>
+                    </div>
+                </div>
+            </a>
+        @endforeach
     </div>
+
   </div>
 </x-app-layout>

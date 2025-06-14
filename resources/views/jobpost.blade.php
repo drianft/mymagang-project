@@ -51,34 +51,36 @@
             {{-- Job Cards --}}
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 @foreach($posts as $post)
-                    <div class="bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between">
-                        <div>
-                            {{-- Gambar --}}
-                            <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
-                                @if ($post->image)
-                                    <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
-                                @else
-                                    <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
-                                @endif
+                    <a href="{{ route('jobs.show', $post->id) }}" class="block">
+                        <div class="bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between">
+                            <div>
+                                {{-- Gambar --}}
+                                <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
+                                    @if ($post->image)
+                                        <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
+                                    @else
+                                        <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
+                                    @endif
+                                </div>
+                                <div class="mb-2 font-semibold text-sm text-gray-800">
+                                    {{ $post->job_title }}
+                                </div>
+                                <span class="text-xs px-2 py-1 rounded font-medium
+                                    {{ $post->job_type === 'full-time' ? ' bg-green-100 text-green-700' : ($post->job_type === 'part-time' ? ' bg-orange-100 text-orange-700' : ' bg-gray-300 text-gray-700') }}">
+                                    {{ ucfirst($post->job_type) }}
+                                </span>
                             </div>
-                            <div class="mb-2 font-semibold text-sm text-gray-800">
-                                {{ $post->job_title }}
+
+                            {{-- Stat --}}
+                            <div class="mt-3 text-xs text-gray-500 flex justify-between">
+                                <div>{{ $post->total_appliers }} Applicants</div>
+                                <div>{{ $post->total_views }} Views</div>
                             </div>
-                            <span class="text-xs px-2 py-1 rounded font-medium
-                                {{ $post->job_type === 'full-time' ? ' bg-green-100 text-green-700' : ($post->job_type === 'part-time' ? ' bg-orange-100 text-orange-700' : ' bg-gray-300 text-gray-700') }}">
-                                {{ ucfirst($post->job_type) }}
-                            </span>
                         </div>
-
-                        {{-- Stat --}}
-                        <div class="mt-3 text-xs text-gray-500 flex justify-between">
-                            <div>{{ $post->total_appliers }} Applicants</div>
-                            <div>{{ $post->total_views }} Views</div>
-                        </div>
-
-                    </div>
+                    </a>
                 @endforeach
             </div>
+
 
 
             <div class="max-w-screen-xl mx-auto flex items-center justify-center gap-8 mt-10 text-base font-semibold" x-data="{ page: {{ $posts->currentPage() }} }">

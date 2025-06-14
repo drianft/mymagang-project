@@ -25,9 +25,17 @@ class PageController extends Controller
         return view('guestwarning', ['page' => $page]);
     }
 
-    public function shownewPost()
+
+    public function showJobDetail($id)
     {
-        $newPosts = Post::latest()->take(10)->get();
-        return view('dashboard', compact('newPosts'));
+        $post = Post::findOrFail($id);
+        return view('jobs.show', compact('post'));
+    }
+
+    public function showCompany($id)
+    {
+        $company = User::where('roles', 'company')->findOrFail($id);
+
+        return view('company.show', compact('company'));
     }
 }

@@ -11,10 +11,8 @@ return new class extends Migration
         // Companies
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name');
-            $table->string('company_email')->unique();
-            $table->string('company_address');
-            $table->string('industry')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->enum('industry', ['tech', 'finance', 'healthcare', 'education', 'sales', 'engineering', 'law', 'fnb', 'logistic', 'freelance'])->default('freelance');
             $table->text('company_description')->nullable();
             $table->date('joined_at')->nullable();
             $table->timestamps();
@@ -44,12 +42,17 @@ return new class extends Migration
             $table->id();
             $table->foreignId('hr_id')->constrained('hrs')->onDelete('cascade');
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
-            $table->string('job_title');
+
+            $table->text('job_title');
+
             $table->text('job_description');
             $table->string('working_hour')->nullable();
             $table->decimal('salary', 12, 2)->nullable();
             $table->enum('status', ['open', 'closed', 'draft'])->default('open');
+            $table->enum('job_type', ['full-time', 'part-time', 'freelance'])->default('freelance');
             $table->string('job_category')->nullable();
+            $table->unsignedBigInteger('total_views')->default(0);
+            $table->unsignedBigInteger('total_appliers')->default(0);
             $table->string('image_post_url')->nullable();
             $table->timestamps();
         });

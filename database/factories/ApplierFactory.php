@@ -13,7 +13,7 @@ class ApplierFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'user_id' => User::factory()->applier(),
             'religion' => $this->faker->randomElement(['Islam', 'Christian', 'Hindu', 'Buddha']),
             'education' => $this->faker->randomElement(['SMA', 'D3', 'S1', 'S2']),
             'cv_url' => $this->faker->url,

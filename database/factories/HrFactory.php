@@ -16,7 +16,7 @@ class HrFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'user_id' => User::factory()->hr(),
             'company_id' => Company::factory(),
             'position' => $this->faker->jobTitle,
         ];

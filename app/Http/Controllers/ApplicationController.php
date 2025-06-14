@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\application;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Application;;
 
 class ApplicationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
+        $applications = Application::with(['post.hr', 'post.company', 'applier'])->paginate(20);
+
+        return view('application', compact('applications'));
+
         //
     }
 
@@ -61,5 +64,6 @@ class ApplicationController extends Controller
     public function destroy(application $application)
     {
         //
+
     }
 }

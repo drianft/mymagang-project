@@ -21,8 +21,12 @@ class PostFactory extends Factory
             'working_hour' => '9-5',
             'salary' => $this->faker->numberBetween(3000000, 15000000),
             'status' => 'open',
+            'job_type' => $this->faker->randomElement(['full-time', 'part-time', 'freelance']),
             'job_category' => $this->faker->word,
-            'image_post_url' => $this->faker->imageUrl(640, 480, 'business', true),
+
+            'total_views' => $this->faker->numberBetween(0, 1000),
+            'total_appliers' => $this->faker->numberBetween(0, 1000),
+
         ];
     }
 }

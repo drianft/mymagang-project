@@ -19,7 +19,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
         <style>
             .swiper-slide {
-            width: auto !important;
+            width: 235px !important;
+            height:auto;
             }
         </style>
         @livewireStyles
@@ -111,11 +112,11 @@
             });
 
             new Swiper('.new-swiper', {
-                slidesPerView: 1.2,
-                spaceBetween: 16,
+                slidesPerView: 1.5,
+                spaceBetween: 12,
                 breakpoints: {
-                640: { slidesPerView: 2.2 },
-                768: { slidesPerView: 3.5 },
+                640: { slidesPerView: 2 },
+                768: { slidesPerView: 3 },
                 1024: { slidesPerView: 5 },
                 },
             });

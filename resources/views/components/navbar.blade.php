@@ -24,9 +24,9 @@
                     <div class="flex space-x-4">
                         @auth
                             <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Home</a>
-                            <a href="#" class="font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm">Jobs</a>
-                            <a href="#" class="font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm">Company</a>
-                            <a href="#" class="font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm">Applications</a>
+                            <a href="{{ route('jobs') }}" class="{{ request()->routeIs('jobs') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Jobs</a>
+                            <a href="{{ route('companies') }}" class="{{ request()->routeIs('companies') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Company</a>
+                            <a href="{{ route('application') }}" class="{{ request()->routeIs('application') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Applications</a>
                         @endauth
                         @guest
                             <a href="{{ route('guestdash') }}" class="{{ request()->routeIs('guestdash') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Home</a>

@@ -73,13 +73,16 @@ class User extends Authenticatable
         ];
     }
 
-    public function applier()
-    {
-        return $this->hasOne(\App\Models\Applier::class);
+    public function hr() {
+        return $this->hasOne(Hr::class);
     }
 
-    public function hr()
-    {
-        return $this->hasOne(\App\Models\Hr::class);
+    public function applier() {
+        return $this->hasOne(Applier::class);
     }
+
+    public function company() {
+        return $this->hasOne(Company::class);
+    }
+
 }

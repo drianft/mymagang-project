@@ -50,4 +50,27 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    public function hr()
+    {
+        return $this->state(fn () => ['roles' => 'hr']);
+    }
+
+    public function applier()
+    {
+        return $this->state(fn () => ['roles' => 'applier']);
+    }
+
+    public function company()
+    {
+        return $this->state(fn() => ['roles' => 'company'])
+        ->afterMaking(function ($user) {
+            $user->name = fake()->company();
+        })
+        ->afterCreating(function ($user) {
+            $user->name = fake()->company();
+            $user->save();
+        });
+    }
+
 }

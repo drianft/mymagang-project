@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -32,7 +33,22 @@ class UserController extends Controller
         } elseif ($validated['role'] === 'company') {
             $targetUser->company()->firstOrCreate([]);
         }
+      
+        $user = User::findOrFail($id);
+        $user->status = $request->input('status');
+        $user->save();
 
         return back()->with('status', 'Role user berhasil diubah.');
     }
+
+    public function updateRole(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->roles = $request->input('roles');
+        $user->save();
+
+        return redirect()->back()->with('success', 'User role updated.');
+    }
+
+
 }

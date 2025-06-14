@@ -11,7 +11,7 @@ class Application extends Model
 
     protected $fillable = [
         'status',
-        'application_date',
+        'applied_at',
     ];
 
     public function applier()

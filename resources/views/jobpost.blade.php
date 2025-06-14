@@ -51,7 +51,7 @@
             {{-- Job Cards --}}
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 @foreach($posts as $post)
-                    <a href="{{ route('jobs.show', $post->id) }}" class="block">
+                    <a href="{{ route('posts.show', $post->id) }}" class="block">
                         <div class="bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between">
                             <div>
                                 {{-- Gambar --}}

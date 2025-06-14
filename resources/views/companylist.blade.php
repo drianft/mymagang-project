@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="bg-[#F9FAFB] min-h-screen py-12">
+    <div class="bg-[#F9FAFB] py-12">
         <div class="mx-auto max-w-screen-xl px-6">
 
             <div class="relative bg-[#F4F5F7] rounded-2xl px-10 py-14 lg:flex items-center justify-between shadow-md mb-12 overflow-hidden">
@@ -90,11 +90,6 @@
                     </a>
                 @endforeach
             </div>
-
-            <div class="mt-4">
-                {{ $companies->links() }}
-            </div>
-
 
             <div class="max-w-screen-xl mx-auto flex items-center justify-center gap-8 mt-10 text-base font-semibold" x-data="{ page: {{ $companies->currentPage() }} }">
                 {{-- Prev Button --}}

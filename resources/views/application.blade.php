@@ -1,5 +1,5 @@
 <x-app-layout>
-    {{-- @if($applications->count() > 0)
+    @if($applications->count() > 0)
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-white">
                 <tr class="text-left text-sm font-bold text-blue-600">
@@ -55,10 +55,10 @@
         </table>
 
         {{-- Pagination --}}
-        {{-- <div class="mt-4">
+        <div class="mt-4">
             {{ $applications->links() }}
-        </div> --}}
-    {{-- @else --}}
+        </div>
+    @else
     <div class=" mt-10 min-h-[55vh] flex items-center justify-center">
         <div class="p-6 bg-white rounded-xl shadow text-center">
             <h2 class="text-xl font-semibold text-gray-800 mb-2">You haven't applied for any jobs yet</h2>
@@ -70,5 +70,5 @@
         </div>
     </div>
 
-    {{-- @endif --}}
+    @endif
 </x-app-layout>

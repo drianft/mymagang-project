@@ -164,7 +164,7 @@
             <div class="swiper-wrapper">
                 @foreach($posts as $post)
                 @auth
-                    <a href="{{ route('jobs.show', $post->id) }}" class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
+                    <a href="{{ route('posts.show', $post->id) }}" class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
                 @endauth
                 @guest
                     <a href="{{ route('warnguest', ['page' => 'postdesc']) }}" class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">

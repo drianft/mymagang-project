@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -36,12 +36,16 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $posts)
+    public function showAdmin(Post $posts)
     {
         $posts = Post::find($posts);
         return view('admin.posts', compact('posts'));
     }
 
+     public function show(Post $post)
+    {
+        return view('detailpost', compact('post'));
+     }
     /**
      * Show the form for editing the specified resource.
      */

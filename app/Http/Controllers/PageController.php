@@ -16,7 +16,7 @@ class PageController extends Controller
 
     public function showCompanies()
     {
-        $companies = User::with('company')->where('roles', 'company')->paginate(5);
+        $companies = User::with('company')->where('roles', 'company')->paginate(8);
         return view('companylist', compact('companies'));
     }
 

@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Http\Controllers\Controller;
+use App\Models\interview;
 use Illuminate\Http\Request;
-use App\Models\Application;;
 
-class ApplicationController extends Controller
+class InterviewController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $applications = Application::with(['post.hr', 'post.company', 'applier'])->paginate(20);
-
-        return view('application', compact('applications'));
-
         //
     }
 
@@ -37,7 +34,7 @@ class ApplicationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(application $application)
+    public function show(interview $interview)
     {
         //
     }
@@ -45,7 +42,7 @@ class ApplicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(application $application)
+    public function edit(interview $interview)
     {
         //
     }
@@ -53,7 +50,7 @@ class ApplicationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, application $application)
+    public function update(Request $request, interview $interview)
     {
         //
     }
@@ -61,9 +58,8 @@ class ApplicationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(application $application)
+    public function destroy(interview $interview)
     {
         //
-
     }
 }

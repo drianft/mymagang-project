@@ -23,8 +23,10 @@ class PostFactory extends Factory
             'status' => 'open',
             'job_type' => $this->faker->randomElement(['full-time', 'part-time', 'freelance']),
             'job_category' => $this->faker->word,
+
             'total_views' => $this->faker->numberBetween(0, 1000),
             'total_appliers' => $this->faker->numberBetween(0, 1000),
+
         ];
     }
 }

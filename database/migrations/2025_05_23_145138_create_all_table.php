@@ -42,7 +42,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('hr_id')->constrained('hrs')->onDelete('cascade');
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
+
             $table->text('job_title');
+
             $table->text('job_description');
             $table->string('working_hour')->nullable();
             $table->decimal('salary', 12, 2)->nullable();

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', [DashboardController::class, 'showGuestDashboard'])->name('guestdash');
 

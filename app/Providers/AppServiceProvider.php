@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 use App\Models\User;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Contracts\LoginResponse;
 use App\Actions\Auth\CustomLoginResponse;

@@ -37,6 +37,8 @@
                 @include('components.navbar')
             @elseif($user && $user->roles == 'admin')
                 @include('components.admin-sidebar')
+            @elseif($user && $user->roles == 'company')
+                @include('components.navbar')
             @endif
 
             <!-- Page Content -->

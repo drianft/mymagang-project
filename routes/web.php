@@ -29,7 +29,13 @@ Route::get('/application', [ApplicationController::class, 'index'])->name('appli
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 
+Route::prefix('company')->name('company.')->group(function () {
 
+  Route::get('/company', function () {
+    return view('homeCompany');
+  }) ;
+
+});
 
 
 // Grup Route untuk Admin

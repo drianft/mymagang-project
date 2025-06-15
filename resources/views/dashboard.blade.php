@@ -368,7 +368,7 @@
 @elseif($user->roles == 'hr')
     @include('hr.dashboard')
 @elseif($user->roles == 'company')
-    @include('company.dashboard')
+    @include('homeCompany')
 @endif
 
 </x-app-layout>

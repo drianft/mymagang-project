@@ -44,9 +44,11 @@
                 {{ $slot }}
             </main>
 
-            @if(!request()->routeIs('profile.show') || $user->roles != 'admin')
+            @if(!(auth()->check() && auth()->user()->roles == 'admin') && !request()->routeIs('profile.show'))
                 @include('components.footer')
             @endif
+
+
         </div>
 
         @stack('modals')

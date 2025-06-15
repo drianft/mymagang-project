@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,14 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-  Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard');
+    // Routing dashboard yang ngecek role
+    Route::get('/dashboard', [DashboardController::class, 'dashboardRedirect'])->name('dashboard');
+
+    // Routing dashboard user biasa
+    Route::get('/dashboard/user', [DashboardController::class, 'showDashboard'])->name('dashboard.user');
+
+    // Routing dashboard admin
+    Route::get('/admin/dashboard', [DashboardController::class, 'showAdminDashboard'])->name('admin.dashboard');
 });
 
 Route::get('/warnguest/{page}', [PageController::class, 'guestWarning'])->name('warnguest');
@@ -49,5 +57,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/companies', [AdminController::class, 'showCompanies'])->name('companies');
 
     // Data Pelamar
-    // Route::get('/application', [AdminController::class, 'showApplicant'])->name('application');
+    Route::get('/application', [AdminController::class, 'showApplicant'])->name('application');
 });

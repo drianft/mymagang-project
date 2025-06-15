@@ -62,7 +62,7 @@
                     Companies
                 </a>
 
-                <a href="#"
+                <a href="{{ route('admin.application') }}"
                    class="flex items-center px-4 py-3 text-base font-medium rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
                     <img src="{{ asset('images/application.png') }}" alt="Application Icon" class="h-6 w-6 mr-4">
                     Application

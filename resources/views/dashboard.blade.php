@@ -264,46 +264,55 @@
 
   </div>
 
-@elseif($user->roles == 'admin')
-        {{-- Konten Utama --}}
+{{-- Cek jika user adalah admin --}}
+@elseif(auth()->user()->roles == 'admin')
+
+{{-- Konten Utama --}}
 <main class="flex-1 p-8">
+
     {{-- Header --}}
     <h1 class="text-4xl font-bold mb-8">Welcome to the Dashboard</h1>
 
     {{-- Statistik Cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+
         <div class="bg-white p-6 rounded-lg shadow flex items-center">
             <img src="{{ asset('images/JOB.svg') }}" alt="" class="w-12 h-12 bg-green-400 rounded-full p-2">
             <div class="ml-5">
                 <h2 class="text-xl font-semibold">Job Posting</h2>
-                {{-- <p>{{ $postCount }}</p> --}}
+                <p>{{ $postCount }}</p>
             </div>
         </div>
+
         <div class="bg-white p-6 rounded-lg shadow flex items-center">
             <img src="{{ asset('images/account.svg') }}" alt="" class="w-12 h-12 bg-orange-200 rounded-full p-2">
             <div class="ml-5">
                 <h2 class="text-xl font-semibold">Account</h2>
-                {{-- <p>{{ $userCount }}</p> --}}
+                <p>{{ $userCount }}</p>
             </div>
         </div>
+
         <div class="bg-white p-6 rounded-lg shadow flex items-center">
             <img src="{{ asset('images/company.svg') }}" alt="" class="w-12 h-12 bg-blue-400 rounded-full p-2">
             <div class="ml-5">
                 <h2 class="text-xl font-semibold">Company</h2>
-                {{-- <p>{{ $companyCount }}</p> --}}
+                <p>{{ $companyCount }}</p>
             </div>
         </div>
+
         <div class="bg-white p-6 rounded-lg shadow flex items-center">
             <img src="{{ asset('images/applicant.svg') }}" alt="" class="w-12 h-12 bg-red-400 rounded-full p-2">
             <div class="ml-5">
                 <h2 class="text-xl font-semibold">Applicant</h2>
-                {{-- <p>{{ $applicationCount }}</p> --}}
+                <p>{{ $applicationCount }}</p>
             </div>
         </div>
+
     </div>
 
     {{-- Daftar Akun dan Recent Post --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
         {{-- Account List --}}
         <div class="bg-white rounded-lg shadow overflow-y-auto max-h-[500px]">
             <div class="sticky top-0 bg-white z-10 py-4 px-6 border-b">
@@ -321,19 +330,19 @@
                     </tr>
                 </thead>
                 <tbody class="text-base">
-                    {{-- @foreach($users as $user)
+                    @foreach($users as $account)
                     <tr class="border-b">
-                        <td class="px-6 py-4">{{ $user->name }}</td>
-                        <td class="px-6 py-4">{{ $user->email }}</td>
-                        <td class="px-6 py-4">{{ $user->roles }}</td>
-                        <td class="px-6 py-4">{{ $user->created_at->format('d-m-Y') }}</td>
+                        <td class="px-6 py-4">{{ $account->name }}</td>
+                        <td class="px-6 py-4">{{ $account->email }}</td>
+                        <td class="px-6 py-4">{{ $account->roles }}</td>
+                        <td class="px-6 py-4">{{ $account->created_at->format('d-m-Y') }}</td>
                         <td class="px-6 py-4">
-                            <span class="{{ $user->status === 'active' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }} text-sm px-3 py-1 rounded-full">
-                                {{ ucfirst($user->status) }}
+                            <span class="{{ $account->status === 'active' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }} text-sm px-3 py-1 rounded-full">
+                                {{ ucfirst($account->status) }}
                             </span>
                         </td>
                     </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -344,8 +353,8 @@
                 <h2 class="text-2xl font-semibold">Recent Post</h2>
             </div>
 
-            {{-- @foreach($posts as $post) --}}
-            {{-- <div class="bg-[#e4e7ec] rounded-[25px] flex items-center px-6 py-4 mt-5">
+            @foreach($posts as $post)
+            <div class="bg-[#e4e7ec] rounded-[25px] flex items-center px-6 py-4 mt-5">
                 <div class="w-20 h-20 bg-white rounded-md mr-6 shrink-0"></div>
                 <div class="flex-1">
                     <h3 class="text-xl font-semibold text-gray-800">{{ $post->job_title }}</h3>
@@ -358,11 +367,14 @@
                         <div>🔍 4200 Views</div>
                     </div>
                 </div>
-            </div> --}}
-            {{-- @endforeach --}}
+            </div>
+            @endforeach
         </div>
+
     </div>
+
 </main>
+
 
 
 @elseif($user->roles == 'hr')

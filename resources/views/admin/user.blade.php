@@ -65,6 +65,8 @@
                                 <option disabled selected value>-- Pilih Role --</option>
                                 <option value="applier" {{ $user->roles === 'applier' ? 'selected' : '' }}>Applier</option>
                                 <option value="hr" {{ $user->roles === 'hr' ? 'selected' : '' }}>HR</option>
+                                <option value="admin" {{ $user->roles === 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="superadmin" {{ $user->roles === 'company' ? 'selected' : '' }}>Company</option>
                             </select>
                         </form>
                      </td>

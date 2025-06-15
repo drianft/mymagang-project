@@ -1,9 +1,9 @@
 <footer class="relative bg-cover bg-center bg-no-repeat text-white mt-7" style="background-image: url('/images/footerback.png');">
 <div class="absolute inset-0"></div>
-<div class="relative z-10 max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-6">  
+<div class="relative z-10 max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-6">
     <!-- Kiri: Logo dan Sosial Media -->
     <div>
-    <img src="{{ asset('images/icon.png') }}" alt="MyMagang" class="w-32 h-auto mb-6">
+    <img src="{{ asset('images/iconfooter.png') }}" alt="MyMagang" class="w-30 h-20 mb-6">
 
     <div class="flex space-x-4">
         <a href="#"><i class="fab fa-facebook text-xl hover:text-blue-500 transition"></i></a>

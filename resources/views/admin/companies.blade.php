@@ -19,7 +19,7 @@
               </div>
         <!-- searching companies -->
         <main class="flex-1 p-6  bg-[#E8EBEE] overflow-y-auto">
-             <div class="mt-4 p-6  rounded-lg shadow-md bg-[#E8EBEE]">
+             <div class="px-6 pb-6  rounded-lg shadow-md bg-[#E8EBEE]">
                  <!-- Search + Filter Form -->
                   <div class="flex justify-start mt-6 mb-4">
                      <form method="GET" action="{{ route('admin.companies') }}">
@@ -49,11 +49,10 @@
     </form>
 </div>
 
-<div class="p-6 bg-white rounded-xl shadow max-h-[500px] overflow-y-auto">
+<div class="px-6 pb-6 bg-white rounded-xl shadow max-h-[500px] overflow-y-auto overflow-x-auto">
     <!-- Tabel -->
-    <div class="overflow-x-auto">
     <table class="min-w-full text-sm text-left text-gray-700">
-        <thead class="border-b border-gray-300 text-gray-500 bg-gray-100">
+        <thead class="sticky top-0 z-10 bg-white h-20 text-gray-500">
             <tr>
                 <th class="px-4 py-2">No</th>
                 <th class="px-4 py-2">Name</th>
@@ -66,19 +65,15 @@
             @foreach ($companies as $index => $company)
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                     <td class="px-4 py-2">{{ $index + 1 }}</td>
-                    <td class="px-4 py-2">{{ $company->company_name }}</td>
-                    <td class="px-4 py-2">{{ $company->company_email }}</td>
-                    <td class="px-4 py-2">{{ $company->industry }}</td>
-                    <td class="px-4 py-2">{{ $company->company_address }}</td> {{-- Ganti ini kalau status bukan email --}}
+                    <td class="px-4 py-2">{{ $company->user ? $company->user->name : 'Unknown'}}</td>
+                    <td class="px-4 py-2">{{ $company->user ? $company->user->email : 'Unknown'}}</td>
+                    <td class="px-4 py-2">{{ ucfirst($company->industry) }}</td>
+                    <td class="px-4 py-2">{{ $company->user ? $company->user->address : 'Unknown'}}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </div>
-
-</div>
-
-
 
 
         </main>

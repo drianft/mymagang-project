@@ -23,7 +23,7 @@
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
                         @auth
-                            <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Home</a>
+                            <a href="{{ route('dashboard.user') }}" class="{{ request()->routeIs('dashboard.user') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Home</a>
                             <a href="{{ route('jobs') }}" class="{{ request()->routeIs('jobs') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Jobs</a>
                             <a href="{{ route('companies') }}" class="{{ request()->routeIs('companies') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Company</a>
                             <a href="{{ route('application') }}" class="{{ request()->routeIs('application') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}" aria-current="page">Applications</a>
@@ -98,10 +98,10 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="sm:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pt-2 pb-3">
-            <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm'}}" aria-current="page">Home</a>
-            <a href="jobs.html" class="block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm">Jobs</a>
-            <a href="company.html" class="block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm">Company</a>
-            <a href="application.html" class="block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm">Applications</a>
+            <a href="{{ route('dashboard.user') }}" class="{{ request()->routeIs('dashboard.user') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm'}}" aria-current="page">Home</a>
+            <a href="{{ route('jobs') }}" class="{{ request()->routeIs('jobs') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm'}}" aria-current="page">Jobs</a>
+            <a href="{{ route('companies') }}" class="{{ request()->routeIs('companies') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm'}}" aria-current="page">Company</a>
+            <a href="{{ route('application') }}" class="{{ request()->routeIs('application') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm'}}" aria-current="page">Applications</a>
         </div>
     </div>
 </nav>

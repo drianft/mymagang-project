@@ -6,6 +6,7 @@ use App\Http\Controllers\JobsController;
 use App\Http\Controllers\HRHomeController;
 use App\Http\Controllers\HRDashboardController;
 use App\Http\Controllers\HRPostController;
+use App\Http\Controllers\JobController;
 
 
 
@@ -17,24 +18,24 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    ])->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
-    });
-    
-    Route::get('/warnguest/{page}', function ($page) {
-        return view('guestwarning', ['page' => $page]);
-    })->name('warnguest');
-    
-    Route::get('/applicants', function () {
-        return view('applicants');
-    })->name('applicants');
-    
-    Route::get('/company', [CompanyController::class, 'index'])->name('company');
-    Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
-    Route::get('/jobs/search', [JobsController::class, 'search'])->name('jobs.search');
-    Route::get('/hr-home', [HRHomeController::class, 'index'])->name('hr-home');
-    Route::get('/hr-dashboard', [HRDashboardController::class, 'index'])->name('hr-dashboard');
-    Route::get('/hr-posts', [HRPostController::class, 'index'])->name('hr-posts');
-    
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+Route::get('/warnguest/{page}', function ($page) {
+    return view('guestwarning', ['page' => $page]);
+})->name('warnguest');
+
+Route::get('/applicants', function () {
+    return view('applicants');
+})->name('applicants');
+
+Route::get('/company', [CompanyController::class, 'index'])->name('company');
+Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
+Route::get('/jobs/search', [JobsController::class, 'search'])->name('jobs.search');
+Route::get('/hr-home', [HRHomeController::class, 'index'])->name('hr-home');
+Route::get('/hr-dashboard', [HRDashboardController::class, 'index'])->name('hr-dashboard');
+Route::get('/hr-posts', [HRPostController::class, 'index'])->name('hr-posts');
+Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('jobs.destroy');

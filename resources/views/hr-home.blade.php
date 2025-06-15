@@ -2,7 +2,7 @@
     @push('styles')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     @endpush
-    
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Job Dashboard') }}
@@ -31,7 +31,8 @@
                     <ul class="space-y-4 text-sm">
                         <li class="flex items-center justify-between p-3 rounded-md ">
                             <div class="flex items-center gap-3">
-                                <div class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
+                                <div
+                                    class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
                                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
                                         alt="Pace Innocentius" class="w-full h-full object-cover">
                                 </div>
@@ -40,12 +41,14 @@
                                     <p class="text-xs text-gray-500 truncate">Full-Stack Web Developer - Laravel</p>
                                 </div>
                             </div>
-                            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded flex-shrink-0">PENDING</span>
+                            <span
+                                class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded flex-shrink-0">PENDING</span>
                         </li>
 
                         <li class="flex items-center justify-between  p-3 rounded-md shadow-sm hover:shadow transition">
                             <div class="flex items-center gap-3">
-                                <div class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
+                                <div
+                                    class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
                                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
                                         alt="Idnaw Ifoor" class="w-full h-full object-cover">
                                 </div>
@@ -54,12 +57,14 @@
                                     <p class="text-xs text-gray-500 truncate">Frontend Developer</p>
                                 </div>
                             </div>
-                            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded flex-shrink-0">PENDING</span>
+                            <span
+                                class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded flex-shrink-0">PENDING</span>
                         </li>
 
                         <li class="flex items-center justify-between  p-3 rounded-md shadow-sm hover:shadow transition">
                             <div class="flex items-center gap-3">
-                                <div class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
+                                <div
+                                    class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
                                     <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face"
                                         alt="Mbappe" class="w-full h-full object-cover">
                                 </div>
@@ -68,12 +73,14 @@
                                     <p class="text-xs text-gray-500 truncate">Marketing Assistant</p>
                                 </div>
                             </div>
-                            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded flex-shrink-0">PENDING</span>
+                            <span
+                                class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded flex-shrink-0">PENDING</span>
                         </li>
 
                         <li class="flex items-center justify-between  p-3 rounded-md shadow-sm hover:shadow transition">
                             <div class="flex items-center gap-3">
-                                <div class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
+                                <div
+                                    class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
                                     <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=100&h=100&fit=crop&crop=face"
                                         alt="Steven Grant" class="w-full h-full object-cover">
                                 </div>
@@ -82,14 +89,15 @@
                                     <p class="text-xs text-gray-500 truncate">Social Media Specialist</p>
                                 </div>
                             </div>
-                            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded flex-shrink-0">PENDING</span>
+                            <span
+                                class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded flex-shrink-0">PENDING</span>
                         </li>
                     </ul>
                     <div class="flex justify-center mt-8">
-                        <button type="submit" 
-                                class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-200">
+                        <a href="hr-dashboard"
+                            class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-200">
                             Go to Dashboard
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -153,7 +161,8 @@
                                     alt="UI/UX Designer" class="w-full h-full object-cover">
                             </div>
                             <p class="font-semibold">UI/UX Designer</p>
-                            <span class="bg-indigo-500 text-indigo-800 text-xs px-2 py-1 rounded inline-block mt-1">Freelance</span>
+                            <span
+                                class="bg-indigo-500 text-indigo-800 text-xs px-2 py-1 rounded inline-block mt-1">Freelance</span>
                             <div class="text-xs text-gray-500 mt-2 flex gap-5">
                                 <span>👥 156 Applicants</span>
                                 <span>👁️ 2100 Views</span>
@@ -246,191 +255,6 @@
                     </div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
-                </div>
-            </div>
-
-            <!-- Improved Recent Applications Section -->
-            <div class="px-6 mt-10">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800">Recent Applications</h2>
-                    <a href="hr-dashboard" class="flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">
-                        View All Applications
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                    <!-- Table-like header -->
-                    <div class="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        <div class="col-span-4">Candidate</div>
-                        <div class="col-span-3">Position</div>
-                        <div class="col-span-2">Applied Date</div>
-                        <div class="col-span-2">Status</div>
-                        <div class="col-span-1 text-right">Actions</div>
-                    </div>
-
-                    <!-- Application Items -->
-                    <div class="divide-y divide-gray-200">
-                        <!-- Application 1 -->
-                        <div class="grid grid-cols-12 gap-4 items-center p-4 hover:bg-gray-50 transition-colors">
-                            <div class="col-span-4 flex items-center space-x-4">
-                                <div class="relative flex-shrink-0">
-                                    <img class="h-10 w-10 rounded-full object-cover border-2 border-white shadow-sm" 
-                                         src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" 
-                                         alt="Sarah Johnson">
-                                    <span class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white"></span>
-                                </div>
-                                <div>
-                                    <p class="font-medium text-gray-900">Sarah Johnson</p>
-                                    <p class="text-sm text-gray-500">sarah@example.com</p>
-                                </div>
-                            </div>
-                            <div class="col-span-3">
-                                <p class="text-gray-900 font-medium">Frontend Developer</p>
-                                <p class="text-sm text-gray-500">Engineering</p>
-                            </div>
-                            <div class="col-span-2">
-                                <p class="text-gray-900">2 hours ago</p>
-                                <p class="text-xs text-gray-500">Jun 12, 2023</p>
-                            </div>
-                            <div class="col-span-2">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    New Application
-                                </span>
-                            </div>
-                            <div class="col-span-1 flex justify-end">
-                                <button class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Application 2 -->
-                        <div class="grid grid-cols-12 gap-4 items-center p-4 hover:bg-gray-50 transition-colors">
-                            <div class="col-span-4 flex items-center space-x-4">
-                                <div class="relative flex-shrink-0">
-                                    <img class="h-10 w-10 rounded-full object-cover border-2 border-white shadow-sm" 
-                                         src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" 
-                                         alt="Michael Chen">
-                                    <span class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white"></span>
-                                </div>
-                                <div>
-                                    <p class="font-medium text-gray-900">Michael Chen</p>
-                                    <p class="text-sm text-gray-500">michael@example.com</p>
-                                </div>
-                            </div>
-                            <div class="col-span-3">
-                                <p class="text-gray-900 font-medium">Backend Developer</p>
-                                <p class="text-sm text-gray-500">Engineering</p>
-                            </div>
-                            <div class="col-span-2">
-                                <p class="text-gray-900">5 hours ago</p>
-                                <p class="text-xs text-gray-500">Jun 12, 2023</p>
-                            </div>
-                            <div class="col-span-2">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                    In Review
-                                </span>
-                            </div>
-                            <div class="col-span-1 flex justify-end">
-                                <button class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Application 3 -->
-                        <div class="grid grid-cols-12 gap-4 items-center p-4 hover:bg-gray-50 transition-colors">
-                            <div class="col-span-4 flex items-center space-x-4">
-                                <div class="relative flex-shrink-0">
-                                    <img class="h-10 w-10 rounded-full object-cover border-2 border-white shadow-sm" 
-                                         src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" 
-                                         alt="Emily Davis">
-                                    <span class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white"></span>
-                                </div>
-                                <div>
-                                    <p class="font-medium text-gray-900">Emily Davis</p>
-                                    <p class="text-sm text-gray-500">emily@example.com</p>
-                                </div>
-                            </div>
-                            <div class="col-span-3">
-                                <p class="text-gray-900 font-medium">UI/UX Designer</p>
-                                <p class="text-sm text-gray-500">Design</p>
-                            </div>
-                            <div class="col-span-2">
-                                <p class="text-gray-900">1 day ago</p>
-                                <p class="text-xs text-gray-500">Jun 11, 2023</p>
-                            </div>
-                            <div class="col-span-2">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    Shortlisted
-                                </span>
-                            </div>
-                            <div class="col-span-1 flex justify-end">
-                                <button class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Application 4 -->
-                        <div class="grid grid-cols-12 gap-4 items-center p-4 hover:bg-gray-50 transition-colors">
-                            <div class="col-span-4 flex items-center space-x-4">
-                                <div class="relative flex-shrink-0">
-                                    <img class="h-10 w-10 rounded-full object-cover border-2 border-white shadow-sm" 
-                                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" 
-                                         alt="David Wilson">
-                                    <span class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-gray-300 ring-2 ring-white"></span>
-                                </div>
-                                <div>
-                                    <p class="font-medium text-gray-900">David Wilson</p>
-                                    <p class="text-sm text-gray-500">david@example.com</p>
-                                </div>
-                            </div>
-                            <div class="col-span-3">
-                                <p class="text-gray-900 font-medium">Marketing Manager</p>
-                                <p class="text-sm text-gray-500">Marketing</p>
-                            </div>
-                            <div class="col-span-2">
-                                <p class="text-gray-900">2 days ago</p>
-                                <p class="text-xs text-gray-500">Jun 10, 2023</p>
-                            </div>
-                            <div class="col-span-2">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                    Rejected
-                                </span>
-                            </div>
-                            <div class="col-span-1 flex justify-end">
-                                <button class="text-blue-600 hover:text-blue-900 p-1 rounded-full hover:bg-blue-50 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- View All Button (Mobile) -->
-                    <div class="px-4 py-3 bg-gray-50 text-center sm:hidden border-t border-gray-200">
-                        <a href="hr-dashboard" class="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800">
-                            View All Applications
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>

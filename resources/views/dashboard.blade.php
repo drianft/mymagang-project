@@ -17,7 +17,7 @@
                 <a href="{{ route('warnguest', ['page' => 'explore']) }}" class="inline-block border border-gray-700 px-4 py-2 rounded-md hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm hover:border-2">EXPLORE NOW</a>
                 @endguest
             </div>
-            <img src="images/hrwoman.png" alt="HR Woman" class="max-h-[380px] hidden md:block object-cover mr-6 mt-6">
+            <img src="{{ asset('images/hrwoman.png') }}" alt="HR Woman" class="max-h-[380px] hidden md:block object-cover mr-6 mt-6">
         </div>
 
         @auth
@@ -317,10 +317,10 @@
         <div class="bg-white rounded-lg shadow overflow-y-auto max-h-[500px]">
             <div class="sticky top-0 bg-white z-10 py-4 px-6 border-b">
                 <h2 class="text-2xl font-semibold">Account List</h2>
-                <a href="#" class="text-blue-500 text-sm">view more..</a>
+                <a href="#" class="text-blue-500 text-sm">View More..</a>
             </div>
-            <table class="min-w-full text-left table-auto">
-                <thead class="bg-gray-100 text-gray-700 text-sm uppercase">
+            <table class="min-w-full bg-white text-left table-auto">
+                <thead class="sticky top-[90px] bg-white text-gray-700 text-sm uppercase">
                     <tr>
                         <th class="px-6 py-3">Name</th>
                         <th class="px-6 py-3">Email</th>
@@ -334,7 +334,7 @@
                     <tr class="border-b">
                         <td class="px-6 py-4">{{ $account->name }}</td>
                         <td class="px-6 py-4">{{ $account->email }}</td>
-                        <td class="px-6 py-4">{{ $account->roles }}</td>
+                        <td class="px-6 py-4">{{ ucfirst($account->roles) }}</td>
                         <td class="px-6 py-4">{{ $account->created_at->format('d-m-Y') }}</td>
                         <td class="px-6 py-4">
                             <span class="{{ $account->status === 'active' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }} text-sm px-3 py-1 rounded-full">
@@ -348,23 +348,23 @@
         </div>
 
         {{-- Recent Posts --}}
-        <div class="bg-white rounded-lg shadow p-6 max-h-[500px] overflow-y-auto">
-            <div class="sticky top-0 bg-white z-10 pb-4">
+        <div class="bg-white rounded-lg shadow px-6 max-h-[500px] overflow-y-auto">
+            <div class="sticky top-0 bg-white z-10 w-full h-20 pb-4 pt-6 border-b border-black-100">
                 <h2 class="text-2xl font-semibold">Recent Post</h2>
             </div>
 
             @foreach($posts as $post)
             <div class="bg-[#e4e7ec] rounded-[25px] flex items-center px-6 py-4 mt-5">
-                <div class="w-20 h-20 bg-white rounded-md mr-6 shrink-0"></div>
+                <img src="{{ $post->image_post_url != null ? asset('storage/job-images/' . $post->image) : asset('images/post_img_null.jpg') }}" class="w-50 h-20 rounded-md mr-6 shrink-0"></img>
                 <div class="flex-1">
-                    <h3 class="text-xl font-semibold text-gray-800">{{ $post->job_title }}</h3>
-                    <span class="text-sm px-3 py-1 rounded-full
-                        {{ $post->working_hour === 'Full Time' ? 'bg-green-200 text-green-800' : 'bg-orange-200 text-orange-800' }}">
-                        {{ $post->working_hour }}
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ $post->job_title }}</h3>
+                    <span class="text-sm px-3 py-1 rounded-md
+                        {{ $post->job_type === 'full-time' ? 'bg-green-200 text-green-800' : 'bg-orange-200 text-orange-800' }}">
+                        {{ ucfirst($post->job_type) }}
                     </span>
                     <div class="mt-3 text-sm text-gray-600 flex gap-6">
-                        <div>👥 420 Applicants</div>
-                        <div>🔍 4200 Views</div>
+                        <div>👥 {{ $post->total_appliers }} Appliers</div>
+                        <div>🔍 {{ $post->total_views }} Views</div>
                     </div>
                 </div>
             </div>

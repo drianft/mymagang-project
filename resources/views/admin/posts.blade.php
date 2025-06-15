@@ -35,26 +35,55 @@
         </div>
 
         <!-- Tabel -->
-        <div class="p-6 bg-white rounded-xl shadow max-h-[500px] overflow-y-auto">
-            <table class="min-w-full text-sm text-left text-gray-700">
-                <thead class="border-b border-gray-300 text-gray-500">
-                    <tr>
+        <div class="relative px-6 pb-6 bg-white rounded-xl shadow max-h-[500px] overflow-y-auto overflow-x-auto">
+            <table class="table-fixed min-w-full text-sm text-left text-gray-700">
+                <thead class="sticky top-0 z-10 h-20 bg-white border-b border-gray-300 text-gray-500">
+                    <tr class="bg-white w-full">
                         <th class="px-4 py-2">Title</th>
+                        <th class="px-4 py-2">Image Post</th>
                         <th class="px-4 py-2">Salary</th>
-                        <th class="px-4 py-2">Type</th>
+                        <th class="px-4 py-2">Working Hour</th>
+                        <th class="px-4 py-2">HR Name</th>
                         <th class="px-4 py-2">Companies</th>
+                        <th class="px-4 py-2">Job Type</th>
+                        <th class="px-4 py-2">Status</th>
                         <th class="px-4 py-2">Action</th>
-                        {{-- <th class="px-4 py-2">Date</th> --}}
                     </tr>
                 </thead>
+
                 <tbody>
                     @foreach ($posts as $post)
                     <tr class="border-b border-gray-200 hover:bg-gray-50">
-                        <td class="px-4 py-2">{{ $post->job_title }}</td>
-                        <td class="px-4 py-2">{{ Str::limit($post->salary, 50) }}</td>
-                        <td class="px-4 py-2">{{ $post->working_hour }}</td>
-                        <td class="px-4 py-2">{{ $post->company->company_name }}</td>
-                        <td class="px-4 py-2">
+                        <td class="w-60 px-4 py-2">{{ $post->job_title }}</td>
+                        <td class="w-60 px-4 py-2">
+                            <a href="{{ $post->image != null ? asset('storage/job-images/' . $post->image) : asset('images/post_img_null.jpg') }}" target="_blank">
+                                @if ($post->image != null)
+                                     <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="w-32 h-20 object-cover rounded shadow">
+                                @else
+                                     <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="w-32 h-20 object-cover rounded shadow">
+                                @endif
+                            </a>
+                        </td>
+                        <td class="w-40 px-4 py-2">Rp{{ number_format($post->salary, 2, ',', '.') }}</td>
+                        <td class="w-40 px-4 py-2">{{ $post->working_hour }}</td>
+                        <td class="w-60 px-4 py-2">{{ $post->hr && $post->hr->user ? $post->hr->user->name : 'Unknown' }}</td>
+                        <td class="w-60 px-4 py-2">{{ $post->company && $post->company->user ? $post->company->user->name : 'Unknown' }}</td>
+                        <td class="w-40 px-4 py-2">
+                            <span class="px-2 py-1 text-xs font-medium rounded
+                            @if($post->job_type == 'freelance') bg-gray-100 text-gray-800
+                            @elseif($post->job_type == 'part-time') bg-orange-100 text-orange-800
+                            @else bg-green-100 text-green-800 @endif">
+                            {{ ucfirst($post->job_type) }}
+                            </span>
+                        <td class="w-40 px-4 py-2">
+                            <span class="px-2 py-1 text-xs font-medium rounded
+                            @if($post->status == 'draft') bg-yellow-100 text-yellow-800
+                            @elseif($post->status == 'closed') bg-red-100 text-red-800
+                            @else bg-green-100 text-green-800 @endif">
+                            {{ ucfirst($post->status) }}
+                            </span>
+                        </td>
+                        <td class="w-20 px-4 py-2">
                             <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus post ini?')">
                                 @csrf
                                 @method('DELETE')

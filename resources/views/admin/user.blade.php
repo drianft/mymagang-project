@@ -37,17 +37,17 @@
         </form>
     </div>
 
-<div class="p-6 bg-white rounded-xl shadow max-h-[500px] overflow-y-auto">
-    <!-- Tabel -->
-    <div class="overflow-x-auto">
+    <div class="p-6 bg-white rounded-xl shadow">
+        <!-- Scroll container langsung di sini -->
+        <div class="overflow-y-auto overflow-x-auto max-h-[500px]">
         <table class="min-w-full text-sm text-left text-gray-700">
-            <thead class="border-b border-gray-300 text-gray-500">
+            <thead class="sticky top-0 z-10 bg-white border-b border-gray-300 text-gray-500">
                 <tr>
                     <th class="px-4 py-2">Name</th>
                     <th class="px-4 py-2">Email</th>
-                    <th class="px-4 py-2">Role</th>
+                    <th class="pl-20 pr-4 py-2">Role</th>
                     <th class="px-4 py-2">Joining Date</th>
-                    <th class="px-4 py-2">Status</th>
+                    <th class="pl-8 pr-4 py-2">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,7 +56,6 @@
                     <td class="px-4 py-2">{{ $user->name }}</td>
                     <td class="px-4 py-2">{{ $user->email }}</td>
 
-                    <!-- <td class="px-4 py-2">{{ ucfirst($user->role) }}</td> -->
                      <td class="px-4 py-2">
                       <form method="POST" action="{{ route('admin.users.updateRole', $user->id) }}">
                         @csrf
@@ -66,7 +65,7 @@
                                 <option value="applier" {{ $user->roles === 'applier' ? 'selected' : '' }}>Applier</option>
                                 <option value="hr" {{ $user->roles === 'hr' ? 'selected' : '' }}>HR</option>
                                 <option value="admin" {{ $user->roles === 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="superadmin" {{ $user->roles === 'company' ? 'selected' : '' }}>Company</option>
+                                <option value="company" {{ $user->roles === 'company' ? 'selected' : '' }}>Company</option>
                             </select>
                         </form>
                      </td>
@@ -75,12 +74,11 @@
                     <td class="px-4 py-2">{{ \Carbon\Carbon::parse($user->created_at)->format('F d, Y') }}</td>
 
 
-                    <!-- <td class="px-4 py-2 capitalize">{{ $user->status }}</td> -->
                              <td class="px-4 py-2">
                            <form method="POST" action="{{ route('admin.users.updateStatus', $user->id) }}">
                                 @csrf
                                @method('PUT')
-                       <select name="status" onchange="this.form.submit()" class="px-2 py-1 bg-white rounded-sm text-sm focus:outline-none hover:bg-gray-50">
+                       <select name="status" onchange="this.form.submit()" class="w-20 px-2 py-1 bg-white rounded-sm text-sm focus:outline-none hover:bg-gray-50">
                      <option value="active" {{ $user->status === 'active' ? 'selected' : '' }}>Active</option>
                    <option value="inactive" {{ $user->status === 'inactive' ? 'selected' : '' }}>Inactive</option>
                </select>
@@ -91,7 +89,6 @@
           </tbody>
        </table>
     </div>
-</div>
 
 
 

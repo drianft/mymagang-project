@@ -59,3 +59,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Data Pelamar
     Route::get('/application', [AdminController::class, 'showApplicant'])->name('application');
 });
+
+//dashboard company
+Route::get('/company-dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('dashboard.company');
+Route::get('/companyjobs', [PageController::class, 'showJobs'])->name('companyjobs');
+Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name('company-admins.store');
+// Route::get('/companyjobs/{id}', [PageController::class, 'showJobDetail'])->name('companyjobs.show');

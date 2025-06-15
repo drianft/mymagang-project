@@ -4,7 +4,7 @@
     <!-- Promo Box -->
     <div class="w-full max-w-6xl bg-gray-200 rounded-xl flex items-center justify-between mx-auto">
       <div class="ml-6 mb-8">
-        <img src="images/logoCompany.png" onerror="this.onerror=null; this.src='images/logoCompany.jpg';" class="max-h-[380px] hidden md:block object-cover mr-6 mt-6 rounded-xl">
+        <img src="{{ asset('images/logoCompany.jpg') }}" class="max-h-[380px] hidden md:block object-cover mr-6 mt-6 rounded-xl">
       </div>
       <div class="flex-1">
         <h1 class="text-5xl font-semibold mb-2">Apple Inc.</h1>

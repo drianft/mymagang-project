@@ -38,7 +38,7 @@
             @elseif($user && $user->roles == 'admin')
                 @include('components.admin-sidebar')
             @elseif($user && $user->roles == 'company')
-                @include('components.navbar')
+                @include('components.navbarCompany')
             @endif
 
             <!-- Page Content -->

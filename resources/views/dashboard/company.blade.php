@@ -8,174 +8,146 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             <!-- Admin Management Section -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <div class="bg-gray-100 rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-300 pb-3">
-                            Company's Hrs
-                        </h3>
+<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+    <div class="p-6 text-gray-900">
+        <div class="bg-gray-100 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-300 pb-3">
+                Company's Hrs
+            </h3>
 
-                        <!-- Admin Table Header -->
-                        <div class="grid grid-cols-12 gap-4 mb-3 px-4 py-2 bg-gray-200 rounded-lg font-medium">
-                            <div class="col-span-1 text-center">No.</div>
-                            <div class="col-span-3">Name</div>
-                            <div class="col-span-3">Email</div>
-                            <div class="col-span-2">Position</div>
-                            <div class="col-span-2 text-center">Status</div>
-                            <div class="col-span-1 text-center">Action</div>
-                        </div>
+            <!-- Admin Table Header -->
+            <div class="grid grid-cols-12 gap-4 mb-3 px-4 py-2 bg-gray-200 rounded-lg font-medium">
+                <div class="col-span-1 text-center">No.</div>
+                <div class="col-span-3">Name</div>
+                <div class="col-span-4">Email</div>
+                <div class="col-span-3">Position</div>
+                <div class="col-span-1 text-center">Action</div>
+            </div>
 
-                        <div class="space-y-3">
-                            <!-- Admin 1 -->
-                            <div class="grid grid-cols-12 gap-4 items-center bg-white p-4 rounded-lg border border-gray-200">
-                                <div class="col-span-1 text-center text-gray-600 font-medium">1.</div>
-                                <div class="col-span-3 font-semibold text-gray-800">Andrian James Nandana Siregar</div>
-                                <div class="col-span-3 text-gray-600">
-                                    <a href="mailto:drian88@gmail.com" class="text-blue-600 hover:text-blue-800 hover:underline">
-                                        drian88@gmail.com
-                                    </a>
-                                </div>
-                                <div class="col-span-2 text-gray-600">Chief Technology Officer</div>
-                                <div class="col-span-2 text-center">
-                                    <select onchange="updateStatus(1, this)"
-                                        class="status-select bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium focus:outline-none focus:ring-2 focus:ring-green-500">
-                                        <option value="active" selected>Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-                                <div class="col-span-1 text-center">
-                                    <button type="button"
-                                        class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 transition-colors duration-200"
-                                        onclick="removeAdmin(1)">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
+            <div class="space-y-3">
+                <!-- Admin 1 -->
+                <div class="grid grid-cols-12 gap-4 items-center bg-white p-4 rounded-lg border border-gray-200">
+                    <div class="col-span-1 text-center text-gray-600 font-medium">1.</div>
+                    <div class="col-span-3 font-semibold text-gray-800">Andrian James Nandana Siregar</div>
+                    <div class="col-span-4 text-gray-600">
+                        <a href="mailto:drian88@gmail.com" class="text-blue-600 hover:text-blue-800 hover:underline">
+                            drian88@gmail.com
+                        </a>
+                    </div>
+                    <div class="col-span-3">
+                        <input type="text" value="Chief Technology Officer" 
+                            class="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <button type="button"
+                            class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 transition-colors duration-200"
+                            onclick="removeAdmin(1)">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
-                            <!-- Admin 2 -->
-                            <div class="grid grid-cols-12 gap-4 items-center bg-white p-4 rounded-lg border border-gray-200">
-                                <div class="col-span-1 text-center text-gray-600 font-medium">2.</div>
-                                <div class="col-span-3 font-semibold text-gray-800">David Wijaya Sibarani</div>
-                                <div class="col-span-3 text-gray-600">
-                                    <a href="mailto:kairidiabet@gmail.com" class="text-blue-600 hover:text-blue-800 hover:underline">
-                                        kairidiabet@gmail.com
-                                    </a>
-                                </div>
-                                <div class="col-span-2 text-gray-600">Product Manager</div>
-                                <div class="col-span-2 text-center">
-                                    <select onchange="updateStatus(2, this)"
-                                        class="status-select bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                                        <option value="active">Active</option>
-                                        <option value="inactive" selected>Inactive</option>
-                                    </select>
-                                </div>
-                                <div class="col-span-1 text-center">
-                                    <button type="button"
-                                        class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 transition-colors duration-200"
-                                        onclick="removeAdmin(2)">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
+                <!-- Admin 2 -->
+                <div class="grid grid-cols-12 gap-4 items-center bg-white p-4 rounded-lg border border-gray-200">
+                    <div class="col-span-1 text-center text-gray-600 font-medium">2.</div>
+                    <div class="col-span-3 font-semibold text-gray-800">David Wijaya Sibarani</div>
+                    <div class="col-span-4 text-gray-600">
+                        <a href="mailto:kairidiabet@gmail.com" class="text-blue-600 hover:text-blue-800 hover:underline">
+                            kairidiabet@gmail.com
+                        </a>
+                    </div>
+                    <div class="col-span-3">
+                        <input type="text" value="Product Manager" 
+                            class="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="col-span-1 text-center">
+                        <button type="button"
+                            class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 transition-colors duration-200"
+                            onclick="removeAdmin(2)">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
-                            <!-- Add Admin Slot 3 -->
-                            <div class="grid grid-cols-12 gap-4 items-center bg-white p-4 rounded-lg border border-gray-200 border-dashed">
-                                <div class="col-span-1 text-center text-gray-600 font-medium">3.</div>
-                                <div class="col-span-11">
-                                    <button type="button"
-                                        class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors duration-200"
-                                        onclick="showAddAdminModal()">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                        </svg>
-                                        <span class="font-medium">Add Hrs</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Add Admin Slot 3 -->
+                <div class="grid grid-cols-12 gap-4 items-center bg-white p-4 rounded-lg border border-gray-200 border-dashed">
+                    <div class="col-span-1 text-center text-gray-600 font-medium">3.</div>
+                    <div class="col-span-11">
+                        <button type="button"
+                            class="flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                            onclick="showAddAdminModal()">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            <span class="font-medium">Add Hrs</span>
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
             <!-- User Account Section -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-[#E8EBEE]">
-                    <h1 class="text-2xl font-semibold text-gray-900 mb-6">User Account</h1>
-                    
-                    <!-- Search Form -->
-                    <div class="flex justify-end mb-6">
-                        <form method="GET" action="{{ route('admin.users') }}" class="w-full max-w-md">
-                            <div class="relative">
-                                <input type="text" name="search" placeholder="Search..."
-                                    class="w-full pl-10 pr-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-none"
-                                    value="{{ request('search') }}">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M10.5 17a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- User Table -->
-                    <div class="bg-white rounded-xl shadow">
-                        <div class="overflow-y-auto overflow-x-auto max-h-[500px]">
-                            <table class="min-w-full text-sm text-left text-gray-700">
-                                <thead class="sticky top-0 z-10 bg-white border-b border-gray-300 text-gray-500">
-                                    <tr>
-                                        <th class="px-6 py-3">Name</th>
-                                        <th class="px-6 py-3">Email</th>
-                                        <th class="px-6 py-3">Role</th>
-                                        <th class="px-6 py-3">Joining Date</th>
-                                        <th class="px-6 py-3">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200">
-                                    @foreach ($users as $user)
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <form method="POST" action="{{ route('admin.users.updateRole', $user->id) }}">
-                                                @csrf
-                                                @method('PUT')
-                                                <select name="roles" onchange="this.form.submit()" 
-                                                    class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                                    <option disabled selected value>-- Select Role --</option>
-                                                    <option value="applier" {{ $user->roles === 'applier' ? 'selected' : '' }}>Applier</option>
-                                                    <option value="hr" {{ $user->roles === 'hr' ? 'selected' : '' }}>HR</option>
-                                                    <option value="admin" {{ $user->roles === 'admin' ? 'selected' : '' }}>Admin</option>
-                                                    <option value="company" {{ $user->roles === 'company' ? 'selected' : '' }}>Company</option>
-                                                </select>
-                                            </form>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            {{ \Carbon\Carbon::parse($user->created_at)->format('F d, Y') }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <form method="POST" action="{{ route('admin.users.updateStatus', $user->id) }}">
-                                                @csrf
-                                                @method('PUT')
-                                                <select name="status" onchange="this.form.submit()"
-                                                    class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                                    <option value="active" {{ $user->status === 'active' ? 'selected' : '' }}>Active</option>
-                                                    <option value="inactive" {{ $user->status === 'inactive' ? 'selected' : '' }}>Inactive</option>
-                                                </select>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+    <div class="p-6 bg-[#E8EBEE]">
+        <h1 class="text-2xl font-semibold text-gray-900 mb-6">User Account</h1>
+        
+        <!-- Search Form -->
+        <div class="flex justify-end mb-6">
+            <form method="GET" action="{{ route('admin.users') }}" class="w-full max-w-md">
+                <div class="relative">
+                    <input type="text" name="search" placeholder="Search..."
+                        class="w-full pl-10 pr-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-none"
+                        value="{{ request('search') }}">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M10.5 17a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
+                        </svg>
                     </div>
                 </div>
+            </form>
+        </div>
+
+        <!-- User Table -->
+        <div class="bg-white rounded-xl shadow">
+            <div class="overflow-y-auto overflow-x-auto max-h-[500px]">
+                <table class="min-w-full text-sm text-left text-gray-700">
+                    <thead class="sticky top-0 z-10 bg-white border-b border-gray-300 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3">Name</th>
+                            <th class="px-6 py-3">Email</th>
+                            <th class="px-6 py-3">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @foreach ($users as $user)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <form method="POST" action="{{ route('admin.users.updateRole', $user->id) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="roles" onchange="this.form.submit()" 
+                                        class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                        <option value="applier" {{ $user->roles === 'applier' ? 'selected' : '' }}>Applier</option>
+                                        <option value="hr" {{ $user->roles === 'hr' ? 'selected' : '' }}>HR</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
+        </div>
+    </div>
+</div>
 
             <!-- Job Cards Section -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

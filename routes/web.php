@@ -29,6 +29,9 @@ Route::middleware([
 
     // Routing dashboard admin
     Route::get('/admin/dashboard', [DashboardController::class, 'showAdminDashboard'])->name('admin.dashboard');
+
+    // Routing dashboard company
+    Route::get('/company/dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('dashboard.company');
 });
 
 Route::get('/warnguest/{page}', [PageController::class, 'guestWarning'])->name('warnguest');
@@ -70,7 +73,7 @@ Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name
 Route::get('/company-dashboard', [DashboardController::class, 'companyDashboard']);
 Route::put('/admin/hr/{id}/demote', [CompanyController::class, 'demoteHrToApplier'])->name('admin.hr.demote');
 Route::get('/admin/user', [CompanyController::class, 'searchUsers'])->name('admin.users');
-Route::get('/company-dashboard', [CompanyController::class, 'showDashboard'])->name('dashboard.company');
+// Route::get('/company-dashboard', [CompanyController::class, 'showDashboard'])->name('dashboard.company');
 
 
 // Route::get('/companyjobs/{id}', [PageController::class, 'showJobDetail'])->name('companyjobs.show');

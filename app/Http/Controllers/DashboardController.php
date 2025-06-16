@@ -19,7 +19,9 @@ class DashboardController extends Controller
     {
         if (Auth::user()->roles === 'admin') {
             return redirect()->route('admin.dashboard');
-        } else {
+        }elseif(Auth::user()-> roles === "company"){
+            return redirect()->route('dashboard.company');
+        }else {
             return redirect()->route('dashboard.user');
         }
     }
@@ -70,14 +72,35 @@ class DashboardController extends Controller
     public function showCompanyDashboard()
     {
         $companyName = Auth::user()->fullName ?? 'Company Name';
-        $totalPosts = Post::count();
-        $totalApplicants = Applier::count(); // atau logika lain
-        $posts = Post::paginate(25);
 
-        $admins = CompanyAdmin::all(); // ambil data HR/admins dari database
+        // Temukan company milik user login
+        $company = Company::where('user_id', Auth::id())->first();
 
-        return view('dashboard.company', compact('companyName', 'totalPosts', 'totalApplicants', 'posts', 'admins'));
+        // Safety check
+        if (!$company) {
+            abort(404, 'Perusahaan tidak ditemukan untuk user ini.');
+        }
+
+        // Ambil post milik perusahaan itu
+        $posts = Post::where('company_id', $company->id)->latest()->paginate(10);
+        $totalPosts = $posts->total();
+        $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
+
+        $users = User::whereIn('roles', ['applier', 'hr'])->get();
+        $hrs = User::where('roles', 'hr')->get();
+        $admins = CompanyAdmin::all();
+
+        return view('dashboard.company', compact(
+            'companyName',
+            'totalPosts',
+            'totalApplicants',
+            'posts',
+            'admins',
+            'users',
+            'hrs'
+        ));
     }
+
     public function storeAdmin(Request $request)
     {
         $validated = $request->validate([

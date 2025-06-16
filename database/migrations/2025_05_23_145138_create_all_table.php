@@ -62,7 +62,6 @@ return new class extends Migration
             $table->foreignId('applier_id')->constrained()->onDelete('cascade');
             $table->foreignId('post_id')->constrained()->onDelete('cascade');
             $table->enum('application_status', ['pending', 'interview', 'accepted', 'rejected'])->default('pending');
-            $table->timestamp('applied_at')->nullable();
             $table->timestamps();
 
             $table->unique(['applier_id', 'post_id']);

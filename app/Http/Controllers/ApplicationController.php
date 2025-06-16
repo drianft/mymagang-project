@@ -2,68 +2,75 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Models\Post;
+use App\Notifications\ApplicationDuplicateAttempt;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\ApplicationSubmitted;
 use Illuminate\Http\Request;
-use App\Models\Application;;
 
 class ApplicationController extends Controller
 {
-    public function index()
+    // handle apply
+    public function apply(Post $post)
     {
-        $applications = Application::with(['post.hr', 'post.company', 'applier'])->paginate(20);
+        $user = Auth::user();
+        $applier = $user->applier;
 
-        return view('application', compact('applications'));
+        if (!$applier) {
+            return back()->with('error', 'Applier profile not found.');
+        }
 
-        //
+        // ✅ Cek apakah user sudah pernah apply (hindari duplikat)
+        $alreadyApplied = Application::where('applier_id', $applier->id)
+            ->where('post_id', $post->id)
+            ->exists();
+
+        if ($alreadyApplied) {
+            $applier->notify(new ApplicationDuplicateAttempt());
+
+            return back()->with('error', 'Kamu sudah pernah apply untuk pekerjaan ini.');
+        }
+
+        // ✅ Simpan aplikasi
+        $application = Application::create([
+            'applier_id' => $applier->id,
+            'post_id' => $post->id,
+            'application_status' => 'pending',
+        ]);
+
+        // ✅ Kirim notifikasi
+        $applier->notify(new ApplicationSubmitted());
+
+        return back()->with('success', 'Berhasil apply!');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $applier = $user->applier;
+
+        // Simpan aplikasi
+        $application = Application::create([
+            'applier_id' => $applier->id,
+            'post_id' => $request->post_id,
+            'application_status' => 'pending',
+        ]);
+
+        // Kirim notifikasi ke user/applier
+        $applier->notify(new ApplicationSubmitted());
+
+        return redirect()->back()->with('success', 'Berhasil apply!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(application $application)
+    // list aplikasi milik user
+    public function myApplications()
     {
-        //
-    }
+        $applications = Application::with('post')
+            ->where('applier_id', Auth::id())
+            ->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(application $application)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, application $application)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(application $application)
-    {
-        //
-
+        return view('applications.my', compact('applications'));
     }
 }

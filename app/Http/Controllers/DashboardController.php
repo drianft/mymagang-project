@@ -91,4 +91,12 @@ class DashboardController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function companyDashboard()
+    {
+        $users = User::all();
+        $posts = Post::latest()->paginate(10); // atau Post::all(); jika tidak pakai pagination
+
+        return view('dashboard.company', compact('users', 'posts'));
+    }
 }

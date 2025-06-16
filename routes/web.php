@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Post;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -64,4 +66,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::get('/company-dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('dashboard.company');
 Route::get('/companyjobs', [PageController::class, 'showJobs'])->name('companyjobs');
 Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name('company-admins.store');
+Route::get('/company-dashboard', [DashboardController::class, 'companyDashboard']);
 // Route::get('/companyjobs/{id}', [PageController::class, 'showJobDetail'])->name('companyjobs.show');

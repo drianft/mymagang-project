@@ -18,10 +18,25 @@ class DashboardController extends Controller
     {
         if (Auth::user()->roles === 'admin') {
             return redirect()->route('admin.dashboard');
-        } else {
+        } else if(Auth::user()->roles === 'company'){
+            return redirect()->route('company.dashboard');
+        }
+        else {
             return redirect()->route('dashboard.user');
         }
     }
+
+    public function showCompanyDashboard()
+    {
+        $user = auth()->user(); // user yang login
+
+        // Ambil data company milik user yang login
+        $company = $user->company;
+
+        return view('homeCompany', compact('user', 'company'));
+    }
+
+
     
     public function showDashboard()
     {

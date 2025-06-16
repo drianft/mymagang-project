@@ -1,4 +1,3 @@
-
   <!-- Top Section -->
   <div class="max-w-7xl mx-auto p-6">
     <!-- Promo Box -->
@@ -7,9 +6,9 @@
         <img src="{{ asset('images/logoCompany.jpg') }}" class="max-h-[380px] hidden md:block object-cover mr-6 mt-6 rounded-xl">
       </div>
       <div class="flex-1">
-        <h1 class="text-5xl font-semibold mb-2">Apple Inc.</h1>
+        <h1 class="text-5xl font-semibold mb-2">{{$user->name}}</h1>
         <p class="text-gray-700 mb-4 text-lg leading-relaxed">
-          {{ Str::limit("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ex diam, gravida sit amet purus eget, lacinia pretium elit. Ut maximus aliquet velit, porttitor rhoncus dolor consectetur et. adlwakodkaodkaowkdoakodkdaoaodkowakdoakodkawokdoawkdoakokdawodnvioaoqoijawijdoiajdoi", 250, '...') }}
+          {{$user->company->company_description}}
         </p>
         <button class="px-5 py-2 bg-white border border-gray-600 rounded-lg text-sm text-gray-800 hover:bg-gray-300 hover:text-black font-medium shadow-sm transition duration-150">
           MANAGE PROFILE

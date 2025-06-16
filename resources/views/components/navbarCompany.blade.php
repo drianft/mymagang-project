@@ -22,8 +22,8 @@
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
-                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}">Dashboard</a>
-                        <a href="{{ route('guestdash') }}" class="{{ request()->routeIs('guestdash') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}">Home</a>
+                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}">Home</a>
+                        <a href="{{ route('guestdash') }}" class="{{ request()->routeIs('guestdash') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm'}}">Dashboard</a>
                     </div>
                 </div>
             </div>
@@ -35,10 +35,6 @@
                 @guest
                     <a href="{{ route('warnguest', ['page' => 'bookmark']) }}" class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
                 @endguest
-                    <span class="absolute -inset-1.5"></span>
-                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75v13.5L12 16.5l-5.25 3.75V6.75a2.25 2.25 0 0 1 2.25-2.25h6a2.25 2.25 0 0 1 2.25 2.25z" />
-                    </svg>
                 </a>
 
                 <!-- Profile dropdown -->
@@ -88,8 +84,8 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="sm:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pt-2 pb-3">
-            <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm'}}">Dashboard</a>
-            <a href="{{ route('guestdash') }}" class="{{ request()->routeIs('guestdash') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm'}}">Home</a>
+            <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm'}}">Home</a>
+            <a href="{{ route('guestdash') }}" class="{{ request()->routeIs('guestdash') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm'}}">Dashboard</a>
         </div>
     </div>
 </nav>

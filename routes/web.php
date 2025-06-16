@@ -26,6 +26,8 @@ Route::middleware([
 
     // Routing dashboard admin
     Route::get('/admin/dashboard', [DashboardController::class, 'showAdminDashboard'])->name('admin.dashboard');
+
+    Route::get('/company/home', [DashboardController::class, 'showCompanyDashboard'])->name('company.dashboard');
 });
 
 Route::get('/warnguest/{page}', [PageController::class, 'guestWarning'])->name('warnguest');

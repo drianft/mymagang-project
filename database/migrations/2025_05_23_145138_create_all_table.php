@@ -14,7 +14,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('industry', ['tech', 'finance', 'healthcare', 'education', 'sales', 'engineering', 'law', 'fnb', 'logistic', 'freelance'])->default('freelance');
             $table->text('company_description')->nullable();
-            $table->date('joined_at')->nullable();
             $table->timestamps();
         });
 

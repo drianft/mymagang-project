@@ -1,4 +1,4 @@
-  <!-- Top Section -->
+<!-- Top Section -->
   <div class="max-w-7xl mx-auto p-6">
     <!-- Promo Box -->
     <div class="w-full max-w-6xl bg-gray-200 rounded-xl flex items-center justify-between mx-auto">

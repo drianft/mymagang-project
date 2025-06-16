@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
-    // handle apply
     public function apply(Post $post)
     {
         $user = Auth::user();
@@ -65,7 +64,7 @@ class ApplicationController extends Controller
     }
 
     // list aplikasi milik user
-    public function myApplications()
+    public function myApplications(Request $request)
     {
         $user = Auth::user();
         $applier = $user->applier;
@@ -74,8 +73,27 @@ class ApplicationController extends Controller
             return redirect('/')->with('error', 'Applier profile not found.');
         }
 
+        $query = $applier->applications()->with(['post', 'interview']);
+
+        if ($request->filled('search')) {
+            $search = strtolower($request->search);
+            $query->whereHas('post', fn($q) => $q->whereRaw('LOWER(job_title) LIKE ?', ["%{$search}%"]));
+        }
+
+        if ($request->filled('status')) {
+            $query->where('application_status', $request->status);
+        }
+
         // Ambil semua applications milik applier ini
-        $applications = $applier->applications()->with('post', 'interview')->get();
+        $applications = $query
+                        ->with('post', 'interview.hr.user')
+                        ->latest()
+                        ->paginate(20)
+                        ->withQueryString();
+
+        if ($request->ajax()) {
+            return view('applications._ajax', compact('applications'))->render();
+        }
 
         return view('applications.my', compact('applications'));
     }

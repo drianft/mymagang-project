@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $fillable = ['user_id', 'industry', 'company_description', 'joined_at'];
+    protected $fillable = ['user_id', 'industry', 'company_description'];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
 
     use HasFactory;
 

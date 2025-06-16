@@ -1,7 +1,6 @@
 <x-app-layout>
     <div class="bg-white">
         <div class="pt-6">
-          <!-- Single Image Dummy -->
           <div class="mx-auto max-w-2xl sm:px-6 lg:max-w-7xl lg:px-8">
             <div class="w-full aspect-[2/1] overflow-hidden rounded-lg">
                 @if ($post->image)

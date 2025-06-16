@@ -16,7 +16,6 @@ class CompanyFactory extends Factory
             'user_id' => User::factory()->company(),
             'industry' => $this->faker->randomElement(['tech', 'finance', 'healthcare', 'education', 'sales', 'engineering', 'law', 'fnb', 'logistic', 'freelance']),
             'company_description' => $this->faker->paragraph,
-            'joined_at' => now(),
         ];
     }
 }

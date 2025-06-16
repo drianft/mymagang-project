@@ -11,6 +11,12 @@ class Hr extends Model
 
     protected $fillable = ['user_id', 'company_id', 'position'];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+
     public function user()
     {
         return $this->belongsTo(User::class);

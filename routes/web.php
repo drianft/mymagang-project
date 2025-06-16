@@ -35,7 +35,7 @@ Route::get('/warnguest/{page}', [PageController::class, 'guestWarning'])->name('
 Route::get('/jobs', [PageController::class, 'showJobs'])->name('jobs');
 Route::get('/jobs/{id}', [PageController::class, 'showJobDetail'])->name('jobs.show');
 Route::get('/companies', [PageController::class, 'showCompanies'])->name('companies');
-Route::get('/company/{id}', [PageController::class, 'showCompany'])->name('company.show');
+Route::get('/company/{id}', [PageController::class, 'showCompanyDetail'])->name('company.show');
 Route::get('/application', [ApplicationController::class, 'index'])->name('application');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 

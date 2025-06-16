@@ -19,9 +19,9 @@ class DashboardController extends Controller
     {
         if (Auth::user()->roles === 'admin') {
             return redirect()->route('admin.dashboard');
-        }elseif(Auth::user()-> roles === "company"){
-            return redirect()->route('dashboard.company');
-        }else {
+        } elseif (Auth::user()->roles === "company") {
+            return redirect()->route('dashboard.homeCompany');
+        } else {
             return redirect()->route('dashboard.user');
         }
     }
@@ -73,6 +73,7 @@ class DashboardController extends Controller
     {
         $companyName = Auth::user()->fullName ?? 'Company Name';
 
+
         // Temukan company milik user login
         $company = Company::where('user_id', Auth::id())->first();
 
@@ -90,7 +91,7 @@ class DashboardController extends Controller
         $hrs = User::where('roles', 'hr')->get();
         $admins = CompanyAdmin::all();
 
-        return view('dashboard.company', compact(
+        return view('dashboard.homeCompany', compact(
             'companyName',
             'totalPosts',
             'totalApplicants',
@@ -123,5 +124,4 @@ class DashboardController extends Controller
 
         return view('dashboard.company', compact('hrs', 'users', 'posts'));
     }
-
 }

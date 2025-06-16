@@ -43,7 +43,13 @@ Route::get('/application', [ApplicationController::class, 'index'])->name('appli
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 
+Route::prefix('company')->name('company.')->group(function () {
 
+  Route::get('/company', function () {
+    return view('dashboard.homeCompany');
+  }) ;
+
+});
 
 
 // Grup Route untuk Admin
@@ -67,7 +73,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 //dashboard company
-Route::get('/company-dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('dashboard.company');
+Route::get('/company-dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('dashboard.homeCompany');
 Route::get('/companyjobs', [PageController::class, 'showJobs'])->name('companyjobs');
 Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name('company-admins.store');
 Route::get('/company-dashboard', [DashboardController::class, 'companyDashboard']);

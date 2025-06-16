@@ -69,5 +69,8 @@ Route::get('/companyjobs', [PageController::class, 'showJobs'])->name('companyjo
 Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name('company-admins.store');
 Route::get('/company-dashboard', [DashboardController::class, 'companyDashboard']);
 Route::put('/admin/hr/{id}/demote', [CompanyController::class, 'demoteHrToApplier'])->name('admin.hr.demote');
+Route::get('/admin/user', [CompanyController::class, 'searchUsers'])->name('admin.users');
+Route::get('/company-dashboard', [CompanyController::class, 'showDashboard'])->name('dashboard.company');
+
 
 // Route::get('/companyjobs/{id}', [PageController::class, 'showJobDetail'])->name('companyjobs.show');

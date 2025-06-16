@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -71,5 +72,33 @@ class CompanyController extends Controller
         }
 
         return back()->with('error', 'User bukan HR.');
+    }
+
+    public function searchUsers(Request $request)
+    {
+        $search = $request->input('search');
+
+        $users = User::query()
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('email', 'LIKE', '%' . $search . '%')
+                        ->orWhere('name', 'LIKE', '%' . $search . '%');
+                });
+            })
+            ->get();
+
+        $hrs = User::where('roles', 'hr')->get();
+        $posts = Post::latest()->paginate(10);
+
+        return view('dashboard.company', compact('users', 'hrs', 'posts'));
+    }
+    public function showDashboard()
+    {
+        // Ambil semua user yang relevan
+        $users = User::whereIn('roles', ['applier', 'hr'])->get();
+        $hrs = User::where('roles', 'hr')->get();
+        $posts = Post::latest()->paginate(10);
+
+        return view('dashboard.company', compact('users', 'hrs', 'posts'));
     }
 }

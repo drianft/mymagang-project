@@ -42,11 +42,11 @@
                <td class="py-4 text-sm text-gray-600">{{ $application->post->job_title }}</td>
                <td class="py-4">
                <span class="px-2 py-1 text-xs font-medium rounded
-               @if($application->status == 'pending') bg-yellow-100 text-yellow-800
-               @elseif($application->status == 'interview') bg-blue-100 text-blue-800
-               @elseif($application->status == 'rejected') bg-red-100 text-red-800
+               @if($application->application_status == 'pending') bg-yellow-100 text-yellow-800
+               @elseif($application->application_status == 'interview') bg-blue-100 text-blue-800
+               @elseif($application->application_status == 'rejected') bg-red-100 text-red-800
                @else bg-green-100 text-green-800 @endif">
-               {{ $application->application_status }}
+               {{ ucfirst($application->application_status) }}
                </span>
                 </td>
                   <td class="py-4 text-sm text-gray-600">
@@ -57,74 +57,8 @@
                               </td>
                         </tr>
                 @endforeach
-
-
-                <!-- ini data dummy  -->
-                <tr class="hover:bg-gray-50">
-                    <td class="py-4 text-sm font-medium text-gray-900">Jhon Piter</td>
-                    <td class="py-4 text-sm text-gray-600">Accounting Intern</td>
-                    <td class="py-4">
-                        <span class="px-2 py-1 text-xs font-medium rounded bg-yellow-100 text-yellow-800">Pending</span>
-                    </td>
-                    <td class="py-4 text-sm text-gray-600">23/04/2025</td>
-                    <td class="py-4">
-                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
-                    </td>
-                </tr>
-
-                <tr class="hover:bg-gray-50">
-                    <td class="py-4 text-sm font-medium text-gray-900">James Smith</td>
-                    <td class="py-4 text-sm text-gray-600">Software Engineer</td>
-                    <td class="py-4">
-                        <span class="px-2 py-1 text-xs font-medium rounded bg-blue-100 text-blue-800">Interview</span>
-                    </td>
-                    <td class="py-4 text-sm text-gray-600">22/04/2025</td>
-                    <td class="py-4">
-                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
-                    </td>
-                </tr>
-
-
-                <tr class="hover:bg-gray-50">
-                    <td class="py-4 text-sm font-medium text-gray-900">Barca</td>
-                    <td class="py-4 text-sm text-gray-600">Graphic Designer</td>
-                    <td class="py-4">
-                        <span class="px-2 py-1 text-xs font-medium rounded bg-red-100 text-red-800">Rejected</span>
-                    </td>
-                    <td class="py-4 text-sm text-gray-600">——</td>
-                    <td class="py-4">
-                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
-                    </td>
-                </tr>
-
-
-                <tr class="hover:bg-gray-50">
-                    <td class="py-4 text-sm font-medium text-gray-900">Garnacho</td>
-                    <td class="py-4 text-sm text-gray-600">Sales & Marketing</td>
-                    <td class="py-4">
-                        <span class="px-2 py-1 text-xs font-medium rounded bg-yellow-100 text-yellow-800">Pending</span>
-                    </td>
-                    <td class="py-4 text-sm text-gray-600">20/04/2025</td>
-                    <td class="py-4">
-                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
-                    </td>
-                </tr>
-
-
-                <tr class="hover:bg-gray-50">
-                    <td class="py-4 text-sm font-medium text-gray-900">Pedri</td>
-                    <td class="py-4 text-sm text-gray-600">Accounting</td>
-                    <td class="py-4">
-                        <span class="px-2 py-1 text-xs font-medium rounded bg-green-100 text-green-800">Accepted</span>
-                    </td>
-                    <td class="py-4 text-sm text-gray-600">20/04/2025</td>
-                    <td class="py-4">
-                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800">View</a>
-                    </td>
-                </tr>
                 </tbody>
                 </table>
-                <!-- sampai sini untuk data dummy -->
 
                          </div>
                       </div>

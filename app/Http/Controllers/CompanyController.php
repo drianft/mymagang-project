@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -58,8 +59,17 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company)
+
+    public function demoteHrToApplier($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        if ($user->roles === 'hr') {
+            $user->roles = 'applier';
+            $user->save();
+            return back()->with('success', 'HR berhasil diubah menjadi Applier.');
+        }
+
+        return back()->with('error', 'User bukan HR.');
     }
 }

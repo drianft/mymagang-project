@@ -94,9 +94,11 @@ class DashboardController extends Controller
 
     public function companyDashboard()
     {
-        $users = User::all();
-        $posts = Post::latest()->paginate(10); // atau Post::all(); jika tidak pakai pagination
+        $hrs = User::where('roles', 'hr')->get(); // Ambil hanya HR
+        $users = User::all(); // Untuk seluruh user di tabel bawah
+        $posts = Post::latest()->paginate(10); // Job posts
 
-        return view('dashboard.company', compact('users', 'posts'));
+        return view('dashboard.company', compact('hrs', 'users', 'posts'));
     }
+
 }

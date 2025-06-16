@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Post;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -67,4 +68,6 @@ Route::get('/company-dashboard', [DashboardController::class, 'showCompanyDashbo
 Route::get('/companyjobs', [PageController::class, 'showJobs'])->name('companyjobs');
 Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name('company-admins.store');
 Route::get('/company-dashboard', [DashboardController::class, 'companyDashboard']);
+Route::put('/admin/hr/{id}/demote', [CompanyController::class, 'demoteHrToApplier'])->name('admin.hr.demote');
+
 // Route::get('/companyjobs/{id}', [PageController::class, 'showJobDetail'])->name('companyjobs.show');

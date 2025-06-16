@@ -38,6 +38,12 @@ class User extends Authenticatable
         'status',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -84,6 +90,7 @@ class User extends Authenticatable
     public function company() {
         return $this->hasOne(Company::class);
     }
+    
 
     
 

@@ -29,13 +29,15 @@ class PageController extends Controller
     public function showJobDetail($id)
     {
         $post = Post::findOrFail($id);
-        return view('jobs.show', compact('post'));
+        return view('detailpost', compact('post'));
     }
 
-    public function showCompany($id)
+    public function showCompanyDetail($id)
     {
-        $company = User::where('roles', 'company')->findOrFail($id);
+        $user = User::with('company')
+        ->where('roles', 'company')
+        ->findOrFail($id);
 
-        return view('company.show', compact('company'));
+        return view('companydetail', compact('user'));
     }
 }

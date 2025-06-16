@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Applier;
 use App\Models\Company;
 use App\Models\Application;
+use App\Models\CompanyAdmin;
 
 class DashboardController extends Controller
 {
@@ -43,14 +44,14 @@ class DashboardController extends Controller
 
         $companies = User::with('company')->where('roles', 'company')->take(4)->get();
         $posts = Post::latest()->take(10)->get();
-        return view('dashboard', compact('companies','posts'));
+        return view('dashboard', compact('companies', 'posts'));
     }
 
     public function showGuestDashboard()
     {
         $companies = User::with('company')->where('roles', 'company')->take(4)->get();
         $posts = Post::latest()->take(10)->get();
-        return view('dashboard', compact('companies','posts'));
+        return view('dashboard', compact('companies', 'posts'));
     }
 
     public function showAdminDashboard(Request $request)
@@ -58,11 +59,11 @@ class DashboardController extends Controller
         $search = $request->input('search');
 
         $users = User::query()
-        ->when($search, function ($query, $search) {
-            $query->where('fullName', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
-        })
-        ->get();
+            ->when($search, function ($query, $search) {
+                $query->where('fullName', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->get();
         $posts = Post::all(); // ambil 5 postingan terbaru
 
         $postCount = Post::count();
@@ -73,12 +74,67 @@ class DashboardController extends Controller
 
         $companies = Company::all(); // ambil semua data company dari database
 
-        return view('dashboard', compact('users' , 'posts' , 'postCount', 'userCount', 'companyCount', 'applicationCount'));
-
+        return view('dashboard', compact('users', 'posts', 'postCount', 'userCount', 'companyCount', 'applicationCount'));
     }
 
     public function guestWarning($page)
     {
         return view('guestwarning', ['page' => $page]);
     }
+
+    public function showCompanyDashboard()
+    {
+        $companyName = Auth::user()->fullName ?? 'Company Name';
+
+        // Temukan company milik user login
+        $company = Company::where('user_id', Auth::id())->first();
+
+        // Safety check
+        if (!$company) {
+            abort(404, 'Perusahaan tidak ditemukan untuk user ini.');
+        }
+
+        // Ambil post milik perusahaan itu
+        $posts = Post::where('company_id', $company->id)->latest()->paginate(10);
+        $totalPosts = $posts->total();
+        $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
+
+        $users = User::whereIn('roles', ['applier', 'hr'])->get();
+        $hrs = User::where('roles', 'hr')->get();
+        $admins = CompanyAdmin::all();
+
+        return view('dashboard.company', compact(
+            'companyName',
+            'totalPosts',
+            'totalApplicants',
+            'posts',
+            'admins',
+            'users',
+            'hrs'
+        ));
+    }
+
+    public function storeAdmin(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:company_admins,email',
+            'position' => 'nullable|string|max:255',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        CompanyAdmin::create($validated);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function companyDashboard()
+    {
+        $hrs = User::where('roles', 'hr')->get(); // Ambil hanya HR
+        $users = User::all(); // Untuk seluruh user di tabel bawah
+        $posts = Post::latest()->paginate(10); // Job posts
+
+        return view('dashboard.company', compact('hrs', 'users', 'posts'));
+    }
+
 }

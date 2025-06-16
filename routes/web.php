@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Post;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -28,13 +31,16 @@ Route::middleware([
     Route::get('/admin/dashboard', [DashboardController::class, 'showAdminDashboard'])->name('admin.dashboard');
 
     Route::get('/company/home', [DashboardController::class, 'showCompanyDashboard'])->name('company.dashboard');
+
+    // Routing dashboard company
+    Route::get('/company/dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('dashboard.company');
 });
 
 Route::get('/warnguest/{page}', [PageController::class, 'guestWarning'])->name('warnguest');
 Route::get('/jobs', [PageController::class, 'showJobs'])->name('jobs');
 Route::get('/jobs/{id}', [PageController::class, 'showJobDetail'])->name('jobs.show');
 Route::get('/companies', [PageController::class, 'showCompanies'])->name('companies');
-Route::get('/company/{id}', [PageController::class, 'showCompany'])->name('company.show');
+Route::get('/company/{id}', [PageController::class, 'showCompanyDetail'])->name('company.show');
 Route::get('/application', [ApplicationController::class, 'index'])->name('application');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
@@ -67,3 +73,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Data Pelamar
     Route::get('/application', [AdminController::class, 'showApplicant'])->name('application');
 });
+
+//dashboard company
+Route::get('/company-dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('dashboard.company');
+Route::get('/companyjobs', [PageController::class, 'showJobs'])->name('companyjobs');
+Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name('company-admins.store');
+Route::get('/company-dashboard', [DashboardController::class, 'companyDashboard']);
+Route::put('/admin/hr/{id}/demote', [CompanyController::class, 'demoteHrToApplier'])->name('admin.hr.demote');
+Route::get('/admin/user', [CompanyController::class, 'searchUsers'])->name('admin.users');
+// Route::get('/company-dashboard', [CompanyController::class, 'showDashboard'])->name('dashboard.company');
+
+
+// Route::get('/companyjobs/{id}', [PageController::class, 'showJobDetail'])->name('companyjobs.show');

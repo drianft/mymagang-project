@@ -34,7 +34,6 @@ Route::get('/jobs/{id}', [PageController::class, 'showJobDetail'])->name('jobs.s
 Route::get('/companies', [PageController::class, 'showCompanies'])->name('companies');
 Route::get('/company/{id}', [PageController::class, 'showCompanyDetail'])->name('company.show');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/application', [ApplicationController::class, 'index'])->name('application');
 Route::middleware(['auth'])->group(function () {
     Route::post('/apply/{post}', [ApplicationController::class, 'apply'])->name('applications.apply');
     Route::get('/my-applications', [ApplicationController::class, 'myApplications'])->name('applications.mine');

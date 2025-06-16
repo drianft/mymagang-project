@@ -67,9 +67,15 @@ class ApplicationController extends Controller
     // list aplikasi milik user
     public function myApplications()
     {
-        $applications = Application::with('post')
-            ->where('applier_id', Auth::id())
-            ->get();
+        $user = Auth::user();
+        $applier = $user->applier;
+
+        if (!$applier) {
+            return redirect('/')->with('error', 'Applier profile not found.');
+        }
+
+        // Ambil semua applications milik applier ini
+        $applications = $applier->applications()->with('post', 'interview')->get();
 
         return view('applications.my', compact('applications'));
     }

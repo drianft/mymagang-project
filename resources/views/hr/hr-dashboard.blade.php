@@ -13,32 +13,29 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Search and Filter Section -->
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-                <form method="GET" action="{{ route('hr-dashboard') }}" class="mb-4">
-                    <input type="text" name="search" placeholder="Search by name..." value="{{ request('search') }}" class="border rounded px-4 py-2" />
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
-                </form>
+            <form method="GET" action="{{ route('hr-dashboard') }}" class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 w-full">
 
-                <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <select id="statusFilter"
-                        class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                        <option value="all">All Statuses</option>
-                        <option value="Under Review">Under Review</option>
-                        <option value="Accepted">Accepted</option>
-                        <option value="Declined">Declined</option>
-                        <option value="Interview Scheduled">Interview Scheduled</option>
-                    </select>
+            {{-- Search Input --}}
+            <input type="text" name="search" value="{{ request('search') }}"
+                placeholder="Search by name or status"
+                class="border px-4 py-2 rounded w-full sm:w-1/3" />
 
-                    <select id="positionFilter"
-                        class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                        <option value="all">All Positions</option>
-                        <option value="Senior Developer">Senior Developer</option>
-                        <option value="Product Designer">Product Designer</option>
-                        <option value="Sales Manager">Sales Manager</option>
-                        <option value="Office Administrator">Office Administrator</option>
-                    </select>
-                </div>
+            {{-- Filter Dropdowns --}}
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <select name="status"
+                    class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                    <option value="">All Statuses</option>
+                    <option value="accepted" {{ request('application_status') == 'Accepted' ? 'selected' : '' }}>Accepted</option>
+                    <option value="rejected" {{ request('application_status') == 'Rejected' ? 'selected' : '' }}>Declined</option>
+                    <option value="Interview Scheduled" {{ request('appliaction_status') == 'Interview Scheduled' ? 'selected' : '' }}>Interview Scheduled</option>
+                </select>
             </div>
+
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Filter
+            </button>
+        </form>
+
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="overflow-x-auto">
@@ -139,7 +136,7 @@
                                             <form action="{{ route('application.update', $appl->id) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('PUT')
-                                                <input type="hidden" name="status" value="Accepted">
+                                                <input type="hidden" name="status" value="accepted">
                                                 <button type="submit" class="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -150,7 +147,7 @@
                                             <form action="{{ route('application.update', $appl->id) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('PUT')
-                                                <input type="hidden" name="status" value="Rejected">
+                                                <input type="hidden" name="status" value="rejected">
                                                 <button type="submit" class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -158,18 +155,48 @@
                                                 </button>
                                             </form>
 
-                                            <form action="{{ route('application.update', $appl->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT') <!-- Atau 'PATCH' -->
-                                                <button class="text-gray-400 hover:text-gray-600 p-1 rounded hover:bg-gray-50">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                            </form>
+                                            <!-- Tombol titik 3 -->
+                                        @foreach ($applications as $application)
+                                                    <!-- Tombol titik 3 (langsung buka modal, tanpa form) -->
+                                                    <button type="button" onclick="openModal('{{ $application->id }}')" class="text-gray-500 hover:text-black">
+                                                        ⋮
+                                                    </button>
+
+                                                    <!-- Modal -->
+                                                    <div id="modal-{{ $application->id }}" class="fixed inset-0 z-50 hidden items-center justify-center">
+                                                        <div onclick="closeModal('{{ $application->id }}')" class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+                                                        <div class="relative bg-white rounded-xl p-6 w-[90%] max-w-md shadow-lg z-50">
+                                                            <div class="flex justify-between items-center mb-4">
+                                                                <h2 class="text-xl font-semibold">Set Interview</h2>
+                                                                <button onclick="closeModal('{{ $application->id }}')">✕</button>
+                                                            </div>
+
+                                                            <!-- Form interview -->
+                                                            <form action="{{ route('interview.store', $application->id) }}" method="POST" class="space-y-4">
+                                                                @csrf
+                                                                <div>
+                                                                    <label class="block text-sm text-gray-600">Interview Time</label>
+                                                                    <input type="datetime-local" name="interview_time" required class="w-full px-4 py-2 border rounded-lg">
+                                                                </div>
+
+                                                                <div>
+                                                                    <label class="block text-sm text-gray-600">Location</label>
+                                                                    <input type="text" name="location" required class="w-full px-4 py-2 border rounded-lg">
+                                                                </div>
+
+                                                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">
+                                                                    Save Interview
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+
+
+
+
+
                                         </div>
                                     </td>
                                 </tr>
@@ -291,118 +318,6 @@
 
 
             </div>
-
-            <!-- Statistics Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 mx-40">
-                <!-- Card 1 -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center">
-                                <div class="p-3 rounded-lg bg-blue-100">
-                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
-                                        </path>
-                                    </svg>
-                                </div>
-                                <h3 class="text-sm font-medium text-gray-500 ml-3">Total Applicants</h3>
-                            </div>
-                            <button class="text-gray-400 hover:text-gray-600">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
-                                    </path>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="text-3xl font-bold text-gray-900 mb-2">{{ $applicantCount }}</div>
-                        <div class="flex items-center">
-                            <span class="text-green-600 text-sm font-medium flex items-center">
-                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                +32 From last month
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center">
-                                <div class="p-3 rounded-lg bg-green-100">
-                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </div>
-                                <h3 class="text-sm font-medium text-gray-500 ml-3">Accepted</h3>
-                            </div>
-                            <button class="text-gray-400 hover:text-gray-600">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
-                                    </path>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="text-3xl font-bold text-gray-900 mb-2">{{ $acceptedCount }}</div>
-                        <div class="flex items-center">
-                            <span class="text-green-600 text-sm font-medium flex items-center">
-                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                +8 From last month
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center">
-                                <div class="p-3 rounded-lg bg-yellow-100">
-                                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </div>
-                                <h3 class="text-sm font-medium text-gray-500 ml-3">Pending Review</h3>
-                            </div>
-                            <button class="text-gray-400 hover:text-gray-600">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
-                                    </path>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="text-3xl font-bold text-gray-900 mb-2">{{ $pendingCount }}</div>
-                        <div class="flex items-center">
-                            <span class="text-red-600 text-sm font-medium flex items-center">
-                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M12 13a1 1 0 100-2H9.414l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 13H12z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                -5 From last month
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -440,6 +355,33 @@
                 1024: { slidesPerView: 5 },
                 },
             });
-        });
+            function toggleDropdown(id) {
+            const dropdown = document.getElementById('dropdown-' + id);
+            dropdown.classList.toggle('hidden');
+            }
+
+
+
+
+
+    function openModal(id) {
+        const modal = document.getElementById('modal-' + id);
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+    }
+
+    function closeModal(id) {
+        const modal = document.getElementById('modal-' + id);
+        if (modal) {
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+    }
+
+
+
+
     </script>
 </x-app-layout>

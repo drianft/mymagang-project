@@ -29,35 +29,59 @@
                 <div class="lg:col-span-4 bg-gray-200 rounded-xl p-6 flex flex-col h-full">
                     <h2 class="text-lg text-center font-bold mb-4">Your Applications</h2>
                     <ul class="space-y-4 text-sm">
-                        @forelse ($jobs as $job)
-                            @foreach ($job->applications as $application)
-                                <li class="flex items-center justify-between p-3 rounded-md">
-                                    <div class="flex items-center gap-3">
-                                        <div class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
-                                            <img src="{{ optional($application->applier->user)->profile_photo_url ?? 'https://via.placeholder.com/100' }}" alt="{{ optional($application->user)->name ?? 'Unknown' }}" class="w-full h-full object-cover">
+                        <!-- Statistics Cards -->
+                    <div class="grid grid-cols-2 gap-6">
+                        <!-- Applicants -->
+                        <div class="bg-white p-4 rounded-lg flex flex-col items-center shadow-md">
+                            <div class="bg-blue-100 p-2 rounded-full mb-2">
+                                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5.121 17.804A4.992 4.992 0 0112 15c1.657 0 3.156.804 4.121 2.043M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <div class="text-xl font-bold">{{ $applicantCount }}</div>
+                            <div class="text-sm text-gray-500 mt-1">Applicants</div>
+                        </div>
 
-                                            <p class="font-semibold truncate">{{ optional($application->applier->user)->name }}</p>
-                                        </div>
-                                        <div class="min-w-0 flex-1">
-                                            <p class="font-semibold truncate">{{ optional($application->applier->user)->name ?? 'Unknown User' }}</p>
-                                            <p class="text-xs text-gray-500 truncate">{{ $job->job_title }}</p>
-                                        </div>
-                                    </div>
-                                    <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded flex-shrink-0">{{ strtoupper($application->status) }}</span>
-                                </li>
-                            @endforeach
-                        @empty
-                            <li class="text-center text-gray-500">No Applications Yet</li>
-                        @endforelse
-                    </ul>
-                    <div class="flex justify-center mt-8">
-                        <a href="{{ route('hr-dashboard') }}"
-                            class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-200">
-                            Go to Dashboard
-                        </a>
+                        <!-- Accepted -->
+                        <div class="bg-white p-4 rounded-lg flex flex-col items-center shadow-md">
+                            <div class="bg-green-100 p-2 rounded-full mb-2">
+                                <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <div class="text-xl font-bold">{{ $acceptedCount }}</div>
+                            <div class="text-sm text-gray-500 mt-1">Accepted</div>
+                        </div>
+
+                        <!-- Interview -->
+                        <div class="bg-white p-4 rounded-lg flex flex-col items-center shadow-md">
+                            <div class="bg-yellow-100 p-2 rounded-full mb-2">
+                                <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="text-xl font-bold">{{ $interviewCount }}</div>
+                            <div class="text-sm text-gray-500 mt-1">Interview</div>
+                        </div>
+
+                        <!-- Rejected -->
+                        <div class="bg-white p-4 rounded-lg flex flex-col items-center shadow-md">
+                            <div class="bg-red-100 p-2 rounded-full mb-2">
+                                <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </div>
+                            <div class="text-xl font-bold">{{ $rejectedCount }}</div>
+                            <div class="text-sm text-gray-500 mt-1">Rejected</div>
+                        </div>
                     </div>
                 </div>
-
+            </div>
+                  
             </div>
 
             <!-- My Job Posts -->
@@ -74,22 +98,20 @@
                         @foreach ($jobs as $job)
                             <div class="swiper-slide max-w-[256px] bg-white rounded-xl p-4 shadow hover:shadow-lg transition-all duration-300" style="width: 256px;">
                                 <div class="w-full h-40 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg mb-3 flex items-center justify-center overflow-hidden">
-                                    @if ($job->image)
-                                        <img src="{{ asset('storage/job-images/' . $job->image) }}" alt="Job Image" class="object-cover w-full h-full">
-                                    @else
-                                        <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
-                                    @endif
+
+                                        <img src="{{ asset('storage/' . $job->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
+
                                 </div>
                                 <p class="font-semibold text-lg truncate">{{ $job->job_title }}</p>
                                 <span class="bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded inline-block mt-1">
                                     {{ $job->job_type ?? 'Unknown HR' }}
                                 </span>
                                 <div class="text-xs text-gray-500 mt-2 flex gap-5">
-                                    <span>👥 {{ $job->applicants_count }} Applicants</span>
-                                    <span>👁️ {{ $job->views_count }} Views</span>
+                                    <span>👥 {{ $job->working_hour }}</span>
+                                    <span>👁️ {{ $job->status }}</span>
                                 </div>
                                 <div class="mt-4 flex gap-2 justify-center">
-                                    <a href="{{ route('jobs.edit', $job->id) }}"
+                                    <a href="{{ route('hr-post.edit', $job->id) }}"
                                         class="bg-yellow-600 text-white text-xs px-3 py-1 rounded hover:bg-yellow-700 transition">
                                         Edit
                                     </a>

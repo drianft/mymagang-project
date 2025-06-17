@@ -90,6 +90,11 @@
                                     Edit
                                 </a>
 
+                                <a href="{{ route('hr-post.show', $job->id) }}"
+                                class="bg-blue-600 text-white text-xs px-2 py-1 rounded hover:bg-blue-700 transition">
+                                    View
+                                </a>
+
                                 <!-- Delete Button -->
                                 <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
                                     @csrf

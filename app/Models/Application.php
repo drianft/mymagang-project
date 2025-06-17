@@ -10,6 +10,8 @@ class Application extends Model
     use HasFactory;
 
     protected $fillable = [
+        'applier_id',
+        'post_id',
         'status',
         'applied_at',
     ];

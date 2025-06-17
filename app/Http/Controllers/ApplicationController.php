@@ -62,11 +62,10 @@ class ApplicationController extends Controller
     public function update(Request $request, $id)
     {
         $application = Application::findOrFail($id);
-        // Misalnya update status jadi 'Accepted'
-        $application->status = 'Accepted';
+        $application->status = $request->status;
         $application->save();
 
-        return redirect()->back()->with('success', 'Application status updated successfully.');
+        return response()->json(['message' => 'Status updated']);
     }
 
 

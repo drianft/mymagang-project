@@ -75,14 +75,25 @@ class DashboardController extends Controller
 
         // Ambil semua job yang dimiliki HR yang sedang login
         $userId = Auth::id();
-        $jobs = Post::with('hr')->where('hr_id', Auth::id())->get();
-        $jobs = Post::with('user')->where('hr_id', Auth::id())
-        ->with(['applications.user']) // ambil semua applicants yang apply
-        ->get();
+        $jobs = Post::with(['user', 'applications.user'])
+            ->where('hr_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->get();
 
+        $applicantCount = Application::whereHas('post', function($query) use ($userId) {
+            $query->where('hr_id', $hrId = Auth::user()->hr->id);
+        })->count();
+        $acceptedCount = Application::whereHas('post', function($query) use ($userId) {
+            $query->where('hr_id', $hrId = Auth::user()->hr->id);
+        })->where('application_status', 'Accepted')->count();
+        $rejectedCount = Application::whereHas('post', function($query) use ($userId) {
+            $query->where('hr_id', $hrId = Auth::user()->hr->id);
+        })->where('application_status', 'Rejected')->count();
+        $interviewCount = Application::whereHas('post', function($query) use ($userId) {
+            $query->where('hr_id', $hrId    = Auth::user()->hr->id);
+        })->where('application_status', 'Interview')->count();
 
-
-        return view('hr.hr-home', compact('jobs'));
+        return view('hr.hr-home', compact('jobs' , 'userId', 'applicantCount', 'acceptedCount', 'rejectedCount', 'interviewCount'));
     }
 
     public function guestWarning($page)

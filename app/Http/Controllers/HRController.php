@@ -80,7 +80,7 @@ class HRController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image_post_url')) {
-            $imagePath = $request->file('image_post_url')->store('image_post_url', 'public');
+            $imagePath = $request->file('image_post_url')->store('job-images', 'public');
         }
 
         Post::create([
@@ -172,7 +172,7 @@ class HRController extends Controller
     }
 
     // Halaman show applicants
-    public function showApplicants()
+    public function showApplicants(Request $request)
     {
         $hrId = Auth::user()->id;
 
@@ -205,6 +205,23 @@ class HRController extends Controller
             $query->where('hr_id', $hrId);
         })->get();
 
+        $search = $request->input('search');
+
+        $applicationsSearch = Application::with('applier')
+        ->whereHas('post', function ($q) use ($hrId) {
+            $q->where('hr_id', $hrId);
+        })
+        ->when($search, function ($q) use ($search) {
+            $q->where(function ($query) use ($search) {
+                $query->whereHas('user', fn($q2) =>
+                    $q2->where('name', 'like', '%' . $search . '%')
+                )
+                ->orWhere('application_status', 'like', '%' . $search . '%');
+            });
+        })
+        ->latest()
+        ->get();
+
 
         return view('hr.hr-dashboard', [
             'applicantCount' => $applicantCount,
@@ -215,6 +232,7 @@ class HRController extends Controller
             'applications' => $applications,
             'jobs' => $jobs,
             'applicationDates' => $applicationDates,
+            'applicationsSearch' => $applicationsSearch,
             // tambahkan variabel lainnya kalau ada
         ]);
     }
@@ -230,6 +248,28 @@ class HRController extends Controller
     {
         return view('hr.jobs');
     }
+
+    public function show(Post $post)
+    {
+        $user = Auth::user();
+        $hr = Hr::where('user_id', $user->id)->first();
+
+        if (!$hr) {
+            abort(403, 'HR tidak ditemukan.');
+        }
+
+        $company = $hr->company;
+
+        
+
+        // Load applications + applier + user
+        $post->load('applications.applier.user');
+
+        return view('hr.hr-post-view', compact('post', 'company', 'hr'));
+    }
+
+
+
 
     public function showPost()
     {

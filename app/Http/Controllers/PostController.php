@@ -42,10 +42,13 @@ class PostController extends Controller
         return view('admin.posts', compact('posts'));
     }
 
-     public function show(Post $post)
+    public function show($id)
     {
-        return view('detailpost', compact('post'));
-     }
+        $post = Post::with('applier')->findOrFail($id);
+
+        return view('hr.hr-post-view', compact('post'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

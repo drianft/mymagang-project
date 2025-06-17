@@ -7,6 +7,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\PostController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\InterviewController;
 
 Route::get('/', [DashboardController::class, 'showGuestDashboard'])->name('guestdash');
 
@@ -52,16 +53,21 @@ Route::prefix('hr')->middleware([
 
     // CRUD Jobs khusus HR
     Route::get('/jobs', [HRController::class, 'jobIndex'])->name('jobs.index');
-    Route::get('/jobs/{id}/edit', [HRController::class, 'editJob'])->name('jobs.edit');
-    Route::put('/jobs/{id}', [HRController::class, 'updateJob'])->name('jobs.update');
+    Route::get('/hr/post/{id}/edit', [HRController::class, 'editPost'])->name('hr-post.edit');
+    Route::put('/hr/post/{id}', [HRController::class, 'updatePost'])->name('hr-post.update');
     Route::delete('/jobs/{id}', [HRController::class, 'destroyJob'])->name('jobs.destroy');
     Route::get('/posts', [HRController::class, 'showPost'])->name('hr-posts');
 
-     Route::get('/hr/post/create', [HRController::class, 'JobCreate'])->name('hr-post.create');
+    Route::get('/hr/post/create', [HRController::class, 'JobCreate'])->name('hr-post.create');
     Route::post('/hr/post/store', [HRController::class, 'store'])->name('hr-post.store');
+    
 
-    Route::get('/hr/post/{id}/edit', [HRController::class, 'editPost'])->name('hr-post.edit');
-    Route::put('/hr/post/{id}', [HRController::class, 'updatePost'])->name('hr-post.update');
+
+
+    // routes/web.php
+    Route::post('/interview/set/{application}', [InterviewController::class, 'store'])->name('interview.store');
+
+
 });
 
 Route::get('/application/{id}', [ApplicationController::class, 'show'])->name('application.show');

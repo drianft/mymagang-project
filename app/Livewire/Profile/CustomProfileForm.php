@@ -14,6 +14,7 @@ class CustomProfileForm extends Component
     public $religion;
     public $education;
     public $cv_url;
+    public $cv_file;
     public $industry;
     public $company_description;
 
@@ -42,7 +43,7 @@ class CustomProfileForm extends Component
             $rules = [
                 'religion' => 'nullable|string|max:50',
                 'education' => 'nullable|string|max:100',
-                'cv_url' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+                'cv_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             ];
         }
 
@@ -69,14 +70,21 @@ class CustomProfileForm extends Component
             ];
 
             // Cek apakah file diupload (dan bukan string path lama)
-            if ($this->cv_url instanceof \Illuminate\Http\UploadedFile) {
-                $path = $this->cv_url->store('cvs', 'public'); // simpan ke storage/app/public/cvs
+            if ($this->cv_file instanceof \Illuminate\Http\UploadedFile) {
+                $path = $this->cv_file->store('cvs', 'public'); // simpan ke storage/app/public/cvs
                 $data['cv_url'] = $path;
 
                 $this->cv_url = $path;
             }
 
-            $user->applier->update($data);
+            $applier = $user->applier;
+
+            $applier->fill($data);
+
+            // Cek apakah ada perubahan
+            if ($applier->isDirty()) {
+                $applier->save();
+            }
         }
 
 

@@ -37,7 +37,7 @@
                 @else
                     {{-- Jika belum ada CV, tampilkan input upload --}}
                     <x-input id="cv_url" type="file" class="mt-1 block w-full"
-                             wire:model="cv_url" accept=".pdf,.doc,.docx" />
+                             wire:model="cv_file" accept=".pdf,.doc,.docx" />
                     <x-input-error for="cv_url" class="mt-2" />
                 @endif
             </div>

@@ -2,6 +2,7 @@
     <div class="bg-[#F9FAFB] py-12">
         <div class="mx-auto max-w-screen-xl px-6">
 
+            {{-- Header Section --}}
             <div class="relative bg-[#F4F5F7] rounded-2xl px-10 py-14 lg:flex items-center justify-between shadow-md mb-12 overflow-hidden">
                 {{-- Left Content --}}
                 <div class="lg:max-w-xl z-10">
@@ -12,10 +13,11 @@
                         Quick, clear insights to help you choose wisely.
                     </p>
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center">
-                        <input type="text"
+                        <input id="search-input" type="text"
                                placeholder="Search Jobs"
-                               class="w-full sm:max-w-md px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
-                        <button class="mt-3 sm:mt-0 sm:ml-3 bg-[#5A48FA] text-white px-5 py-2 rounded-md hover:bg-indigo-700 transition">
+                               class="w-full sm:max-w-md px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                               value="{{ request('search') }}">
+                        <button id="search-btn" class="mt-3 sm:mt-0 sm:ml-3 bg-[#5A48FA] text-white px-5 py-2 rounded-md hover:bg-indigo-700 transition">
                             Search
                         </button>
                     </div>
@@ -38,70 +40,23 @@
                 </div>
             </div>
 
-
-            {{-- Dropdown --}}
-            <div class="flex justify-end mb-6">
-                <div class="relative inline-block">
-                    <select class="appearance-none border border-gray-300 bg-white px-4 py-2 rounded-md shadow-sm pr-8 text-gray-700">
-                        <option>Categories</option>
-                    </select>
-                </div>
+            {{-- Grid Section --}}
+            <div id="company-grid-container">
+                @include('companies.partials.company_grid', ['companies' => $companies])
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
-                @foreach($companies as $user)
-                    <a href="{{ route('company.show', $user->id) }}" class="block">
-                        <div class="w-full bg-gray-100 rounded-xl p-3 flex items-center space-x-4 hover:shadow-md transition-all">
-                            {{-- Logo perusahaan --}}
-                            <div class="flex-shrink-0 h-12 w-12 rounded-full bg-white flex items-center justify-center overflow-hidden">
-                                <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="object-cover w-full h-full">
-                            </div>
+            {{-- Pagination Section --}}
+            <div class="max-w-screen-xl mx-auto flex items-center justify-center gap-8 mt-10 text-base font-semibold"
+                 x-data="{ page: {{ $companies->currentPage() }} }">
 
-                            {{-- Detail perusahaan --}}
-                            <div class="flex-1 min-w-0">
-                                <div class="font-semibold text-sm text-gray-900 truncate">
-                                    {{ $user->name }}
-                                </div>
-
-                                <div class="flex items-center space-x-2 mt-1">
-                                    <span class="text-xs font-medium px-2 py-0.5 rounded
-                                        {{ match($user->industry) {
-                                            'tech' => 'bg-blue-100 text-blue-700',
-                                            'finance' => 'bg-indigo-100 text-indigo-700',
-                                            'healthcare' => 'bg-green-100 text-green-700',
-                                            'education' => 'bg-purple-100 text-purple-700',
-                                            'sales' => 'bg-pink-100 text-pink-700',
-                                            'engineering' => 'bg-orange-100 text-orange-700',
-                                            'law' => 'bg-gray-300 text-gray-800',
-                                            'fnb' => 'bg-yellow-100 text-yellow-700',
-                                            'logistic' => 'bg-amber-100 text-amber-700',
-                                            default => 'bg-slate-100 text-slate-700',
-                                        } }}">
-                                        {{ ucfirst($user->industry) }}
-                                    </span>
-                                </div>
-
-                                {{-- Lokasi atau info tambahan --}}
-                                <p class="text-xs text-gray-500 mt-1 truncate">
-                                    {{ $user->address ?? 'Alamat tidak tersedia' }}
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
-
-            <div class="max-w-screen-xl mx-auto flex items-center justify-center gap-8 mt-10 text-base font-semibold" x-data="{ page: {{ $companies->currentPage() }} }">
                 {{-- Prev Button --}}
-            <button
-                x-on:click="page = Math.max(1, page - 1); $refs['page' + page]?.click()"
-                class="px-4 py-2 text-gray-500 hover:text-black disabled:text-gray-300"
-                :disabled="page <= 1"
-            >
-                &lt;
-            </button>
+                <button
+                    x-on:click="page = Math.max(1, page - 1); $refs['page' + page]?.click()"
+                    class="px-4 py-2 text-gray-500 hover:text-black disabled:text-gray-300"
+                    :disabled="page <= 1"
+                >&lt;</button>
 
-                {{-- Pagination --}}
+                {{-- Numbered Pagination --}}
                 <div class="flex items-center gap-7">
                     <div class="flex items-center gap-4 w-[400px] justify-center">
                         @php
@@ -119,18 +74,18 @@
                             }
                         @endphp
 
-                        {{-- Always show page 1 --}}
                         @if ($start > 1)
-                            <a href="{{ $companies->url(1) }}"
-                            class="text-gray-700 hover:text-black"
-                            x-ref="page1">1</a>
+                            <a href="{{ $companies->appends(['search' => request('search')])->url(1) }}"
+                               class="text-gray-700 hover:text-black"
+                               x-ref="page1">1</a>
                             <span class="text-gray-400 text-xl font-bold px-2">. . .</span>
                         @endif
 
-                        {{-- Dynamic range --}}
                         @for ($i = $start; $i <= $end; $i++)
                             @if ($i >= 1 && $i <= $last)
-                                <a href="{{ $companies->url($i) }}" x-ref="page{{ $i }}" class="{{ $current == $i ? 'bg-gray-800 text-white rounded-full px-4 py-2 min-w-[44px] text-center' : 'text-gray-700 hover:text-black px-4 py-2 min-w-[44px] text-center' }}">
+                                <a href="{{ $companies->appends(['search' => request('search')])->url($i) }}"
+                                   x-ref="page{{ $i }}"
+                                   class="{{ $current == $i ? 'bg-gray-800 text-white rounded-full px-4 py-2 min-w-[44px] text-center' : 'text-gray-700 hover:text-black px-4 py-2 min-w-[44px] text-center' }}">
                                     {{ $i }}
                                 </a>
                             @endif
@@ -139,14 +94,36 @@
                 </div>
 
                 {{-- Next Button --}}
-            <button
-                x-on:click="page = Math.min({{ $last }}, page + 1); $refs['page' + page]?.click()"
-                class="px-4 py-2 text-gray-500 hover:text-black disabled:text-gray-300"
-                :disabled="page >= {{ $last }}"
-            >
-                &gt;
-            </button>
+                <button
+                    x-on:click="page = Math.min({{ $last }}, page + 1); $refs['page' + page]?.click()"
+                    class="px-4 py-2 text-gray-500 hover:text-black disabled:text-gray-300"
+                    :disabled="page >= {{ $last }}"
+                >&gt;</button>
             </div>
+
         </div>
     </div>
+
+    {{-- Script --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('search-input');
+            const button = document.getElementById('search-btn');
+
+            button.addEventListener('click', function () {
+                const searchTerm = input.value;
+
+                fetch(`{{ route('companies') }}?search=${encodeURIComponent(searchTerm)}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('company-grid-container').innerHTML = html;
+                })
+                .catch(error => console.error('Search failed:', error));
+            });
+        });
+    </script>
 </x-app-layout>

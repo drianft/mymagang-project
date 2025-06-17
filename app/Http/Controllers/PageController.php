@@ -25,9 +25,20 @@ class PageController extends Controller
         return view('jobpost', compact('posts', 'bookmarkedIds'));
     }
 
-    public function showCompanies()
+    public function showCompanies(Request $request)
     {
-        $companies = User::with('company')->where('roles', 'company')->paginate(8);
+        $query = User::where('roles', 'company');
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $companies = $query->paginate(20);
+
+        if ($request->ajax()) {
+            return view('companies.partials.company_grid', compact('companies'))->render();
+        }
+
         return view('companylist', compact('companies'));
     }
 

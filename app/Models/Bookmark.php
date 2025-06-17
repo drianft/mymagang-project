@@ -15,14 +15,4 @@ class Bookmark extends Pivot
         'post_id',
         'saved_at',
     ];
-
-    public function setCreatedAt($value)
-    {
-
-    }
-
-    public function setUpdatedAt($value)
-    {
-
-    }
 }

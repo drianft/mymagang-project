@@ -27,10 +27,9 @@ class Applier extends Model
         return $this->hasMany(Application::class);
     }
 
-    public function bookmarks()
+    public function bookmarkedPosts()
     {
-        return $this->belongsToMany(Post::class, 'bookmarks', 'applier_id', 'post_id')
-                    ->using(Bookmark::class)
-                    ->withPivot('saved_at');
+        return $this->belongsToMany(Post::class, 'bookmarks')
+            ->withPivot('saved_at');
     }
 }

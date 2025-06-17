@@ -61,20 +61,20 @@
 
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 @auth
-                    <a href="#"
-                        class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
-                    @endauth
-                    @guest
-                        <a href="{{ route('warnguest', ['page' => 'bookmark']) }}"
-                            class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
-                        @endguest
-                        <span class="absolute -inset-1.5"></span>
-                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                            aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17.25 6.75v13.5L12 16.5l-5.25 3.75V6.75a2.25 2.25 0 0 1 2.25-2.25h6a2.25 2.25 0 0 1 2.25 2.25z" />
-                        </svg>
-                    </a>
+
+                    <a href="{{ route('bookmarks.view') }}" class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
+                @endauth
+                @guest
+                    <a href="{{ route('warnguest', ['page' => 'bookmark']) }}" class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
+                @endguest
+                    <span class="absolute -inset-1.5"></span>
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75v13.5L12 16.5l-5.25 3.75V6.75a2.25 2.25 0 0 1 2.25-2.25h6a2.25 2.25 0 0 1 2.25 2.25z" />
+                    </svg>
+                </a>
+
+                    
+
 
                     <!-- Profile dropdown -->
                     @auth

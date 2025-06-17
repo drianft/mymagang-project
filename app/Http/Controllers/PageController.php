@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\User;
 
@@ -11,7 +12,17 @@ class PageController extends Controller
     public function showJobs()
     {
         $posts = Post::paginate(25);
-        return view('jobpost', compact('posts'));
+
+        $bookmarkedIds = [];
+
+        if (Auth::check() && Auth::user()->applier) {
+            $bookmarkedIds = Auth::user()->applier
+                ->bookmarkedPosts()
+                ->pluck('posts.id')
+                ->toArray();
+        }
+
+        return view('jobpost', compact('posts', 'bookmarkedIds'));
     }
 
     public function showCompanies()
@@ -28,8 +39,20 @@ class PageController extends Controller
 
     public function showJobDetail($id)
     {
-        $post = Post::findOrFail($id);
-        return view('detailpost', compact('post'));
+        $post = Post::with(['company.user', 'hr.user'])->findOrFail($id);
+
+        // Cek apakah user sudah bookmark
+        $user = Auth::user();
+        $bookmarked = false;
+
+        if ($user && $user->applier) {
+            $bookmarked = $user->applier->bookmarkedPosts()->where('post_id', $post->id)->exists();
+        }
+
+        return view('detailpost', [
+            'post' => $post,
+            'bookmarked' => $bookmarked,
+        ]);
     }
 
     public function showCompanyDetail($id)

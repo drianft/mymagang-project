@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 
 class CustomProfileForm extends Component
@@ -17,10 +18,17 @@ class CustomProfileForm extends Component
     public $cv_file;
     public $industry;
     public $company_description;
+    public $address;
+    public $birth_date;
+    public $phone_number;
 
     public function mount()
     {
         $user = Auth::user();
+
+        $this->address = $user->address;
+        $this->birth_date = $user->birth_date;
+        $this->phone_number = $user->phone_number;
 
         // Prefill data sesuai role
         if ($user->roles === 'applier' && $user->applier) {
@@ -37,7 +45,11 @@ class CustomProfileForm extends Component
 
     public function rules()
     {
-        $rules = [];
+        $rules = [
+            'address' => 'nullable|string|max:255',
+            'birth_date' => 'nullable|date',
+            'phone_number' => 'nullable|string|max:20',
+        ];
 
         if (Auth::user()->roles === 'applier') {
             $rules = [
@@ -61,7 +73,14 @@ class CustomProfileForm extends Component
     {
         $this->validate();
 
+        /** @var User $user */
         $user = Auth::user();
+
+        $user->update([
+            'address' => $this->address,
+            'birth_date' => $this->birth_date,
+            'phone_number' => $this->phone_number,
+        ]);
 
         if ($user->roles === 'applier' && $user->applier) {
             $data = [

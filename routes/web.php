@@ -42,8 +42,11 @@ Route::get('/jobs', [PageController::class, 'showJobs'])->name('jobs');
 Route::get('/jobs/{id}', [PageController::class, 'showJobDetail'])->name('jobs.show');
 Route::get('/companies', [PageController::class, 'showCompanies'])->name('companies');
 Route::get('/company/{id}', [PageController::class, 'showCompanyDetail'])->name('company.show');
-Route::get('/application', [ApplicationController::class, 'index'])->name('application');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/apply/{post}', [ApplicationController::class, 'apply'])->name('applications.apply');
+    Route::get('/my-applications', [ApplicationController::class, 'myApplications'])->name('applications.mine');
+});
 
 // Group untuk admin
 Route::prefix('admin')->name('admin.')->group(function () {

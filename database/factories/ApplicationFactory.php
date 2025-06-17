@@ -17,7 +17,6 @@ class ApplicationFactory extends Factory
             'applier_id' => Applier::factory(),
             'post_id' => Post::factory(),
             'application_status' => $this->faker->randomElement(['pending', 'interview', 'accepted', 'rejected']),
-            'applied_at' => now(),
         ];
     }
 }

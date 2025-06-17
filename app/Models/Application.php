@@ -10,13 +10,14 @@ class Application extends Model
     use HasFactory;
 
     protected $fillable = [
-        'status',
-        'applied_at',
+        'applier_id',
+        'post_id',
+        'application_status',
     ];
 
     public function applier()
     {
-        return $this->belongsTo(Applier::class);
+        return $this->belongsTo(User::class, 'applier_id');
     }
 
     public function post()
@@ -26,6 +27,7 @@ class Application extends Model
 
     public function interview()
     {
-        return $this->hasOne(Interview::class);
+    return $this->hasOne(Interview::class);
     }
+
 }

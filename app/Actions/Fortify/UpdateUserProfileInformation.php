@@ -22,12 +22,13 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
-
+            'phone_number' => ['nullable', 'string', 'max:20'],
             'religion' => ['nullable', 'string', 'max:50'],
             'education' => ['nullable', 'string', 'max:100'],
             'cv_url' => ['nullable', 'file', 'mimes:pdf,docx', 'max:2048'],
             'industry' => ['nullable', 'string', 'max:100'],
             'company_description' => ['nullable', 'string', 'max:255'],
+            'position' => ['nullable', 'string', 'max:100'],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -43,8 +44,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             ])->save();
         }
 
-        if ($user->role === 'applier' && $user->applier) {
+        if ($user->roles === 'applier') {
             $applier = $user->applier;
+
+            if (! $applier) {
+                $applier = $user->applier()->create();
+            }
 
             if (isset($input['cv_url'])) {
                 $cvPath = $input['cv_url']->store('cv_files', 'public');
@@ -56,20 +61,40 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
             $applier->save();
         }
-        if ($user->role === 'hr' && !$user->hr) {
-            $user->hr()->create([
-                'position' => 'Staff',
-                'company_id' => Auth::user()?->company->id ?? null,
-            ]);
+
+        if ($user->roles === 'hr') {
+            $hr = $user->hr;
+
+            if (! $hr) {
+                $hr = $user->hr()->create([
+                    'position' => $input['position'] ?? 'Staff',
+                    'company_id' => Auth::user()?->company->id ?? null,
+                ]);
+            } else {
+                $hr->update([
+                    'position' => $input['position'] ?? $hr->position,
+                ]);
+            }
         }
 
-        if ($user->role === 'company' && !$user->company) {
-            $user->company()->create([
-                'industry' => $input['industry'] ?? 'Unknown',
-                'company_description' => $input['company_description'] ?? '',
-                'joined_at' => now(),
-            ]);
+
+        if ($user->roles === 'company') {
+            $company = $user->company;
+
+            if (! $company) {
+                $company = $user->company()->create([
+                    'industry' => $input['industry'] ?? 'Unknown',
+                    'company_description' => $input['company_description'] ?? '',
+                    'joined_at' => now(),
+                ]);
+            } else {
+                $company->update([
+                    'industry' => $input['industry'] ?? $company->industry,
+                    'company_description' => $input['company_description'] ?? $company->company_description,
+                ]);
+            }
         }
+
     }
 
     /**

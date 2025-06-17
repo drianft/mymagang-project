@@ -110,8 +110,8 @@
                             <!-- Gambar -->
                             <a href="{{ route('jobs.show', $post->id) }}">
                                 <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
-                                    @if ($post->image)
-                                        <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
+                                    @if ($post->image_post_url)
+                                        <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
                                     @else
                                         <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
                                     @endif
@@ -210,8 +210,8 @@
                         {{-- Gambar --}}
                         <a href="{{ auth()->check() ? route('jobs.show', $post->id) : route('warnguest', ['page' => 'postdesc']) }}">
                             <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
-                                @if ($post->image)
-                                    <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
+                                @if ($post->image_post_url)
+                                    <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
                                 @else
                                     <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
                                 @endif
@@ -488,7 +488,7 @@
 
             @foreach($posts as $post)
             <div class="bg-[#e4e7ec] rounded-[25px] flex items-center px-6 py-4 mt-5">
-                <img src="{{ $post->image_post_url != null ? asset('storage/job-images/' . $post->image) : asset('images/post_img_null.jpg') }}" class="w-50 h-20 rounded-md mr-6 shrink-0"></img>
+                <img src="{{ $post->image_post_url != null ? asset('storage/job-images/' . $post->image_post_url) : asset('images/post_img_null.jpg') }}" class="w-50 h-20 rounded-md mr-6 shrink-0"></img>
                 <div class="flex-1">
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ $post->job_title }}</h3>
                     <span class="text-sm px-3 py-1 rounded-md

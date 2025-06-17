@@ -19,8 +19,8 @@
         <div class="pt-6">
           <div class="mx-auto max-w-2xl sm:px-6 lg:max-w-7xl lg:px-8">
             <div class="w-full aspect-[2/1] overflow-hidden rounded-lg">
-                @if ($post->image)
-                    <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
+                @if ($post->image_post_url)
+                    <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
                 @else
                     <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
                 @endif

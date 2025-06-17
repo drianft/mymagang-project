@@ -9,12 +9,19 @@ use App\Models\User;
 
 class PageController extends Controller
 {
-    public function showJobs()
+    public function showJobs(Request $request)
     {
-        $posts = Post::paginate(25);
+        $query = Post::query();
 
+        // Search filter
+        if ($request->has('search') && $request->search !== '') {
+            $query->where('job_title', 'like', '%' . $request->search . '%');
+        }
+
+        $posts = $query->paginate(25);
+
+        // Ambil bookmark ID
         $bookmarkedIds = [];
-
         if (Auth::check() && Auth::user()->applier) {
             $bookmarkedIds = Auth::user()->applier
                 ->bookmarkedPosts()
@@ -22,6 +29,12 @@ class PageController extends Controller
                 ->toArray();
         }
 
+        // AJAX response buat isi ulang job grid doang
+        if ($request->ajax()) {
+            return view('jobs.partials.job_grid', compact('posts', 'bookmarkedIds'))->render();
+        }
+
+        // Full page load
         return view('jobpost', compact('posts', 'bookmarkedIds'));
     }
 

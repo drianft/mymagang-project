@@ -27,17 +27,23 @@
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
                         @auth
-                            <a href="{{ route('hr-home') }}"
-                                class="{{ request()->routeIs('hr-home') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
-                                aria-current="page">Home</a>
-                            <a href="{{ route('jobs') }}"
-                                class="{{ request()->routeIs('jobs') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">
-                                Posts
-                            </a>
-                            {{-- Link Applicants --}}
-                            <a href="{{ route('hr-dashboard') }}"
-                                class="{{ request()->routeIs('hr-dashboard') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Applicants</a>
+                            @if (auth()->user()->roles === 'hr')
+                                <a href="{{ route('hr-home') }}"
+                                    class="{{ request()->routeIs('hr-home') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
+                                    aria-current="page">Home</a>
+
+                                <a href="{{ route('jobs.index') }}"
+                                    class="{{ request()->routeIs('jobs.index') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">
+                                    Posts
+                                </a>
+
+                                <a href="{{ route('hr-dashboard') }}"
+                                    class="{{ request()->routeIs('hr-dashboard') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">
+                                    Applicants
+                                </a>
+                            @endif
                         @endauth
+
                         @guest
                             <a href="{{ route('guestdash') }}"
                                 class="{{ request()->routeIs('guestdash') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
@@ -66,7 +72,7 @@
                             class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
                         @endguest
                         <span class="absolute -inset-1.5"></span>
-                     
+
                     </a>
 
                     <!-- Profile dropdown -->

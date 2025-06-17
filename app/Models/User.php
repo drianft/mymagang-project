@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Applier;
+use App\Models\Hr;
 
 class User extends Authenticatable
 {
@@ -29,7 +31,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'address',
+        'phone_number',
+        'birth_date',
+        'roles',
+        'status',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -64,4 +72,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function hr() {
+        return $this->hasOne(Hr::class);
+    }
+
+    public function applier() {
+        return $this->hasOne(Applier::class);
+    }
+
+    public function company() {
+        return $this->hasOne(Company::class, 'user_id');
+    }
+
 }

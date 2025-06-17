@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
-class CompanyController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $posts = Post::all(); // ambil semua postingan
+        return view('admin.posts', compact('posts'));
     }
 
     /**
@@ -34,15 +36,20 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function showAdmin(Post $posts)
     {
-        //
+        $posts = Post::find($posts);
+        return view('admin.posts', compact('posts'));
     }
 
+     public function show(Post $post)
+    {
+        return view('detailpost', compact('post'));
+     }
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Company $company)
+    public function edit(post $posts)
     {
         //
     }
@@ -50,7 +57,7 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, post $posts)
     {
         //
     }
@@ -58,7 +65,7 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company)
+    public function destroy(post $posts)
     {
         //
     }

@@ -19,9 +19,9 @@ class DashboardController extends Controller
     {
         if (Auth::user()->roles === 'admin') {
             return redirect()->route('admin.dashboard');
-        }elseif(Auth::user()-> roles === "company"){
-            return redirect()->route('dashboard.company');
-        }else {
+        } elseif (Auth::user()->roles === "company") {
+            return redirect()->route('company.dashboard');
+        } else {
             return redirect()->route('dashboard.user');
         }
     }
@@ -69,37 +69,6 @@ class DashboardController extends Controller
         return view('guestwarning', ['page' => $page]);
     }
 
-    public function showCompanyDashboard()
-    {
-        $companyName = Auth::user()->fullName ?? 'Company Name';
-
-        // Temukan company milik user login
-        $company = Company::where('user_id', Auth::id())->first();
-
-        // Safety check
-        if (!$company) {
-            abort(404, 'Perusahaan tidak ditemukan untuk user ini.');
-        }
-
-        // Ambil post milik perusahaan itu
-        $posts = Post::where('company_id', $company->id)->latest()->paginate(10);
-        $totalPosts = $posts->total();
-        $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
-
-        $users = User::whereIn('roles', ['applier', 'hr'])->get();
-        $hrs = User::where('roles', 'hr')->get();
-        $admins = CompanyAdmin::all();
-
-        return view('dashboard.company', compact(
-            'companyName',
-            'totalPosts',
-            'totalApplicants',
-            'posts',
-            'admins',
-            'users',
-            'hrs'
-        ));
-    }
 
     public function storeAdmin(Request $request)
     {
@@ -115,13 +84,13 @@ class DashboardController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function companyDashboard()
+    public function showCompanyDashboard()
     {
+        $company = Auth::user()->company; // Ambil company dari user yang sedang login
         $hrs = User::where('roles', 'hr')->get(); // Ambil hanya HR
-        $users = User::all(); // Untuk seluruh user di tabel bawah
+        $appliers = User::where('roles', 'applier')->get(); // Untuk seluruh user di tabel bawah
         $posts = Post::latest()->paginate(10); // Job posts
 
-        return view('dashboard.company', compact('hrs', 'users', 'posts'));
+        return view('company.home', compact('appliers', 'company', 'hrs', 'posts'));
     }
-
 }

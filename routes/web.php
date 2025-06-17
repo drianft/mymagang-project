@@ -1,17 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Post;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CompanyController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', [DashboardController::class, 'showGuestDashboard'])->name('guestdash');
 
@@ -21,19 +22,21 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    // Routing dashboard yang ngecek role
+
+    // Redirect sesuai role
     Route::get('/dashboard', [DashboardController::class, 'dashboardRedirect'])->name('dashboard');
 
-    // Routing dashboard user biasa
+    // Dashboard untuk user biasa
     Route::get('/dashboard/user', [DashboardController::class, 'showDashboard'])->name('dashboard.user');
 
-    // Routing dashboard admin
+    // Dashboard untuk admin
     Route::get('/admin/dashboard', [DashboardController::class, 'showAdminDashboard'])->name('admin.dashboard');
 
-    // Routing dashboard company
-    Route::get('/company/dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('dashboard.company');
+    // Dashboard untuk company (pakai .home biar sesuai dengan Blade view)
+    Route::get('/company/home', [DashboardController::class, 'showCompanyDashboard'])->name('company.home');
 });
 
+// Halaman guest dan public
 Route::get('/warnguest/{page}', [PageController::class, 'guestWarning'])->name('warnguest');
 Route::get('/jobs', [PageController::class, 'showJobs'])->name('jobs');
 Route::get('/jobs/{id}', [PageController::class, 'showJobDetail'])->name('jobs.show');
@@ -42,38 +45,23 @@ Route::get('/company/{id}', [PageController::class, 'showCompanyDetail'])->name(
 Route::get('/application', [ApplicationController::class, 'index'])->name('application');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
-
-
-
-
-// Grup Route untuk Admin
+// Group untuk admin
 Route::prefix('admin')->name('admin.')->group(function () {
-    // Dashboard dan Index Admin
-
-    // Manajemen User
     Route::get('/user', [AdminController::class, 'showUsers'])->name('users');
     Route::put('/users/{id}/update-status', [UserController::class, 'updateStatus'])->name('users.updateStatus');
     Route::put('/users/{id}/update-role', [UserController::class, 'updateRole'])->name('users.updateRole');
 
-    // Manajemen Postingan
     Route::get('/posts', [PostController::class, 'index'])->name('posts');
     Route::delete('/posts/{id}', [AdminController::class, 'destroy'])->name('posts.destroy');
 
-    // Data Perusahaan
     Route::get('/companies', [AdminController::class, 'showCompanies'])->name('companies');
-
-    // Data Pelamar
     Route::get('/application', [AdminController::class, 'showApplicant'])->name('application');
 });
 
-//dashboard company
-Route::get('/company-dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('dashboard.company');
+// Routing khusus perusahaan
+Route::get('/company-dashboard', [CompanyController::class, 'showCompanyDashboard'])->name('company.dashboard');
 Route::get('/companyjobs', [PageController::class, 'showJobs'])->name('companyjobs');
 Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name('company-admins.store');
-Route::get('/company-dashboard', [DashboardController::class, 'companyDashboard']);
 Route::put('/admin/hr/{id}/demote', [CompanyController::class, 'demoteHrToApplier'])->name('admin.hr.demote');
 Route::get('/admin/user', [CompanyController::class, 'searchUsers'])->name('admin.users');
-// Route::get('/company-dashboard', [CompanyController::class, 'showDashboard'])->name('dashboard.company');
-
-
-// Route::get('/companyjobs/{id}', [PageController::class, 'showJobDetail'])->name('companyjobs.show');
+Route::get('/company/home', [DashboardController::class, 'showCompanyDashboard'])->name('company.home');

@@ -6,6 +6,10 @@ use App\Models\Company;
 use App\Models\User;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Applier;
+use App\Models\CompanyAdmin;
+use App\Models\Application;
 
 class CompanyController extends Controller
 {
@@ -36,9 +40,36 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function showCompanyDashboard()
     {
-        //
+        $companyName = Auth::user()->fullName ?? 'Company Name';
+
+        // Temukan company milik user login
+        $company = Company::where('user_id', Auth::id())->first();
+
+        // Safety check
+        if (!$company) {
+            abort(404, 'Perusahaan tidak ditemukan untuk user ini.');
+        }
+
+        // Ambil post milik perusahaan itu
+        $posts = Post::where('company_id', $company->id)->latest()->paginate(10);
+        $totalPosts = $posts->total();
+        $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
+
+        $users = User::whereIn('roles', ['applier', 'hr'])->get();
+        $hrs = User::where('roles', 'hr')->get();
+        $admins = CompanyAdmin::all();
+
+        return view('company.dashboard', compact(
+            'companyName',
+            'totalPosts',
+            'totalApplicants',
+            'posts',
+            'admins',
+            'users',
+            'hrs'
+        ));
     }
 
     /**
@@ -90,7 +121,7 @@ class CompanyController extends Controller
         $hrs = User::where('roles', 'hr')->get();
         $posts = Post::latest()->paginate(10);
 
-        return view('dashboard.company', compact('users', 'hrs', 'posts'));
+        return view('company.dashboard', compact('users', 'hrs', 'posts'));
     }
     public function showDashboard()
     {
@@ -99,6 +130,12 @@ class CompanyController extends Controller
         $hrs = User::where('roles', 'hr')->get();
         $posts = Post::latest()->paginate(10);
 
-        return view('dashboard.company', compact('users', 'hrs', 'posts'));
+        return view('company.dashboard', compact('users', 'hrs', 'posts'));
+    }
+
+    public function showCompanyHome()
+    {
+        $user = Auth::user();
+        return view('company.home', compact('user'));
     }
 }

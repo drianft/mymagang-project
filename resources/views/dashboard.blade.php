@@ -1,9 +1,5 @@
 <x-app-layout>
-
-    @php
-        $user = Auth::user();
-    @endphp
-    @if(!$user || ($user && $user->roles == 'applier'))
+    @if(Auth::guest() || (Auth::check() && Auth::user()->roles == 'applier'))
    <!-- Top Section -->
     <div class="grid grid-cols-1 lg:grid-cols-9 gap-6 max-w-7xl mx-auto p-6">
         <!-- Promo Box -->
@@ -21,33 +17,44 @@
         </div>
 
         @auth
-            <!-- Applications -->
-            <div class="lg:col-span-4 bg-gray-200 rounded-xl p-6 flex flex-col h-full">
-                <h2 class="text-lg text-center font-bold mb-4">Your Applications</h2>
-                    <ul class="space-y-4 text-sm">
-                        @foreach($latestApplications as $app)
-                            <li class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <img src="{{ $app->post->company->user->profile_photo_url }}" alt="{{ $app->post->company->user->name }}" class="w-8 h-8 rounded-full">
-                                    <div>
-                                        <p class="font-semibold">{{ $app->post->company->user->name ?? 'Unknown Company' }}</p>
-                                        <p class="text-xs text-gray-500">{{ $app->post->job_title ?? 'Unknown Job' }}</p>
-                                    </div>
+        <!-- Applications -->
+        <div class="lg:col-span-4 bg-gray-200 rounded-xl p-6 flex flex-col h-full">
+            <h2 class="text-lg text-center font-bold mb-4">Your Applications</h2>
+
+            @if($latestApplications->isEmpty())
+                <div class="text-center text-sm text-gray-600 flex-1 flex flex-col justify-center items-center">
+                    <p class="mb-4">You haven't applied for any jobs yet.</p>
+                    <a href="{{ route('jobs') }}"
+                    class="inline-block bg-blue-600 text-white text-sm px-4 py-2 rounded hover:bg-blue-700 transition">
+                        Browse Jobs
+                    </a>
+                </div>
+            @else
+                <ul class="space-y-4 text-sm">
+                    @foreach($latestApplications as $app)
+                        <li class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <img src="{{ $app->post->company->user->profile_photo_url }}" alt="{{ $app->post->company->user->name }}" class="w-8 h-8 rounded-full">
+                                <div>
+                                    <p class="font-semibold">{{ $app->post->company->user->name ?? 'Unknown Company' }}</p>
+                                    <p class="text-xs text-gray-500">{{ $app->post->job_title ?? 'Unknown Job' }}</p>
                                 </div>
-                                <span class="
-                                    text-xs font-semibold px-2 py-1 rounded
-                                    @if($app->application_status === 'accepted') bg-green-100 text-green-700
-                                    @elseif($app->application_status === 'rejected') bg-red-100 text-red-700
-                                    @elseif($app->application_status === 'interview') bg-blue-100 text-blue-700
-                                    @else bg-yellow-100 text-yellow-700 @endif
-                                ">
-                                    {{ strtoupper($app->application_status) }}
-                                </span>
-                            </li>
-                        @endforeach
-                    </ul>
+                            </div>
+                            <span class="
+                                text-xs font-semibold px-2 py-1 rounded
+                                @if($app->application_status === 'accepted') bg-green-100 text-green-700
+                                @elseif($app->application_status === 'rejected') bg-red-100 text-red-700
+                                @elseif($app->application_status === 'interview') bg-blue-100 text-blue-700
+                                @else bg-yellow-100 text-yellow-700 @endif
+                            ">
+                                {{ strtoupper($app->application_status) }}
+                            </span>
+                        </li>
+                    @endforeach
+                </ul>
                 <a href="{{ route('applications.mine') }}" class="text-lg text-center text-neutral-700 mt-auto cursor-pointer hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">Show more</a>
-            </div>
+            @endif
+        </div>
         @endauth
 
         @guest
@@ -72,96 +79,179 @@
     </div>
 
 
-    <!-- Saved Jobs -->
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="flex justify-between items-center mb-2">
-            <h2 class="font-semibold text-lg">Saved Jobs</h2>
-            @auth
-                <a href="{{ route('jobs') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Saved Jobs →</a>
-            @endauth
-            @guest
-                <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Saved Jobs →</a>
-            @endguest
-
-        </div>
-        <div class="swiper saved-swiper">
-            <div class="swiper-wrapper">
-                <!-- Slide -->
-                <a href="#" class="swiper-slide bg-gray-100 rounded-xl p-4 w-64 shadow block">
-                    <!-- Gambar -->
-                    <div class="w-full h-40 bg-white rounded-lg mb-3"></div>
-                    <p class="font-semibold">Frontend Developer</p>
-                    <span class="bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded inline-block mt-1">Part Time</span>
-                    <div class="text-xs text-gray-500 mt-2 flex gap-5">
-                        <span>👥 420 Applicants</span>
-                        <span>👁️ 4200 Views</span>
-                    </div>
-                </a>
-
-
-                <a href="#" class="swiper-slide bg-gray-100 rounded-xl p-4 w-64 shadow block">
-                    <!-- Gambar -->
-                    <img src="images/test1.png" class="w-full h-40 object-cover rounded-lg mb-3" alt="Job image">
-
-                    <p class="font-semibold">Frontend Developer</p>
-                    <span class="bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded inline-block mt-1">Part Time</span>
-                        <div class="text-xs text-gray-500 mt-2 flex gap-5">
-                        <span>👥 420 Applicants</span>
-                        <span>👁️ 4200 Views</span>
-                    </div>
-                </a>
-
-                <a href="#" class="swiper-slide bg-gray-100 rounded-xl p-4 w-64 shadow block">
-                    <!-- Gambar -->
-                    <img src="images/test2.png"
-                    class="w-full h-40 object-cover rounded-lg mb-3"
-                    alt="Job image">
-
-                    <p class="font-semibold">Frontend Developer</p>
-                    <span class="bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded inline-block mt-1">Part Time</span>
-                    <div class="text-xs text-gray-500 mt-2 flex gap-5">
-                        <span>👥 420 Applicants</span>
-                        <span>👁️ 4200 Views</span>
-                    </div>
-                </a>
-            </div>
-        </div>
+ <!-- Saved Jobs -->
+<div class="max-w-7xl mx-auto px-6 mt-6">
+    <div class="flex justify-between items-center mb-2">
+        <h2 class="font-semibold text-lg">Saved Jobs</h2>
+        @auth
+            <a href="{{ route('jobs') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">
+                View Saved Jobs →
+            </a>
+        @endauth
+        @guest
+            <a href="{{ route('login') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">
+                View Saved Jobs →
+            </a>
+        @endguest
     </div>
+
+    @auth
+        @if ($bookmarkedPosts->isEmpty())
+            <p class="text-gray-500 text-center">You have no bookmarked jobs yet.</p>
+        @else
+            <div class="swiper saved-swiper">
+                <div class="swiper-wrapper">
+                    @foreach($bookmarkedPosts as $post)
+                        @php
+                            $bookmarked = auth()->user()->applier->bookmarkedPosts->contains($post->id);
+                        @endphp
+
+                        <div class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
+                            <!-- Gambar -->
+                            <a href="{{ route('jobs.show', $post->id) }}">
+                                <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
+                                    @if ($post->image_post_url)
+                                        <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
+                                    @else
+                                        <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
+                                    @endif
+                                </div>
+                            </a>
+
+                            <!-- Title + Bookmark -->
+                            <div class="mb-2 flex justify-between items-start">
+                                <div class="font-semibold text-sm text-gray-800">
+                                    {{ $post->job_title }}
+                                </div>
+                                <button type="button"
+                                    class="toggle-bookmark"
+                                    data-post-id="{{ $post->id }}"
+                                    data-bookmarked="{{ $bookmarked ? 'true' : 'false' }}">
+                                    <span class="bookmark-icon">
+                                        @if ($bookmarked)
+                                            <!-- Solid -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                 viewBox="0 0 24 24" class="w-5 h-5 text-blue-600">
+                                                <path fill-rule="evenodd"
+                                                      d="M6.75 3A2.25 2.25 0 004.5 5.25v15.636a.75.75 0
+                                                      001.14.64l6.36-3.816 6.36 3.816a.75.75 0
+                                                      001.14-.64V5.25A2.25 2.25 0 0017.25 3H6.75z"
+                                                      clip-rule="evenodd" />
+                                            </svg>
+                                        @else
+                                            <!-- Outline -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                 viewBox="0 0 24 24" stroke-width="1.5"
+                                                 stroke="currentColor" class="w-5 h-5 text-gray-500">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M17.25 3.75H6.75A2.25 2.25 0 004.5
+                                                      6v14.25l7.5-4.5 7.5 4.5V6a2.25
+                                                      2.25 0 00-2.25-2.25z" />
+                                            </svg>
+                                        @endif
+                                    </span>
+                                </button>
+                            </div>
+
+                            <!-- Job Type Badge -->
+                            <span class="text-xs px-2 py-1 mb-[40px] inline-block rounded font-medium
+                                {{ $post->job_type === 'full-time' ? 'bg-green-100 text-green-700' :
+                                   ($post->job_type === 'part-time' ? 'bg-orange-100 text-orange-700' : 'bg-gray-300 text-gray-700') }}">
+                                {{ ucfirst($post->job_type) }}
+                            </span>
+
+                            <!-- Stats -->
+                            <div class="mt-3 text-xs text-gray-500 flex justify-between absolute bottom-5 left-4 right-4">
+                                <div>{{ $post->total_appliers }} Applicants</div>
+                                <div>{{ $post->total_views }} Views</div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    @endauth
+
+    @guest
+        <div class="bg-yellow-100 text-yellow-800 px-4 py-4 rounded text-center">
+            <p class="font-semibold text-base">Anda belum login.</p>
+            <p class="text-sm">Silakan <a href="{{ route('login') }}" class="text-blue-600 hover:underline font-semibold">login terlebih dahulu</a> untuk melihat daftar pekerjaan yang disimpan.</p>
+        </div>
+    @endguest
+</div>
+
 
     <!-- New Jobs -->
     <div class="max-w-7xl mx-auto px-6 mt-6">
         <div class="flex justify-between items-center mb-2">
             <h2 class="font-semibold text-lg">New Jobs</h2>
             @auth
-                <a href="{{ route('jobs') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Jobs →</a>
+                <a href="{{ route('jobs') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">View Other Jobs →</a>
             @endauth
             @guest
-                <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Jobs →</a>
+                <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">View Other Jobs →</a>
             @endguest
         </div>
 
         <div class="swiper new-swiper">
             <div class="swiper-wrapper">
                 @foreach($posts as $post)
-                @auth
-                    <a href="{{ route('posts.show', $post->id) }}" class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
-                @endauth
-                @guest
-                    <a href="{{ route('warnguest', ['page' => 'postdesc']) }}" class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
-                @endguest
+                    @php
+                        $bookmarked = auth()->check() && auth()->user()->applier->bookmarkedPosts->contains($post->id);
+                    @endphp
+
+                    @auth
+                        <div class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
+                    @endauth
+                    @guest
+                        <div class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
+                    @endguest
 
                         {{-- Gambar --}}
-                        <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
-                            @if ($post->image)
-                                <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
-                            @else
-                                <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
-                            @endif
-                        </div>
+                        <a href="{{ auth()->check() ? route('jobs.show', $post->id) : route('warnguest', ['page' => 'postdesc']) }}">
+                            <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
+                                @if ($post->image_post_url)
+                                    <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
+                                @else
+                                    <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
+                                @endif
+                            </div>
+                        </a>
 
-                        {{-- Title --}}
-                        <div class="mb-2 font-semibold text-sm text-gray-800">
-                            {{ $post->job_title }}
+                        {{-- Title + Bookmark --}}
+                        <div class="mb-2 flex justify-between items-start">
+                            <div class="font-semibold text-sm text-gray-800">
+                                {{ $post->job_title }}
+                            </div>
+                            <button type="button"
+                                class="toggle-bookmark"
+                                data-post-id="{{ $post->id }}"
+                                data-bookmarked="{{ $bookmarked ? 'true' : 'false' }}"
+                                @guest data-guest="true" @endguest>
+                                <span class="bookmark-icon">
+                                    @if ($bookmarked)
+                                        {{-- Solid --}}
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                             viewBox="0 0 24 24" class="w-5 h-5 text-blue-600">
+                                            <path fill-rule="evenodd"
+                                                  d="M6.75 3A2.25 2.25 0 004.5 5.25v15.636a.75.75 0
+                                                  001.14.64l6.36-3.816 6.36 3.816a.75.75 0
+                                                  001.14-.64V5.25A2.25 2.25 0 0017.25 3H6.75z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                    @else
+                                        {{-- Outline --}}
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                             viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" class="w-5 h-5 text-gray-500">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M17.25 3.75H6.75A2.25 2.25 0 004.5
+                                                  6v14.25l7.5-4.5 7.5 4.5V6a2.25
+                                                  2.25 0 00-2.25-2.25z" />
+                                        </svg>
+                                    @endif
+                                </span>
+                            </button>
                         </div>
 
                         {{-- Job Type Badge --}}
@@ -176,7 +266,7 @@
                             <div>{{ $post->total_appliers }} Applicants</div>
                             <div>{{ $post->total_views }} Views</div>
                         </div>
-                    </a>
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -241,7 +331,70 @@
             </a>
         @endforeach
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.toggle-bookmark').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
 
+                    if (this.dataset.guest === 'true') {
+                        window.location.href = "{{ route('warnguest', ['page' => 'bookmarks']) }}";
+                        return;
+                    }
+
+                    const postId = this.dataset.postId;
+                    const isBookmarked = this.dataset.bookmarked === 'true';
+                    const iconContainer = this.querySelector('.bookmark-icon');
+
+                    fetch('/bookmarks/toggle', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ post_id: postId }),
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'added') {
+                            // Change to solid icon
+                            iconContainer.innerHTML = `
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                    viewBox="0 0 24 24" class="w-5 h-5 text-blue-600">
+                                    <path fill-rule="evenodd"
+                                        d="M6.75 3A2.25 2.25 0 004.5 5.25v15.636a.75.75 0
+                                        001.14.64l6.36-3.816 6.36 3.816a.75.75 0
+                                        001.14-.64V5.25A2.25 2.25 0 0017.25 3H6.75z"
+                                        clip-rule="evenodd" />
+                                </svg>`;
+                            button.dataset.bookmarked = 'true';
+
+                            // Refresh page after added
+                            window.location.reload();
+                        } else if (data.status === 'removed') {
+                            // Change to outline icon
+                            iconContainer.innerHTML = `
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-5 h-5 text-gray-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17.25 3.75H6.75A2.25 2.25 0 004.5
+                                        6v14.25l7.5-4.5 7.5 4.5V6a2.25
+                                        2.25 0 00-2.25-2.25z" />
+                                </svg>`;
+                            button.dataset.bookmarked = 'false';
+
+                            // Refresh page after removed
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Bookmark toggle error:', error);
+                    });
+                });
+            });
+        });
+    </script>
   </div>
 
 {{-- Cek jika user adalah admin --}}
@@ -335,7 +488,7 @@
 
             @foreach($posts as $post)
             <div class="bg-[#e4e7ec] rounded-[25px] flex items-center px-6 py-4 mt-5">
-                <img src="{{ $post->image_post_url != null ? asset('storage/job-images/' . $post->image) : asset('images/post_img_null.jpg') }}" class="w-50 h-20 rounded-md mr-6 shrink-0"></img>
+                <img src="{{ $post->image_post_url != null ? asset('storage/job-images/' . $post->image_post_url) : asset('images/post_img_null.jpg') }}" class="w-50 h-20 rounded-md mr-6 shrink-0"></img>
                 <div class="flex-1">
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ $post->job_title }}</h3>
                     <span class="text-sm px-3 py-1 rounded-md

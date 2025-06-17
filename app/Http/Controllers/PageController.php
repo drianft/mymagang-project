@@ -9,12 +9,19 @@ use App\Models\User;
 
 class PageController extends Controller
 {
-    public function showJobs()
+    public function showJobs(Request $request)
     {
-        $posts = Post::paginate(25);
+        $query = Post::query();
 
+        // Search filter
+        if ($request->has('search') && $request->search !== '') {
+            $query->where('job_title', 'like', '%' . $request->search . '%');
+        }
+
+        $posts = $query->paginate(25);
+
+        // Ambil bookmark ID
         $bookmarkedIds = [];
-
         if (Auth::check() && Auth::user()->applier) {
             $bookmarkedIds = Auth::user()->applier
                 ->bookmarkedPosts()
@@ -22,12 +29,29 @@ class PageController extends Controller
                 ->toArray();
         }
 
+        // AJAX response buat isi ulang job grid doang
+        if ($request->ajax()) {
+            return view('jobs.partials.job_grid', compact('posts', 'bookmarkedIds'))->render();
+        }
+
+        // Full page load
         return view('jobpost', compact('posts', 'bookmarkedIds'));
     }
 
-    public function showCompanies()
+    public function showCompanies(Request $request)
     {
-        $companies = User::with('company')->where('roles', 'company')->paginate(8);
+        $query = User::where('roles', 'company');
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $companies = $query->paginate(20);
+
+        if ($request->ajax()) {
+            return view('companies.partials.company_grid', compact('companies'))->render();
+        }
+
         return view('companylist', compact('companies'));
     }
 

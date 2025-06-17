@@ -69,4 +69,6 @@ Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name
 Route::put('/admin/hr/{id}/demote', [CompanyController::class, 'demoteHrToApplier'])->name('admin.hr.demote');
 Route::get('/admin/user', [CompanyController::class, 'searchUsers'])->name('admin.users');
 Route::put('/users/{id}/update-role', [UserController::class, 'updateRole'])->name('admin.users.updateRole');
-
+Route::post('/company/hr/store', [CompanyController::class, 'storeHR'])->name('company.storeHR');
+Route::put('/company/users/update-role/{id}', [CompanyController::class, 'updateUserRole'])->name('company.users.updateRole');
+Route::put('/company/users/update-role/{id}', [CompanyController::class, 'updateUserRole'])->name('company.users.updateRole');

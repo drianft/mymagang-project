@@ -66,13 +66,13 @@
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                 tabindex="-1">
                                 <a href="{{ route('profile.show') }}"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 px-4 py-2 ease-in-out text-sm"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out"
                                     role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
                                 <form method="POST" action="{{ route('logout') }}" id="custom-logout-form">
                                     @csrf
                                     <a href="#"
                                         onclick="event.preventDefault(); document.getElementById('custom-logout-form').submit();"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 px-4 py-2 ease-in-out text-sm"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out"
                                         role="menuitem" tabindex="-1" id="user-menu-item-1">
                                         Sign out
                                     </a>
@@ -98,10 +98,10 @@
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                 tabindex="-1">
                                 <a href="{{ route('login') }}"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 px-4 py-2 ease-in-out text-sm"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out"
                                     role="menuitem" tabindex="-1" id="user-menu-item-0">Login</a>
                                 <a href="{{ route('register') }}"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 px-4 py-2 ease-in-out text-sm"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out"
                                     role="menuitem" tabindex="-1" id="user-menu-item-1">Sign In</a>
                             </div>
                         </div>
@@ -114,9 +114,9 @@
     <div class="sm:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pt-2 pb-3">
             <a href="{{ route('company.dashboard') }}"
-                class="{{ request()->routeIs('company.dashboard') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm' }}">Dashboard</a>
+                class="{{ request()->routeIs('company.dashboard') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out' }}">Dashboard</a>
             <a href="{{ route('company.jobs') }}"
-                class="{{ request()->routeIs('company.jobs') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out text-sm' }}">Company Posts</a>
+                class="{{ request()->routeIs('company.jobs') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out' }}">Company Posts</a>
         </div>
     </div>
 </nav>

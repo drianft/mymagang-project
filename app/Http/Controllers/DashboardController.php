@@ -69,27 +69,10 @@ class DashboardController extends Controller
         return view('guestwarning', ['page' => $page]);
     }
 
-
-    public function storeAdmin(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:company_admins,email',
-            'position' => 'nullable|string|max:255',
-            'status' => 'required|in:active,inactive',
-        ]);
-
-        CompanyAdmin::create($validated);
-
-        return response()->json(['success' => true]);
-    }
-
     public function showCompanyDashboard()
     {
-        $companyName = Auth::user()->fullName ?? 'Company Name';
-
-        // Temukan company milik user login
-        $company = Company::where('user_id', Auth::id())->first();
+        $user = Auth::user();
+        $company = $user->company; // Ambil perusahaan yang terkait dengan user
 
         // Safety check
         if (!$company) {
@@ -101,21 +84,16 @@ class DashboardController extends Controller
         $totalPosts = $posts->total();
         $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
 
-        $users = User::whereIn('roles', ['applier'])->get();
+        $applier = User::whereIn('roles', ['applier'])->get();
         $hrs = User::where('roles', 'hr')->get();
-        $admins = CompanyAdmin::all();
 
         return view('company.dashboard', compact(
-            'companyName',
             'company',
             'totalPosts',
             'totalApplicants',
             'posts',
-            'admins',
-            'users',
+            'applier',
             'hrs'
         ));
     }
-
-
 }

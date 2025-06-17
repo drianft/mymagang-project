@@ -25,48 +25,28 @@
             <div class="lg:col-span-4 bg-gray-200 rounded-xl p-6 flex flex-col h-full">
                 <h2 class="text-lg text-center font-bold mb-4">Your Applications</h2>
                     <ul class="space-y-4 text-sm">
-                        <li class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                            <img src="images/test1.png" class="w-8 h-8 rounded-full" />
-                            <div>
-                                <p class="font-semibold">Universitas Sumatera Utara</p>
-                                <p class="text-xs text-gray-500">Full-Stack Web Developer</p>
-                            </div>
-                            </div>
-                        <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded">ACCEPTED</span>
-                        </li>
-                        <li class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                            <img src="images/logo2.png" class="w-8 h-8 rounded-full" />
-                            <div>
-                                <p class="font-semibold">Universitas Mikroskil</p>
-                                <p class="text-xs text-gray-500">Frontend Developer</p>
-                            </div>
-                            </div>
-                            <span class="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded">DECLINED</span>
-                        </li>
-                        <li class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                            <img src="images/logo3.png" class="w-8 h-8 rounded-full" />
-                            <div>
-                                <p class="font-semibold">PT Wilmar Nabati Indonesia</p>
-                                <p class="text-xs text-gray-500">Marketing Assistant</p>
-                            </div>
-                            </div>
-                            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">PENDING</span>
-                        </li>
-                        <li class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                            <img src="images/logo4.png" class="w-8 h-8 rounded-full" />
-                            <div>
-                                <p class="font-semibold">PT Bank Mandiri Tbk</p>
-                                <p class="text-xs text-gray-500">Social Media Specialist</p>
-                            </div>
-                            </div>
-                            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">PENDING</span>
-                        </li>
+                        @foreach($latestApplications as $app)
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <img src="{{ $app->post->company->user->profile_photo_url }}" alt="{{ $app->post->company->user->name }}" class="w-8 h-8 rounded-full">
+                                    <div>
+                                        <p class="font-semibold">{{ $app->post->company->user->name ?? 'Unknown Company' }}</p>
+                                        <p class="text-xs text-gray-500">{{ $app->post->job_title ?? 'Unknown Job' }}</p>
+                                    </div>
+                                </div>
+                                <span class="
+                                    text-xs font-semibold px-2 py-1 rounded
+                                    @if($app->application_status === 'accepted') bg-green-100 text-green-700
+                                    @elseif($app->application_status === 'rejected') bg-red-100 text-red-700
+                                    @elseif($app->application_status === 'interview') bg-blue-100 text-blue-700
+                                    @else bg-yellow-100 text-yellow-700 @endif
+                                ">
+                                    {{ strtoupper($app->application_status) }}
+                                </span>
+                            </li>
+                        @endforeach
                     </ul>
-                <p class="text-lg text-center text-neutral-700 mt-auto cursor-pointer hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">Show more</p>
+                <a href="{{ route('applications.mine') }}" class="text-lg text-center text-neutral-700 mt-auto cursor-pointer hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">Show more</a>
             </div>
         @endauth
 

@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
                     'hr_id' => $post->hr_id
                 ]);
 
-                $applier->bookmarks()->attach($post->id, ['saved_at' => now()]);
+                $applier->bookmarkedPosts()->attach($post->id, ['saved_at' => now()]);
             }
         });
     }

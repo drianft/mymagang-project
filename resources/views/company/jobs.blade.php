@@ -23,7 +23,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                         @foreach ($posts as $post)
-                        <a href="{{ route('posts.show', $post->id) }}" class="block hover:transform hover:scale-105 transition-transform duration-200">
+                        <a href="{{ route('jobs.show', $post->id) }}" class="block hover:transform hover:scale-105 transition-transform duration-200">
                             <div class="bg-white rounded-xl p-4 border shadow hover:shadow-lg transition-all h-80 flex flex-col justify-between">
                                 <div>
                                     <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-4 overflow-hidden rounded-lg">

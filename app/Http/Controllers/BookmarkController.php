@@ -74,6 +74,6 @@ class BookmarkController extends Controller
         $applier = Auth::user()->applier;
         $bookmarked = $applier->bookmarkedPosts()->where('post_id', $id)->exists();
 
-        return view('posts.show', compact('post', 'bookmarked'));
+        return view('jobs.show', compact('post', 'bookmarked'));
     }
 }

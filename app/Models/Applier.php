@@ -29,7 +29,7 @@ class Applier extends Model
 
     public function bookmarkedPosts()
     {
-        return $this->belongsToMany(Post::class, 'bookmarks')
+        return $this->belongsToMany(Post::class, 'bookmarks','applier_id','post_id')
             ->withPivot('saved_at');
     }
 }

@@ -38,8 +38,8 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get();
-
-        return view('dashboard', compact('companies', 'posts', 'latestApplications'));
+        $bookmarkedPosts = $user->applier->bookmarkedPosts()->latest()->take(10)->get();
+        return view('dashboard', compact('companies', 'posts', 'latestApplications','bookmarkedPosts'));
 
     }
 

@@ -8,6 +8,27 @@
     </x-slot>
 
     <x-slot name="form">
+        <!-- Address -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="address" value="{{ __('Address') }}" />
+            <x-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="address" />
+            <x-input-error for="address" class="mt-2" />
+        </div>
+
+        <!-- Birth Date -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="birth_date" value="{{ __('Birth Date') }}" />
+            <x-input id="birth_date" type="date" class="mt-1 block w-full" wire:model.defer="birth_date" />
+            <x-input-error for="birth_date" class="mt-2" />
+        </div>
+
+        <!-- Phone Number -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="phone_number" value="{{ __('Phone Number') }}" />
+            <x-input id="phone_number" type="text" class="mt-1 block w-full" wire:model.defer="phone_number" />
+            <x-input-error for="phone_number" class="mt-2" />
+        </div>
+
         @if (Auth::user()->roles === 'applier')
             <!-- Religion -->
             <div class="col-span-6 sm:col-span-4">
@@ -37,7 +58,7 @@
                 @else
                     {{-- Jika belum ada CV, tampilkan input upload --}}
                     <x-input id="cv_url" type="file" class="mt-1 block w-full"
-                             wire:model="cv_url" accept=".pdf,.doc,.docx" />
+                             wire:model="cv_file" accept=".pdf,.doc,.docx" />
                     <x-input-error for="cv_url" class="mt-2" />
                 @endif
             </div>

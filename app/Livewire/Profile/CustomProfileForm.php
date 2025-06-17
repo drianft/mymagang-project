@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 
 class CustomProfileForm extends Component
@@ -14,12 +15,20 @@ class CustomProfileForm extends Component
     public $religion;
     public $education;
     public $cv_url;
+    public $cv_file;
     public $industry;
     public $company_description;
+    public $address;
+    public $birth_date;
+    public $phone_number;
 
     public function mount()
     {
         $user = Auth::user();
+
+        $this->address = $user->address;
+        $this->birth_date = $user->birth_date;
+        $this->phone_number = $user->phone_number;
 
         // Prefill data sesuai role
         if ($user->roles === 'applier' && $user->applier) {
@@ -36,13 +45,17 @@ class CustomProfileForm extends Component
 
     public function rules()
     {
-        $rules = [];
+        $rules = [
+            'address' => 'nullable|string|max:255',
+            'birth_date' => 'nullable|date',
+            'phone_number' => 'nullable|string|max:20',
+        ];
 
         if (Auth::user()->roles === 'applier') {
             $rules = [
                 'religion' => 'nullable|string|max:50',
                 'education' => 'nullable|string|max:100',
-                'cv_url' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+                'cv_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             ];
         }
 
@@ -60,7 +73,14 @@ class CustomProfileForm extends Component
     {
         $this->validate();
 
+        /** @var User $user */
         $user = Auth::user();
+
+        $user->update([
+            'address' => $this->address,
+            'birth_date' => $this->birth_date,
+            'phone_number' => $this->phone_number,
+        ]);
 
         if ($user->roles === 'applier' && $user->applier) {
             $data = [
@@ -69,14 +89,21 @@ class CustomProfileForm extends Component
             ];
 
             // Cek apakah file diupload (dan bukan string path lama)
-            if ($this->cv_url instanceof \Illuminate\Http\UploadedFile) {
-                $path = $this->cv_url->store('cvs', 'public'); // simpan ke storage/app/public/cvs
+            if ($this->cv_file instanceof \Illuminate\Http\UploadedFile) {
+                $path = $this->cv_file->store('cvs', 'public'); // simpan ke storage/app/public/cvs
                 $data['cv_url'] = $path;
 
                 $this->cv_url = $path;
             }
 
-            $user->applier->update($data);
+            $applier = $user->applier;
+
+            $applier->fill($data);
+
+            // Cek apakah ada perubahan
+            if ($applier->isDirty()) {
+                $applier->save();
+            }
         }
 
 

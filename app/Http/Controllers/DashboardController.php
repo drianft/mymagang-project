@@ -86,11 +86,36 @@ class DashboardController extends Controller
 
     public function showCompanyDashboard()
     {
-        $company = Auth::user()->company; // Ambil company dari user yang sedang login
-        $hrs = User::where('roles', 'hr')->get(); // Ambil hanya HR
-        $appliers = User::where('roles', 'applier')->get(); // Untuk seluruh user di tabel bawah
-        $posts = Post::latest()->paginate(10); // Job posts
+        $companyName = Auth::user()->fullName ?? 'Company Name';
 
-        return view('company.home', compact('appliers', 'company', 'hrs', 'posts'));
+        // Temukan company milik user login
+        $company = Company::where('user_id', Auth::id())->first();
+
+        // Safety check
+        if (!$company) {
+            abort(404, 'Perusahaan tidak ditemukan untuk user ini.');
+        }
+
+        // Ambil post milik perusahaan itu
+        $posts = Post::where('company_id', $company->id)->latest()->paginate(10);
+        $totalPosts = $posts->total();
+        $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
+
+        $users = User::whereIn('roles', ['applier', 'hr'])->get();
+        $hrs = User::where('roles', 'hr')->get();
+        $admins = CompanyAdmin::all();
+
+        return view('company.dashboard', compact(
+            'companyName',
+            'company',
+            'totalPosts',
+            'totalApplicants',
+            'posts',
+            'admins',
+            'users',
+            'hrs'
+        ));
     }
+
+
 }

@@ -33,7 +33,7 @@ Route::middleware([
     Route::get('/admin/dashboard', [DashboardController::class, 'showAdminDashboard'])->name('admin.dashboard');
 
     // Dashboard untuk company (pakai .home biar sesuai dengan Blade view)
-    Route::get('/company/home', [DashboardController::class, 'showCompanyDashboard'])->name('company.home');
+    Route::get('/company/jobs', [CompanyController::class, 'showJobs'])->name('company.jobs');
 });
 
 // Halaman guest dan public
@@ -59,9 +59,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 // Routing khusus perusahaan
-Route::get('/company-dashboard', [CompanyController::class, 'showCompanyDashboard'])->name('company.dashboard');
+Route::get('/company-dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('company.dashboard');
 Route::get('/companyjobs', [PageController::class, 'showJobs'])->name('companyjobs');
 Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name('company-admins.store');
 Route::put('/admin/hr/{id}/demote', [CompanyController::class, 'demoteHrToApplier'])->name('admin.hr.demote');
 Route::get('/admin/user', [CompanyController::class, 'searchUsers'])->name('admin.users');
-Route::get('/company/home', [DashboardController::class, 'showCompanyDashboard'])->name('company.home');

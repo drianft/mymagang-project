@@ -4,16 +4,70 @@
             {{ __('Company Admin Management') }}
         </h2>
     </x-slot>
+<!-- Top Section -->
+<div class="max-w-7xl mx-auto p-6">
+    <!-- Promo Box -->
+    <!-- Promo Box -->
+    <div
+        class="w-full max-w-6xl bg-white rounded-2xl flex flex-col md:flex-row items-center justify-between mx-auto overflow-hidden shadow-md border border-gray-200">
+
+        <!-- Company Logo -->
+        <div class="md:w-1/2 p-6 flex justify-center items-center bg-gray-50">
+            <img src="{{ asset('images/logoCompany.jpg') }}"
+                onerror="this.onerror=null; this.src='{{ asset('images/post_img_null.jpg') }}';"
+                class="w-full h-72 md:h-96 object-cover rounded-lg shadow-sm border border-gray-300"
+                alt="Company Logo">
+        </div>
+
+        <!-- Company Info -->
+        <div class="md:w-1/2 p-8 space-y-4">
+            <!-- Name -->
+            <h1 class="text-4xl md:text-5xl font-semibold text-gray-800">
+                {{ $company->user->name }}
+            </h1>
+
+            <!-- Description (manual 3-line truncate effect) -->
+            <div class="text-gray-700 text-lg leading-relaxed overflow-hidden relative" style="max-height: 4.5em;">
+                <p class="overflow-hidden text-ellipsis whitespace-normal break-words">
+                    {{ $company->company_description }}
+                </p>
+
+                <!-- Fade gradient -->
+                <div class="absolute bottom-0 left-0 w-full h-6 bg-gradient-to-t from-white to-transparent"></div>
+            </div>
+
+            <!-- CTA -->
+            <button
+                class="px-6 py-2 bg-gray-800 text-white rounded-md text-sm font-medium hover:bg-gray-900 transition">
+                MANAGE PROFILE
+            </button>
+        </div>
+    </div>
+
+
+
+    <!-- Saved Jobs -->
+    <div class="mt-10 max-w-7xl mx-auto px-6">
+        <div class="flex justify-between items-center mb-2">
+            @auth
+                
+            @endauth
+            @guest
+                <a href="{{ route('warnguest', ['page' => 'viewother']) }}"
+                    class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View
+                    Your Jobs →</a>
+            @endguest
+        </div>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             <!-- Admin Management Section -->
             
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class=>
                 <div class="p-6 text-gray-900">
                     <div class="bg-gray-100 rounded-lg p-6">
                         <h3 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-300 pb-3">
-                            Company's Hrs
+                            Company's HRs
                         </h3>
 
                         <!-- Admin Table Header -->
@@ -84,7 +138,7 @@
                         </div>
                     </div>
 
-                    <p class="text-sm text-gray-500 mb-4">Total Users: {{ $users->count() }}</p>
+                    <p class="text-sm text-gray-500 mb-4">Cari users untuk dijadikan HR's,-----Total Users: {{ $users->count() }}</p>
 
                     <div class="bg-white rounded-xl shadow">
                         <div class="overflow-y-auto overflow-x-auto max-h-[500px]">
@@ -121,116 +175,12 @@
                 </div>
             </div>
 
-            <!-- Job Cards Section -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-semibold text-gray-800">Your Posts</h3>
-                        <div class="relative inline-block">
-                            <select class="appearance-none border border-gray-300 bg-white px-4 py-2 rounded-md shadow-sm pr-8 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>All Categories</option>
-                                <option>Full-time</option>
-                                <option>Part-time</option>
-                                <option>Freelance</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                        @foreach ($posts as $post)
-                        <a href="{{ route('posts.show', $post->id) }}" class="block hover:transform hover:scale-105 transition-transform duration-200">
-                            <div class="bg-white rounded-xl p-4 border shadow hover:shadow-lg transition-all h-80 flex flex-col justify-between">
-                                <div>
-                                    <!-- Image -->
-                                    <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-4 overflow-hidden rounded-lg">
-                                        @if ($post->image)
-                                            <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
-                                        @else
-                                            <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
-                                        @endif
-                                    </div>
-                                    <div class="mb-3 font-semibold text-gray-800 line-clamp-2">
-                                        {{ $post->job_title }}
-                                    </div>
-                                    <span class="inline-block text-xs px-3 py-1 rounded-full font-medium
-                                        {{ $post->job_type === 'full-time' ? 'bg-green-100 text-green-700' : ($post->job_type === 'part-time' ? 'bg-orange-100 text-orange-700' : 'bg-indigo-100 text-indigo-700') }}">
-                                        {{ ucfirst($post->job_type) }}
-                                    </span>
-                                </div>
-
-                                <!-- Stats -->
-                                <div class="mt-4 text-xs text-gray-500 flex justify-between">
-                                    <div class="flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                                        </svg>
-                                        {{ $post->total_appliers }} Applicants
-                                    </div>
-                                    <div class="flex items-center">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                        </svg>
-                                        {{ $post->total_views }} Views
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        @endforeach
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="mt-8 flex items-center justify-center gap-7">
-                        <div class="flex items-center gap-4 w-[400px] justify-center">
-                            @php
-                                $current = $posts->currentPage();
-                                $last = $posts->lastPage();
-                                if ($current >= $last - 3) {
-                                    $start = $last - 4;
-                                    $end = $last;
-                                } elseif ($current <= 4) {
-                                    $start = 1;
-                                    $end = min($last, 7);
-                                } else {
-                                    $start = $current - 1;
-                                    $end = $current + 3;
-                                }
-                            @endphp
-
-                            <!-- Always show page 1 -->
-                            @if ($start > 1)
-                                <a href="{{ $posts->url(1) }}" class="text-gray-700 hover:text-black" x-ref="page1">1</a>
-                                <span class="text-gray-400 text-xl font-bold px-2">. . .</span>
-                            @endif
-
-                            <!-- Dynamic range -->
-                            @for ($i = $start; $i <= $end; $i++)
-                                @if ($i >= 1 && $i <= $last)
-                                    <a href="{{ $posts->url($i) }}" x-ref="page{{ $i }}"
-                                        class="{{ $current == $i ? 'bg-gray-800 text-white rounded-full px-4 py-2 min-w-[44px] text-center' : 'text-gray-700 hover:text-black px-4 py-2 min-w-[44px] text-center' }}">
-                                        {{ $i }}
-                                    </a>
-                                @endif
-                            @endfor
-                        </div>
-
-                        <!-- Next Button -->
-                        <button x-on:click="page = Math.min({{ $last }}, page + 1); $refs['page' + page]?.click()"
-                            class="px-4 py-2 text-gray-500 hover:text-black disabled:text-gray-300"
-                            :disabled="page >= {{ $last }}">
-                            &gt;
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+            
     <!-- Add Admin Modal -->
     <div id="addAdminModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Add New HRS</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Add New HRs</h3>
                 <form id="addAdminForm">
                     <div class="mb-4">
                         <label for="adminName" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>

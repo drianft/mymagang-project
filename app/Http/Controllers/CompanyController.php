@@ -40,36 +40,13 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showCompanyDashboard()
+
+    public function showJobs()
     {
-        $companyName = Auth::user()->fullName ?? 'Company Name';
-
-        // Temukan company milik user login
-        $company = Company::where('user_id', Auth::id())->first();
-
-        // Safety check
-        if (!$company) {
-            abort(404, 'Perusahaan tidak ditemukan untuk user ini.');
-        }
-
-        // Ambil post milik perusahaan itu
+        $company = Company::where('user_id', Auth::id())->firstOrFail();
         $posts = Post::where('company_id', $company->id)->latest()->paginate(10);
-        $totalPosts = $posts->total();
-        $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
 
-        $users = User::whereIn('roles', ['applier', 'hr'])->get();
-        $hrs = User::where('roles', 'hr')->get();
-        $admins = CompanyAdmin::all();
-
-        return view('company.dashboard', compact(
-            'companyName',
-            'totalPosts',
-            'totalApplicants',
-            'posts',
-            'admins',
-            'users',
-            'hrs'
-        ));
+        return view('company.jobs', compact('posts'));
     }
 
     /**

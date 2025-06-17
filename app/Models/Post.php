@@ -37,9 +37,8 @@ class Post extends Model
     public function bookmarkedBy()
     {
         return $this->belongsToMany(Applier::class, 'bookmarks')
-                    ->using(Bookmark::class)
-                    ->withTimestamps()
-                    ->withPivot('saved_at');
+            ->withPivot('saved_at')
+            ->withTimestamps();
     }
 
 

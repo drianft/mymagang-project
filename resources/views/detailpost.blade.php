@@ -65,13 +65,30 @@
 
         <!-- Buttons -->
         <div class="mt-10 flex gap-4">
-          <!-- Bookmark button -->
-          <button type="button" class="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            <svg class="h-5 w-5 text-gray-500 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 5v14l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z" />
-            </svg>
-            Bookmark
-          </button>
+            @if (auth()->check())
+            <button
+                id="bookmark-button"
+                data-post-id="{{ $post->id }}"
+                data-bookmarked="{{ $bookmarked ? 'true' : 'false' }}"
+                class="flex items-center justify-center rounded-md border
+                    {{ $bookmarked ? 'border-red-300 bg-red-50 text-red-700 hover:bg-red-100' : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-100' }}
+                    px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2
+                    {{ $bookmarked ? 'focus:ring-red-500' : 'focus:ring-indigo-500' }}"
+            >
+                <span id="bookmark-icon">
+                    @if ($bookmarked)
+                        <svg class="h-5 w-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5 3a2 2 0 00-2 2v12l7-4 7 4V5a2 2 0 00-2-2H5z" />
+                        </svg>
+                    @else
+                        <svg class="h-5 w-5 text-gray-500 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 5v14l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z" />
+                        </svg>
+                    @endif
+                </span>
+                <span id="bookmark-label">{{ $bookmarked ? 'Bookmarked' : 'Bookmark' }}</span>
+            </button>
+        @endif
 
             <form action="{{ route('applications.apply', $post->id) }}" method="POST">
                 @csrf
@@ -95,4 +112,49 @@
           </div>
         </div>
       </div>
+      <script>
+        document.getElementById('bookmark-button').addEventListener('click', function () {
+            const button = this;
+            const postId = button.getAttribute('data-post-id');
+
+            fetch("{{ route('bookmarks.toggle') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ post_id: postId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const iconContainer = document.getElementById('bookmark-icon');
+                const label = document.getElementById('bookmark-label');
+
+                if (data.status === 'added') {
+                    iconContainer.innerHTML = `
+                        <svg class="h-5 w-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5 3a2 2 0 00-2 2v12l7-4 7 4V5a2 2 0 00-2-2H5z" />
+                        </svg>
+                    `;
+                    label.textContent = 'Bookmarked';
+                    button.classList.remove('border-gray-300', 'bg-white', 'text-gray-700', 'hover:bg-gray-100', 'focus:ring-indigo-500');
+                    button.classList.add('border-red-300', 'bg-red-50', 'text-red-700', 'hover:bg-red-100', 'focus:ring-red-500');
+                } else if (data.status === 'removed') {
+                    iconContainer.innerHTML = `
+                        <svg class="h-5 w-5 text-gray-500 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 5v14l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z" />
+                        </svg>
+                    `;
+                    label.textContent = 'Bookmark';
+                    button.classList.remove('border-red-300', 'bg-red-50', 'text-red-700', 'hover:bg-red-100', 'focus:ring-red-500');
+                    button.classList.add('border-gray-300', 'bg-white', 'text-gray-700', 'hover:bg-gray-100', 'focus:ring-indigo-500');
+                }
+            })
+            .catch(err => {
+                console.error('Gagal toggle bookmark:', err);
+                alert('Gagal update bookmark.');
+            });
+        });
+    </script>
+
 </x-app-layout>

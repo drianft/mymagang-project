@@ -9,6 +9,7 @@ use App\Http\Controllers\PostController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookmarkController;
 
 Route::get('/', [DashboardController::class, 'showGuestDashboard'])->name('guestdash');
 
@@ -33,14 +34,14 @@ Route::get('/jobs', [PageController::class, 'showJobs'])->name('jobs');
 Route::get('/jobs/{id}', [PageController::class, 'showJobDetail'])->name('jobs.show');
 Route::get('/companies', [PageController::class, 'showCompanies'])->name('companies');
 Route::get('/company/{id}', [PageController::class, 'showCompanyDetail'])->name('company.show');
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::middleware(['auth'])->group(function () {
     Route::post('/apply/{post}', [ApplicationController::class, 'apply'])->name('applications.apply');
     Route::get('/my-applications', [ApplicationController::class, 'myApplications'])->name('applications.mine');
 });
-
-
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/bookmarks', [BookmarkController::class, 'view'])->name('bookmarks.view');
+    Route::post('/bookmarks/toggle', [BookmarkController::class, 'toggle'])->name('bookmarks.toggle');
+});
 
 
 // Grup Route untuk Admin

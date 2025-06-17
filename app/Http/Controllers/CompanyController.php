@@ -115,4 +115,5 @@ class CompanyController extends Controller
         $user = Auth::user();
         return view('company.home', compact('user'));
     }
+
 }

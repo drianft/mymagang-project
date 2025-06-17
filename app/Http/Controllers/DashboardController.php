@@ -101,7 +101,7 @@ class DashboardController extends Controller
         $totalPosts = $posts->total();
         $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
 
-        $users = User::whereIn('roles', ['applier', 'hr'])->get();
+        $users = User::whereIn('roles', ['applier'])->get();
         $hrs = User::where('roles', 'hr')->get();
         $admins = CompanyAdmin::all();
 

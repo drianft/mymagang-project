@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,12 +10,11 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Applier;
 use App\Models\Hr;
+use App\Models\Company;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
-
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
@@ -37,13 +35,6 @@ class User extends Authenticatable
         'roles',
         'status',
     ];
-
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-
 
     /**
      * The attributes that should be hidden for serialization.
@@ -67,7 +58,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
      * @return array<string, string>
      */
@@ -79,16 +70,25 @@ class User extends Authenticatable
         ];
     }
 
-    public function hr() {
+    // Additional default casts
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    // Relationship Methods
+    public function hr()
+    {
         return $this->hasOne(Hr::class);
     }
 
-    public function applier() {
+    public function applier()
+    {
         return $this->hasOne(Applier::class);
     }
 
-    public function company() {
+    public function company()
+    {
         return $this->hasOne(Company::class);
     }
-
 }

@@ -1,42 +1,96 @@
 <x-app-layout>
-    <h1>My Applications</h1>
-
-    @foreach ($applications as $app)
-        <div class="application-card">
-            <strong>{{ $app->post->title }}</strong><br>
-            Status: {{ $app->application_status }}
-
-            @if ($app->application_status == 'interview')
-                <!-- Tombol buka popup -->
-                <button onclick="showInterview({{ $app->id }})">View Interview</button>
-
-                <!-- Modal popup -->
-                <div id="modal-{{ $app->id }}" class="modal" style="display:none;">
-                    <div class="modal-content">
-                        <span onclick="closeInterview({{ $app->id }})" class="close">&times;</span>
-                        <h3>Interview Details</h3>
-                        <p><strong>HR:</strong> {{ $app->interview->hr_name ?? '-' }}</p>
-                        <p><strong>Time:</strong> {{ $app->interview->time ?? '-' }}</p>
-                        <p><strong>Location:</strong> {{ $app->interview->location ?? '-' }}</p>
-                    </div>
-                </div>
+    <div class="min-w-full">
+        <div class="max-w-6xl mx-auto p-6">
+            @if (session('success'))
+                <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">{{ session('success') }}</div>
             @endif
-        </div>
-    @endforeach
+            @if (session('error'))
+                <div class="bg-red-100 text-red-800 px-4 py-2 rounded mb-4">{{ session('error') }}</div>
+            @endif
 
+            <!-- Search + Filter -->
+            <div class="flex justify-between items-center mb-4" id="filterForm">
+                <input type="text" id="searchInput" name="search" value="{{ request('search') }}" placeholder="Search jobs..." class="border px-3 py-2 rounded w-[450px]">
+                <select name="status" id="statusFilter" class="border px-3 py-2 rounded w-[140px]">
+                    <option value="">All Status</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="pending">Pending</option>
+                    <option value="interview">Interview</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+
+            <!-- Table + Pagination AJAX Wrapper -->
+            <div id="ajaxWrapper">
+                @include('applications._ajax', ['applications' => $applications])
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script>
-        function showInterview(id) {
-            document.getElementById('modal-' + id).style.display = 'block';
+        const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const ajaxWrapper = document.getElementById('ajaxWrapper');
+
+        function fetchData(urlOrEvent = null) {
+            let url = typeof urlOrEvent === 'string' ? urlOrEvent : null;
+            const search = searchInput.value;
+            const status = statusFilter.value;
+
+            const fetchUrl = url ?? `/my-applications?search=${encodeURIComponent(search)}&status=${encodeURIComponent(status)}`;
+
+            fetch(fetchUrl, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(res => res.text())
+            .then(html => {
+                ajaxWrapper.innerHTML = html;
+                attachPaginationLinks();
+                attachModalButtons();
+            });
         }
 
-        function closeInterview(id) {
-            document.getElementById('modal-' + id).style.display = 'none';
+
+        // Debounce input
+        searchInput.addEventListener('input', () => {
+            clearTimeout(window.typingTimer);
+            window.typingTimer = setTimeout(fetchData, 300);
+        });
+
+        statusFilter.addEventListener('change', fetchData);
+
+        function attachPaginationLinks() {
+            document.querySelectorAll('#pagination a').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    fetchData(link.href);
+                });
+            });
+        }
+
+        // Init
+        attachPaginationLinks();
+        fetchData();
+
+        function attachModalButtons() {
+            document.querySelectorAll('[id^="modal-"]').forEach(modal => {
+                modal.classList.add('hidden'); // jaga-jaga kalau udah kebuka sebelumnya
+            });
+
+            document.querySelectorAll('button[onclick^="showModal"]').forEach(btn => {
+                const id = btn.getAttribute('onclick').match(/\d+/)[0];
+                btn.onclick = () => {
+                    document.getElementById(`modal-${id}`).classList.remove('hidden');
+                };
+            });
+
+            document.querySelectorAll('button[onclick^="closeModal"]').forEach(btn => {
+                const id = btn.getAttribute('onclick').match(/\d+/)[0];
+                btn.onclick = () => {
+                    document.getElementById(`modal-${id}`).classList.add('hidden');
+                };
+            });
         }
     </script>
-
-    <style>
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
-        .modal-content { background: white; margin: 15% auto; padding: 20px; width: 300px; position: relative; }
-        .close { position: absolute; top: 5px; right: 10px; cursor: pointer; }
-    </style>
 </x-app-layout>

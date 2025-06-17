@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\Interview;
 use App\Models\Post;
 use App\Notifications\ApplicationDuplicateAttempt;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,6 @@ use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
-    // handle apply
     public function apply(Post $post)
     {
         $user = Auth::user();
@@ -65,12 +65,61 @@ class ApplicationController extends Controller
     }
 
     // list aplikasi milik user
-    public function myApplications()
+    public function myApplications(Request $request)
     {
-        $applications = Application::with('post')
-            ->where('applier_id', Auth::id())
-            ->get();
+        $user = Auth::user();
+        $applier = $user->applier;
+
+        if (!$applier) {
+            return redirect('/')->with('error', 'Applier profile not found.');
+        }
+
+        $query = $applier->applications()->with(['post', 'interview']);
+
+        if ($request->filled('search')) {
+            $search = strtolower($request->search);
+            $query->whereHas('post', fn($q) => $q->whereRaw('LOWER(job_title) LIKE ?', ["%{$search}%"]));
+        }
+
+        if ($request->filled('status')) {
+            $query->where('application_status', $request->status);
+        }
+
+        // Ambil semua applications milik applier ini
+        $applications = $query
+                        ->with('post', 'interview.hr.user')
+                        ->latest()
+                        ->paginate(20)
+                        ->withQueryString();
+
+        if ($request->ajax()) {
+            return view('applications._ajax', compact('applications'))->render();
+        }
 
         return view('applications.my', compact('applications'));
     }
+
+    public function update(Request $request, Application $application)
+    {
+        $user = Auth::user();
+        $hr = $user->hr;
+
+        $status = $request->input('application_status');
+        $application->application_status = $status;
+        $application->save();
+
+        // Cek jika status-nya jadi "interview"
+        if ($status === 'interview' && $application->interview === null) {
+            $interview = new Interview();
+            $interview->application_id = $application->id;
+            $interview->hr_id = $hr->id;
+            $interview->save();
+
+            return redirect()->route('interviews.edit', $interview->id)
+                                ->with('success', 'Interview entry created, please fill the details.');
+        }
+
+        return back()->with('success', 'Application updated successfully.');
+    }
+
 }

@@ -52,23 +52,32 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $newRole = $request->input('roles');
+
+        // ✅ Cek jika mau ubah ke 'hr' dan belum 'hr' sebelumnya
+        if ($newRole === 'hr' && $user->roles !== 'hr') {
+            $totalHrs = User::where('roles', 'hr')->count();
+            if ($totalHrs >= 3) {
+                return redirect()->back()->with('error', 'Maksimal HR hanya 3 orang.');
+            }
+        }
+
+        // Ubah role
         $user->roles = $newRole;
         $user->save();
 
-        // Insert ke tabel hr kalau role-nya jadi 'hr' dan belum ada
+        // Tambahkan ke tabel hr jika belum ada
         if ($newRole === 'hr' && !$user->hr) {
             Hr::create([
                 'user_id' => $user->id,
-                'company_id' => 1, // default null, bisa diisi nanti kalau perlu
-                'position' => 'Unknown', // atau default lain
+                'company_id' => 1, // nanti bisa diisi dinamis kalau perlu
+                'position' => 'Unknown',
             ]);
         }
 
-        // Insert ke tabel company kalau role-nya jadi 'company' dan belum ada
         if ($newRole === 'company' && !$user->company) {
             Company::create([
                 'user_id' => $user->id,
-                'industry' => 'freelance', // pastikan enum-nya ada opsi ini
+                'industry' => 'freelance',
                 'company_description' => '',
                 'joined_at' => Carbon::now(),
             ]);
@@ -76,5 +85,4 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'User role updated.');
     }
-
 }

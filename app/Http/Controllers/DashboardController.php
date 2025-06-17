@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Applier;
 use App\Models\Company;
 use App\Models\Application;
+use App\Models\CompanyAdmin;
 
 class DashboardController extends Controller
 {
@@ -18,6 +19,8 @@ class DashboardController extends Controller
     {
         if (Auth::user()->roles === 'admin') {
             return redirect()->route('admin.dashboard');
+        } elseif (Auth::user()->roles === "company") {
+            return redirect()->route('company.dashboard');
         } else {
             return redirect()->route('dashboard.user');
         }
@@ -30,7 +33,6 @@ class DashboardController extends Controller
 
         $companies = User::with('company')->where('roles', 'company')->take(4)->get();
         $posts = Post::latest()->take(10)->get();
-
         $latestApplications = Application::with('post.company.user')
             ->where('applier_id', $applier->id) // pake id user login
             ->latest()
@@ -38,13 +40,14 @@ class DashboardController extends Controller
             ->get();
 
         return view('dashboard', compact('companies', 'posts', 'latestApplications'));
+
     }
 
     public function showGuestDashboard()
     {
         $companies = User::with('company')->where('roles', 'company')->take(4)->get();
         $posts = Post::latest()->take(10)->get();
-        return view('dashboard', compact('companies','posts'));
+        return view('dashboard', compact('companies', 'posts'));
     }
 
     public function showAdminDashboard(Request $request)
@@ -52,11 +55,11 @@ class DashboardController extends Controller
         $search = $request->input('search');
 
         $users = User::query()
-        ->when($search, function ($query, $search) {
-            $query->where('fullName', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
-        })
-        ->get();
+            ->when($search, function ($query, $search) {
+                $query->where('fullName', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->get();
         $posts = Post::all(); // ambil 5 postingan terbaru
 
         $postCount = Post::count();
@@ -67,12 +70,39 @@ class DashboardController extends Controller
 
         $companies = Company::all(); // ambil semua data company dari database
 
-        return view('dashboard', compact('users' , 'posts' , 'postCount', 'userCount', 'companyCount', 'applicationCount'));
-
+        return view('dashboard', compact('users', 'posts', 'postCount', 'userCount', 'companyCount', 'applicationCount'));
     }
 
     public function guestWarning($page)
     {
         return view('guestwarning', ['page' => $page]);
+    }
+
+    public function showCompanyDashboard()
+    {
+        $user = Auth::user();
+        $company = $user->company; // Ambil perusahaan yang terkait dengan user
+
+        // Safety check
+        if (!$company) {
+            abort(404, 'Perusahaan tidak ditemukan untuk user ini.');
+        }
+
+        // Ambil post milik perusahaan itu
+        $posts = Post::where('company_id', $company->id)->latest()->paginate(10);
+        $totalPosts = $posts->total();
+        $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
+
+        $applier = User::whereIn('roles', ['applier'])->get();
+        $hrs = User::where('roles', 'hr')->get();
+
+        return view('company.dashboard', compact(
+            'company',
+            'totalPosts',
+            'totalApplicants',
+            'posts',
+            'applier',
+            'hrs'
+        ));
     }
 }

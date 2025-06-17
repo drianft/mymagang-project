@@ -27,54 +27,26 @@
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
-                        @auth
-                            <a href="{{ route('dashboard.user') }}"
-                                class="{{ request()->routeIs('dashboard.user') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
-                                aria-current="page">Home</a>
-                            <a href="{{ route('jobs') }}"
-                                class="{{ request()->routeIs('jobs') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
-                                aria-current="page">Jobs</a>
-                            <a href="{{ route('companies') }}"
-                                class="{{ request()->routeIs('companies') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
-                                aria-current="page">Company</a>
-                            <a href="{{ route('applications.mine') }}"
-                                class="{{ request()->routeIs('applications.mine') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
-                                aria-current="page">Applications</a>
-                        @endauth
-                        @guest
-                            <a href="{{ route('guestdash') }}"
-                                class="{{ request()->routeIs('guestdash') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
-                                aria-current="page">Home</a>
-                            <a href="{{ route('warnguest', ['page' => 'jobs']) }}"
-                                class="{{ request()->segment(2) === 'jobs' ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
-                                aria-current="page">Jobs</a>
-                            <a href="{{ route('warnguest', ['page' => 'company']) }}"
-                                class="{{ request()->segment(2) === 'company' ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
-                                aria-current="page">Company</a>
-                            <a href="{{ route('warnguest', ['page' => 'applications']) }}"
-                                class="{{ request()->segment(2) === 'applications' ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}"
-                                aria-current="page">Applications</a>
-                        @endguest
+                        <a href="{{ route('company.dashboard') }}"
+                            class="{{ request()->routeIs('company.dashboard') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Dashboard</a>
+                        <a href="{{ route('company.jobs') }}"
+                            class="{{ request()->routeIs('company.jobs') ? 'rounded-md bg-zinc-800 px-3 py-2 text-sm font-medium text-white' : 'font-medium text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out px-3 py-2 text-sm' }}">Company Posts</a>
                     </div>
                 </div>
             </div>
 
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 @auth
+                    <a href="#"
+                        class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
+                    @endauth
+                    @guest
+                        <a href="{{ route('warnguest', ['page' => 'bookmark']) }}"
+                            class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
+                        @endguest
+                        <span class="absolute -inset-1.5"></span>
 
-                    <a href="{{ route('bookmarks.view') }}" class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
-                @endauth
-                @guest
-                    <a href="{{ route('warnguest', ['page' => 'bookmark']) }}" class="inline-block relative rounded-full bg-zinc-700 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-700 focus:outline-hidden">
-                @endguest
-                    <span class="absolute -inset-1.5"></span>
-                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75v13.5L12 16.5l-5.25 3.75V6.75a2.25 2.25 0 0 1 2.25-2.25h6a2.25 2.25 0 0 1 2.25 2.25z" />
-                    </svg>
-                </a>
-
-                    
-
+                    </a>
 
                     <!-- Profile dropdown -->
                     @auth
@@ -129,7 +101,7 @@
                                     class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out"
                                     role="menuitem" tabindex="-1" id="user-menu-item-0">Login</a>
                                 <a href="{{ route('register') }}"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out "
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out"
                                     role="menuitem" tabindex="-1" id="user-menu-item-1">Sign In</a>
                             </div>
                         </div>
@@ -141,18 +113,10 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="sm:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pt-2 pb-3">
-            <a href="{{ route('dashboard.user') }}"
-                class="{{ request()->routeIs('dashboard.user') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out' }}"
-                aria-current="page">Home</a>
-            <a href="{{ route('jobs') }}"
-                class="{{ request()->routeIs('jobs') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out' }}"
-                aria-current="page">Jobs</a>
-            <a href="{{ route('companies') }}"
-                class="{{ request()->routeIs('companies') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out' }}"
-                aria-current="page">Company</a>
-            <a href="{{ route('applications.mine') }}"
-                class="{{ request()->routeIs('applications.mine') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out ' }}"
-                aria-current="page">Applications</a>
+            <a href="{{ route('company.dashboard') }}"
+                class="{{ request()->routeIs('company.dashboard') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out' }}">Dashboard</a>
+            <a href="{{ route('company.jobs') }}"
+                class="{{ request()->routeIs('company.jobs') ? 'block rounded-md bg-zinc-800 px-3 py-2 text-base font-semibold text-white' : 'block rounded-md px-3 py-2 text-base text-gray-300 hover:text-white hover:font-semibold transition duration-150 ease-in-out' }}">Company Posts</a>
         </div>
     </div>
 </nav>

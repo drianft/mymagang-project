@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\Interview;
 use App\Models\Post;
 use App\Notifications\ApplicationDuplicateAttempt;
 use Illuminate\Support\Facades\Auth;
@@ -97,4 +98,28 @@ class ApplicationController extends Controller
 
         return view('applications.my', compact('applications'));
     }
+
+    public function update(Request $request, Application $application)
+    {
+        $user = Auth::user();
+        $hr = $user->hr;
+
+        $status = $request->input('application_status');
+        $application->application_status = $status;
+        $application->save();
+
+        // Cek jika status-nya jadi "interview"
+        if ($status === 'interview' && $application->interview === null) {
+            $interview = new Interview();
+            $interview->application_id = $application->id;
+            $interview->hr_id = $hr->id;
+            $interview->save();
+
+            return redirect()->route('interviews.edit', $interview->id)
+                                ->with('success', 'Interview entry created, please fill the details.');
+        }
+
+        return back()->with('success', 'Application updated successfully.');
+    }
+
 }

@@ -71,6 +71,7 @@
 
         // Init
         attachPaginationLinks();
+        fetchData();
 
         function attachModalButtons() {
             document.querySelectorAll('[id^="modal-"]').forEach(modal => {

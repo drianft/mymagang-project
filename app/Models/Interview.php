@@ -10,9 +10,12 @@ class Interview extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date',
+        'hr_id',
+        'application_id',
+        'interview_time',
         'location',
     ];
+
 
     public function application()
     {

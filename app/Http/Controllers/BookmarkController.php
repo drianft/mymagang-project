@@ -76,4 +76,19 @@ class BookmarkController extends Controller
 
         return view('jobs.show', compact('post', 'bookmarked'));
     }
+
+    public function search(Request $request)
+    {
+        $user = Auth::user();
+
+        $query = $user->applier->bookmarkedPosts(); // tanpa with('categoryRelationIfNeeded')
+
+        if ($request->filled('search')) {
+            $query->where('job_title', 'like', '%' . $request->search . '%');
+        }
+
+        $bookmarkedPosts = $query->get();
+
+        return view('bookmarked.partials.job_grid', compact('bookmarkedPosts'))->render();
+    }
 }

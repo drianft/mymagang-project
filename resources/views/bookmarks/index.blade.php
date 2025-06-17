@@ -4,16 +4,16 @@
             {{-- Left Content --}}
             <div class="lg:max-w-xl z-10">
                 <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
-                    The Smarter Way to Find Your Next Job
+                    Your Saved Jobs in One Place
                 </h1>
                 <p class="text-gray-500 mb-6">
-                    All the job insights you need, right at your fingertips.
+                    Review the jobs you've bookmarked and apply when you're ready.
                 </p>
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center">
-                    <input type="text"
+                    <input type="text" id="search-input"
                            placeholder="Search Jobs"
                            class="w-full sm:max-w-md px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
-                    <button class="mt-3 sm:mt-0 sm:ml-3 bg-[#5A48FA] text-white px-5 py-2 rounded-md hover:bg-indigo-700 transition">
+                    <button id="search-button" class="mt-3 sm:mt-0 sm:ml-3 bg-[#5A48FA] text-white px-5 py-2 rounded-md hover:bg-indigo-700 transition">
                         Search
                     </button>
                 </div>
@@ -36,153 +36,105 @@
             </div>
         </div>
 
-
-        {{-- Dropdown --}}
-        <div class="flex justify-end mb-6">
-            <div class="relative inline-block">
-                <select class="appearance-none border border-gray-300 bg-white px-4 py-2 rounded-md shadow-sm pr-8 text-gray-700">
-                    <option>Categories</option>
-                </select>
-            </div>
-        </div>
-
         @if ($bookmarkedPosts->isEmpty())
             <p class="text-gray-500 text-center">You have no bookmarked jobs yet.</p>
         @else
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            @foreach($bookmarkedPosts as $post)
-                @php
-                    $bookmarked = auth()->user()->applier->bookmarkedPosts->contains($post->id);
-                @endphp
-                <div class="relative group">
-                    <a href="{{ route('jobs.show', $post->id) }}" class="block">
-                        <div class="bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between">
-                            <div>
-                                {{-- Gambar --}}
-                                <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
-                                    @if ($post->image)
-                                        <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
-                                    @else
-                                        <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
-                                    @endif
-                                </div>
-
-                                {{-- Judul + Bookmark sejajar --}}
-                                <div class="flex justify-between items-start mb-2">
-                                    <div class="font-semibold text-sm text-gray-800">
-                                        {{ $post->job_title }}
-                                    </div>
-                                    <button type="button"
-                                            class="toggle-bookmark ml-2"
-                                            data-post-id="{{ $post->id }}"
-                                            data-bookmarked="{{ $bookmarked ? 'true' : 'false' }}">
-                                        <span class="bookmark-icon">
-                                            @if ($bookmarked)
-                                                {{-- Solid bookmark icon --}}
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                    viewBox="0 0 24 24" class="w-6 h-6 text-blue-600">
-                                                    <path fill-rule="evenodd"
-                                                        d="M6.75 3A2.25 2.25 0 004.5 5.25v15.636a.75.75 0
-                                                        001.14.64l6.36-3.816 6.36 3.816a.75.75 0
-                                                        001.14-.64V5.25A2.25 2.25 0 0017.25 3H6.75z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                            @else
-                                                {{-- Outline bookmark icon --}}
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24" stroke-width="1.5"
-                                                    stroke="currentColor" class="w-6 h-6 text-gray-500">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M17.25 3.75H6.75A2.25 2.25 0 004.5
-                                                        6v14.25l7.5-4.5 7.5 4.5V6a2.25
-                                                        2.25 0 00-2.25-2.25z" />
-                                                </svg>
-                                            @endif
-                                        </span>
-                                    </button>
-                                </div>
-
-                                {{-- Job type badge --}}
-                                <span class="text-xs px-2 py-1 rounded font-medium
-                                    {{ $post->job_type === 'full-time' ? ' bg-green-100 text-green-700' : ($post->job_type === 'part-time' ? ' bg-orange-100 text-orange-700' : ' bg-gray-300 text-gray-700') }}">
-                                    {{ ucfirst($post->job_type) }}
-                                </span>
-                            </div>
-
-                            {{-- Stat --}}
-                            <div class="mt-3 text-xs text-gray-500 flex justify-between">
-                                <div>{{ $post->total_appliers }} Applicants</div>
-                                <div>{{ $post->total_views }} Views</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
+        <div id="job-grid-container">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    @include('bookmarked.partials.job_grid')
+            </div>
         </div>
         @endif
     </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.toggle-bookmark').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    function fetchJobs() {
+        const searchTerm = document.getElementById('search-input').value;
 
-                    const postId = this.dataset.postId;
-                    const isBookmarked = this.dataset.bookmarked === 'true';
-                    const iconContainer = this.querySelector('.bookmark-icon');
+        const params = new URLSearchParams();
+        if (searchTerm) params.append('search', searchTerm);
 
-                    fetch('/bookmarks/toggle', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ post_id: postId }),
-                    })
-                    .then(res => {
-                        if (!res.ok) throw new Error('Network response not OK');
-                        return res.json();
-                    })
-                    .then(data => {
-                        if (data.status === 'added') {
-                            this.dataset.bookmarked = 'true';
-                            iconContainer.innerHTML = solidIcon();
-                        } else if (data.status === 'removed') {
-                            this.dataset.bookmarked = 'false';
-                            iconContainer.innerHTML = outlineIcon();
+        fetch(`/bookmarked/search?${params.toString()}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        })
+        .then(res => res.text())
+        .then(html => {
+            document.querySelector('#job-grid-container').innerHTML = `
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    ${html}
+                </div>`;
+            attachBookmarkListeners(); // re-attach bookmark toggle listeners after reload
+        })
+        .catch(err => console.error('Fetch jobs error:', err));
+    }
 
-                            // Remove post dari list
-                            const postCard = this.closest('.relative.group');
-                            if (postCard) {
-                                postCard.remove();
-                            }
-                        }
-                    })
-                    .catch(err => console.error('Bookmark toggle error:', err));
-                });
+    document.getElementById('search-button').addEventListener('click', () => {
+        fetchJobs();
+    });
+
+    // Attach bookmark toggle listeners (copas dari kamu)
+    function attachBookmarkListeners() {
+        document.querySelectorAll('.toggle-bookmark').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const postId = this.dataset.postId;
+                const iconContainer = this.querySelector('.bookmark-icon');
+
+                fetch('/bookmarks/toggle', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ post_id: postId }),
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'added') {
+                        this.dataset.bookmarked = 'true';
+                        iconContainer.innerHTML = solidIcon();
+                    } else if (data.status === 'removed') {
+                        this.dataset.bookmarked = 'false';
+                        iconContainer.innerHTML = outlineIcon();
+
+                        const postCard = this.closest('.relative.group');
+                        if (postCard) postCard.remove();
+                    }
+                })
+                .catch(err => console.error('Bookmark toggle error:', err));
             });
-
-            function solidIcon() {
-                return `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                             viewBox="0 0 24 24" class="w-6 h-6 text-blue-600">
-                          <path fill-rule="evenodd"
-                                d="M6.75 3A2.25 2.25 0 004.5 5.25v15.636a.75.75 0
-                                   001.14.64l6.36-3.816 6.36 3.816a.75.75 0
-                                   001.14-.64V5.25A2.25 2.25 0 0017.25 3H6.75z"
-                                clip-rule="evenodd" />
-                       </svg>`;
-            }
-
-            function outlineIcon() {
-                return `<svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                             viewBox="0 0 24 24" stroke-width="1.5"
-                             stroke="currentColor" class="w-6 h-6 text-gray-500">
-                          <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17.25 3.75H6.75A2.25 2.25 0 004.5
-                                   6v14.25l7.5-4.5 7.5 4.5V6a2.25
-                                   2.25 0 00-2.25-2.25z" />
-                       </svg>`;
-            }
         });
+    }
+
+    function solidIcon() {
+        return `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                     viewBox="0 0 24 24" class="w-6 h-6 text-blue-600">
+                  <path fill-rule="evenodd"
+                        d="M6.75 3A2.25 2.25 0 004.5 5.25v15.636a.75.75 0
+                           001.14.64l6.36-3.816 6.36 3.816a.75.75 0
+                           001.14-.64V5.25A2.25 2.25 0 0017.25 3H6.75z"
+                        clip-rule="evenodd" />
+               </svg>`;
+    }
+
+    function outlineIcon() {
+        return `<svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-6 h-6 text-gray-500">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M17.25 3.75H6.75A2.25 2.25 0 004.5
+                           6v14.25l7.5-4.5 7.5 4.5V6a2.25
+                           2.25 0 00-2.25-2.25z" />
+               </svg>`;
+    }
+
+    // Run once on page load to attach bookmark listeners on initial content
+    attachBookmarkListeners();
+});
+
     </script>
 </x-app-layout>

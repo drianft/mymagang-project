@@ -1,9 +1,5 @@
 <x-app-layout>
-
-    @php
-        $user = Auth::user();
-    @endphp
-    @if(!$user || ($user && $user->roles == 'applier'))
+    @if(Auth::guest() || (Auth::check() && Auth::user()->roles == 'applier'))
    <!-- Top Section -->
     <div class="grid grid-cols-1 lg:grid-cols-9 gap-6 max-w-7xl mx-auto p-6">
         <!-- Promo Box -->
@@ -83,18 +79,23 @@
     </div>
 
 
-    <!-- Saved Jobs -->
-    <div class="max-w-7xl mx-auto px-6 mt-6">
-        <div class="flex justify-between items-center mb-2">
-            <h2 class="font-semibold text-lg">Saved Jobs</h2>
-            @auth
-                <a href="{{ route('jobs') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">View Saved Jobs →</a>
-            @endauth
-            @guest
-                <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">View Saved Jobs →</a>
-            @endguest
-        </div>
+ <!-- Saved Jobs -->
+<div class="max-w-7xl mx-auto px-6 mt-6">
+    <div class="flex justify-between items-center mb-2">
+        <h2 class="font-semibold text-lg">Saved Jobs</h2>
+        @auth
+            <a href="{{ route('jobs') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">
+                View Saved Jobs →
+            </a>
+        @endauth
+        @guest
+            <a href="{{ route('login') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">
+                View Saved Jobs →
+            </a>
+        @endguest
+    </div>
 
+    @auth
         @if ($bookmarkedPosts->isEmpty())
             <p class="text-gray-500 text-center">You have no bookmarked jobs yet.</p>
         @else
@@ -102,11 +103,11 @@
                 <div class="swiper-wrapper">
                     @foreach($bookmarkedPosts as $post)
                         @php
-                            $bookmarked = auth()->check() && auth()->user()->applier->bookmarkedPosts->contains($post->id);
+                            $bookmarked = auth()->user()->applier->bookmarkedPosts->contains($post->id);
                         @endphp
 
                         <div class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
-                            {{-- Gambar --}}
+                            <!-- Gambar -->
                             <a href="{{ route('jobs.show', $post->id) }}">
                                 <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
                                     @if ($post->image)
@@ -117,7 +118,7 @@
                                 </div>
                             </a>
 
-                            {{-- Title + Bookmark --}}
+                            <!-- Title + Bookmark -->
                             <div class="mb-2 flex justify-between items-start">
                                 <div class="font-semibold text-sm text-gray-800">
                                     {{ $post->job_title }}
@@ -125,11 +126,10 @@
                                 <button type="button"
                                     class="toggle-bookmark"
                                     data-post-id="{{ $post->id }}"
-                                    data-bookmarked="{{ $bookmarked ? 'true' : 'false' }}"
-                                    @guest data-guest="true" @endguest>
+                                    data-bookmarked="{{ $bookmarked ? 'true' : 'false' }}">
                                     <span class="bookmark-icon">
                                         @if ($bookmarked)
-                                            {{-- Solid --}}
+                                            <!-- Solid -->
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                  viewBox="0 0 24 24" class="w-5 h-5 text-blue-600">
                                                 <path fill-rule="evenodd"
@@ -139,7 +139,7 @@
                                                       clip-rule="evenodd" />
                                             </svg>
                                         @else
-                                            {{-- Outline --}}
+                                            <!-- Outline -->
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                  viewBox="0 0 24 24" stroke-width="1.5"
                                                  stroke="currentColor" class="w-5 h-5 text-gray-500">
@@ -153,14 +153,14 @@
                                 </button>
                             </div>
 
-                            {{-- Job Type Badge --}}
+                            <!-- Job Type Badge -->
                             <span class="text-xs px-2 py-1 mb-[40px] inline-block rounded font-medium
                                 {{ $post->job_type === 'full-time' ? 'bg-green-100 text-green-700' :
                                    ($post->job_type === 'part-time' ? 'bg-orange-100 text-orange-700' : 'bg-gray-300 text-gray-700') }}">
                                 {{ ucfirst($post->job_type) }}
                             </span>
 
-                            {{-- Stats --}}
+                            <!-- Stats -->
                             <div class="mt-3 text-xs text-gray-500 flex justify-between absolute bottom-5 left-4 right-4">
                                 <div>{{ $post->total_appliers }} Applicants</div>
                                 <div>{{ $post->total_views }} Views</div>
@@ -170,7 +170,16 @@
                 </div>
             </div>
         @endif
-    </div>
+    @endauth
+
+    @guest
+        <div class="bg-yellow-100 text-yellow-800 px-4 py-4 rounded text-center">
+            <p class="font-semibold text-base">Anda belum login.</p>
+            <p class="text-sm">Silakan <a href="{{ route('login') }}" class="text-blue-600 hover:underline font-semibold">login terlebih dahulu</a> untuk melihat daftar pekerjaan yang disimpan.</p>
+        </div>
+    @endguest
+</div>
+
 
     <!-- New Jobs -->
     <div class="max-w-7xl mx-auto px-6 mt-6">

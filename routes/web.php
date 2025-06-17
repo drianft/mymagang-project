@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/bookmarks', [BookmarkController::class, 'view'])->name('bookmarks.view');
     Route::post('/bookmarks/toggle', [BookmarkController::class, 'toggle'])->name('bookmarks.toggle');
+    Route::get('/bookmarked/search', [BookmarkController::class, 'search'])->name('bookmarked.search');
 });
 
 

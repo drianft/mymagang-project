@@ -34,10 +34,10 @@ class DashboardController extends Controller
         $companies = User::with('company')->where('roles', 'company')->take(4)->get();
         $posts = Post::latest()->take(10)->get();
         $latestApplications = Application::with('post.company.user')
-            ->where('applier_id', $applier->id) // pake id user login
-            ->latest()
-            ->take(5)
-            ->get();
+        ->where('applier_id', $applier->id) // pake id user login
+        ->latest()
+        ->take(5)
+        ->get();
         $bookmarkedPosts = $user->applier->bookmarkedPosts()->latest()->take(10)->get();
         return view('dashboard', compact('companies', 'posts', 'latestApplications','bookmarkedPosts'));
 

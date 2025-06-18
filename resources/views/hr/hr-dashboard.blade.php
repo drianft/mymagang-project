@@ -162,42 +162,40 @@
 
 
                                             <!-- Tombol titik 3 -->
-                                        @foreach ($applications as $application)
-                                                    <!-- Tombol titik 3 (langsung buka modal, tanpa form) -->
-                                                    <button type="button" onclick="openModal('{{ $application->id }}')" class="text-gray-500 hover:text-black">
-                                                        ⋮
-                                                    </button>
+                                        <!-- Tombol titik 3 (langsung buka modal, tanpa form) -->
+                                                <button type="button" onclick="openModal('{{ $appl->id }}')" class="text-gray-500 hover:text-black">
+                                                    ⋮
+                                                </button>
 
-                                                    <!-- Modal -->
-                                                    <div id="modal-{{ $application->id }}" class="fixed inset-0 z-50 hidden items-center justify-center">
-                                                        <div onclick="closeModal('{{ $application->id }}')" class="absolute inset-0 bg-black bg-opacity-50"></div>
+                                                <!-- Modal -->
+                                                <div id="modal-{{ $appl->id }}" class="fixed inset-0 z-50 hidden items-center justify-center">
+                                                    <div onclick="closeModal('{{ $appl->id }}')" class="absolute inset-0 bg-black bg-opacity-50"></div>
 
-                                                        <div class="relative bg-white rounded-xl p-6 w-[90%] max-w-md shadow-lg z-50">
-                                                            <div class="flex justify-between items-center mb-4">
-                                                                <h2 class="text-xl font-semibold">Set Interview</h2>
-                                                                <button onclick="closeModal('{{ $application->id }}')">✕</button>
+                                                    <div class="relative bg-white rounded-xl p-6 w-[90%] max-w-md shadow-lg z-50">
+                                                        <div class="flex justify-between items-center mb-4">
+                                                            <h2 class="text-xl font-semibold">Set Interview</h2>
+                                                            <button onclick="closeModal('{{ $appl->id }}')">✕</button>
+                                                        </div>
+
+                                                        <!-- Form interview -->
+                                                        <form action="{{ route('interview.store', $appl->id) }}" method="POST" class="space-y-4">
+                                                            @csrf
+                                                            <div>
+                                                                <label class="block text-sm text-gray-600">Interview Time</label>
+                                                                <input type="datetime-local" name="interview_time" required class="w-full px-4 py-2 border rounded-lg">
                                                             </div>
 
-                                                            <!-- Form interview -->
-                                                            <form action="{{ route('interview.store', $application->id) }}" method="POST" class="space-y-4">
-                                                                @csrf
-                                                                <div>
-                                                                    <label class="block text-sm text-gray-600">Interview Time</label>
-                                                                    <input type="datetime-local" name="interview_time" required class="w-full px-4 py-2 border rounded-lg">
-                                                                </div>
+                                                            <div>
+                                                                <label class="block text-sm text-gray-600">Location</label>
+                                                                <input type="text" name="location" required class="w-full px-4 py-2 border rounded-lg">
+                                                            </div>
 
-                                                                <div>
-                                                                    <label class="block text-sm text-gray-600">Location</label>
-                                                                    <input type="text" name="location" required class="w-full px-4 py-2 border rounded-lg">
-                                                                </div>
-
-                                                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">
-                                                                    Save Interview
-                                                                </button>
-                                                            </form>
-                                                        </div>
+                                                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">
+                                                                Save Interview
+                                                            </button>
+                                                        </form>
                                                     </div>
-                                                @endforeach
+                                                </div>
 
 
 

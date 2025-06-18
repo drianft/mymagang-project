@@ -36,10 +36,10 @@ class HRController extends Controller
 public function jobIndex()
 {
     $userId = Auth::id();
-    $address = Auth::user()->address;
+
 
     $hr = Auth::user()->hr; // Ambil HR yang lagi login
-
+    $address = $hr->user->address; // Ambil alamat HR
     if (!$hr) {
         return redirect()->back()->with('error', 'HR profile not found.');
     }
@@ -74,9 +74,9 @@ public function jobIndex()
         $request->validate([
             'job_title' => 'required|string|max:255',
             'job_description' => 'required|string',
-            'working_hour' => 'required|integer|min:1',
+            'working_hour' => 'required|integer',
             'salary' => 'required|string',
-            'job_category' => 'required|string',
+            'job_type' => 'required|string',
             'image_post_url' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
         ]);
 
@@ -95,7 +95,7 @@ public function jobIndex()
             'job_description' => $request->job_description,
             'working_hour' => $request->working_hour,
             'salary' => $request->salary,
-            'category' => $request->job_category, // FIXED!
+            'job_type' => $request->job_type, // FIXED!
             'image_post_url' => $imagePath,
             'status' => 'open',
             'hr_id' => $hr->id,
@@ -169,7 +169,7 @@ public function jobIndex()
         $job = Post::findOrFail($id);
 
         // Pastikan job yang dihapus milik HR yang sedang login
-        if ($job->hr_id !== Auth::id()) {
+        if ($job->hr_id !== Auth::user()->hr->id) {
             abort(403, 'Unauthorized action.');
         }
 

@@ -14,9 +14,10 @@ class Post extends Model
         'hr_id',
         'company_id',
         'job_description',
-        'working-hours',
+        'working_hour',
         'salary',
         'status',
+        'job_type', // FIXED!
         'job_category',
         'image_post_url'
     ];

@@ -47,7 +47,7 @@ public function jobIndex()
     $jobs = Post::with('hr.user')
         ->where('hr_id', $hr->id) // Ini yang bener
         ->orderBy('created_at', 'desc')
-        ->with(['applications.user'])
+        ->with(['applications.applier.user'])
         ->paginate(8);
 
     return view('hr.jobs', compact('jobs', 'userId', 'address'));
@@ -181,7 +181,7 @@ public function jobIndex()
     // Halaman show applicants
     public function showApplicants(Request $request)
     {
-        $hrId = Auth::user()->id;
+        $hrId = Auth::user()->hr->id;
 
         $totalApplicants = Application::whereHas('post', function($query) use ($hrId) {
             $query->where('company_id', $hrId);
@@ -194,18 +194,6 @@ public function jobIndex()
         ->with('applications.applier.user') // eager load semua data yang dibutuhkan
         ->get();
 
-        $applicantCount = Application::whereHas('post', function($query) use ($hrId) {
-            $query->where('hr_id', $hrId);
-        })->count();
-        $acceptedCount = Application::whereHas('post', function($query) use ($hrId) {
-            $query->where('hr_id', $hrId);
-        })->where('application_status', 'Accepted')->count();
-        $rejectedCount = Application::whereHas('post', function($query) use ($hrId) {
-            $query->where('hr_id', $hrId);
-        })->where('application_status', 'Rejected')->count();
-        $pendingCount = Application::whereHas('post', function($query) use ($hrId) {
-            $query->where('hr_id', $hrId);
-        })->where('application_status', 'Pending')->count();
 
         $applicationDates = Application::select('id', 'created_at') // atau tambah 'name', dst. sesuai kebutuhan
         ->whereHas('post', function($query) use ($hrId) {
@@ -231,10 +219,6 @@ public function jobIndex()
 
 
         return view('hr.hr-dashboard', [
-            'applicantCount' => $applicantCount,
-            'acceptedCount' => $acceptedCount,
-            'rejectedCount' => $rejectedCount,
-            'pendingCount' => $pendingCount,
             'totalApplicants' => $totalApplicants,
             'applications' => $applications,
             'jobs' => $jobs,
@@ -243,6 +227,7 @@ public function jobIndex()
             // tambahkan variabel lainnya kalau ada
         ]);
     }
+
 
     // Halaman show company
     public function showCompany()

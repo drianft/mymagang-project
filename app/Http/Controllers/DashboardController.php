@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Applier;
 use App\Models\Company;
 use App\Models\Application;
+use App\Models\Hr;
 use App\Models\CompanyAdmin;
 
 class DashboardController extends Controller
@@ -96,8 +97,15 @@ class DashboardController extends Controller
         $totalApplicants = Applier::count(); // atau logika lain sesuai kebutuhan
 
         $applier = User::whereIn('roles', ['applier'])->get();
-        $hrs = User::where('roles', 'hr')->get();
+        // $hrs = User::where('roles', 'hr')
+        //                         ->where('company_id', $company->id)
+        //                         ->get();
 
+        $hrs = Hr::where('company_id', $company->id)
+            ->with('user') // Eager load user untuk mendapatkan nama HR
+            ->get();
+
+        // dd($company->id, $hrs);
         return view('company.dashboard', compact(
             'company',
             'totalPosts',
@@ -106,6 +114,7 @@ class DashboardController extends Controller
             'applier',
             'hrs'
         ));
+
     }
 
 public function showHRDashboard()

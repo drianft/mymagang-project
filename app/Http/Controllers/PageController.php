@@ -88,4 +88,21 @@ class PageController extends Controller
 
         return view('companydetail', compact('user'));
     }
+
+    public function showCompanyJobs(Request $request)
+    {
+        // Ambil user yang lagi login
+        $user = Auth::user();
+
+        // Pastikan usernya role 'company'
+        if ($user->roles !== 'company') {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Ambil semua jobs yang punya company_id sesuai dengan user login
+        $jobs = Post::where('company_id', $user->company->id)->get();
+
+        // Kirim datanya ke view
+        return view('company.jobs', compact('jobs'));
+    }
 }

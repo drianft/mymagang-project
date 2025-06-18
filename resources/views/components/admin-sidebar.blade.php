@@ -46,11 +46,7 @@
                     Job Posting
                 </a>
 
-<<<<<<< HEAD
                 <a href="{{ route('admin.users.main') }}" class="{{ request()->routeIs('admin.users') ? 'bg-gray-800 text-white flex items-center px-4 py-3 text-base font-medium rounded-lg hover:bg-gray-700 transition duration-200' : 'text-white flex items-center px-4 py-3 text-base font-medium rounded-lg hover:bg-gray-700 transition duration-200' }}">
-=======
-                <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users') ? 'bg-gray-800 text-white flex items-center px-4 py-3 text-base font-medium rounded-lg hover:bg-gray-700 transition duration-200' : 'text-white flex items-center px-4 py-3 text-base font-medium rounded-lg hover:bg-gray-700 transition duration-200' }}">
->>>>>>> bd9fd533e0861a527edf01130ccda941fb5e2824
                     <img src="{{ asset('images/userAcc.png') }}" alt="User Icon" class="h-6 w-6 mr-4">
                     User Account
                 </a>

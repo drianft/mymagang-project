@@ -94,9 +94,10 @@ class CompanyController extends Controller
 
     public function demoteHrToApplier($id)
     {
-        $user = User::findOrFail($id);
+        $hr = Hr::findOrFail($id);
+        $user = User::findOrFail($hr->user_id);
 
-        if ($user->roles === 'hr') {
+        if ($hr->user->roles === 'hr') {
             $user->roles = 'applier';
             $user->save();
             return back()->with('success', 'HR berhasil diubah menjadi Applier.');

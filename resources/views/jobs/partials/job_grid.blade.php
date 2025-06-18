@@ -9,7 +9,7 @@
                 {{-- Gambar --}}
                 <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
                     @if ($post->image_post_url)
-                        <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
+                        <img src="{{ asset('storage/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
                     @else
                         <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
                     @endif

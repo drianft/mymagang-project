@@ -402,7 +402,7 @@
 @elseif(Auth::user()->roles == 'admin')
 
 {{-- Konten Utama --}}
-<main class="flex-1 p-8">
+<main class="flex-1 p-5">
 
     {{-- Header --}}
     <h1 class="text-4xl font-bold mb-8">Welcome to the Dashboard</h1>

@@ -47,18 +47,37 @@ class UserController extends Controller
         return back()->with('status', 'Role user berhasil diubah.');
     }
 
+    public function updateRoles(Request $request)
+    {
+        $user = Auth::user();
+
+        // Hanya admin yang boleh ubah role
+        if ($user->role !== 'admin') {
+            abort(403, 'Kamu tidak punya izin untuk mengubah role.');
+        }
+
+        $validated = $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'roles' => ['required', Rule::in(['applier', 'hr', 'company'])],
+        ]);
+
+        $targetUser = User::findOrFail($validated['user_id']);
+        $targetUser->roles = $validated['roles'];
+        $targetUser->save();
+
+        return redirect()->route('admin.users.main')->with('success', 'User role updated successfully.');
+    }
 
     public function updateRole(Request $request, $id)
     {
+        logger('🔥 updateRole kepanggil untuk user ID: ' . $id);
+        // dd('✅ Function updateRole berhasil terpanggil');
         $user = User::findOrFail($id);
         $newRole = $request->input('roles');
 
         // ✅ Cek jika mau ubah ke 'hr' dan belum 'hr' sebelumnya
         if ($newRole === 'hr' && $user->roles !== 'hr') {
             $totalHrs = User::where('roles', 'hr')->count();
-            if ($totalHrs >= 3) {
-                return redirect()->back()->with('error', 'Maksimal HR hanya 3 orang.');
-            }
         }
 
         // Ubah role
@@ -83,6 +102,15 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'User role updated.');
+        return redirect()->route('admin.users.main')->with('success', 'User role updated.');
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = $request->input('status');
+        $user->save();
+
+        return redirect()->route('admin.users.main')->with('success', 'User status updated successfully.');
     }
 }

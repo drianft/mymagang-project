@@ -169,7 +169,7 @@ public function jobIndex()
         $job = Post::findOrFail($id);
 
         // Pastikan job yang dihapus milik HR yang sedang login
-        if ($job->hr_id !== Auth::id()) {
+        if ($job->hr_id !== Auth::user()->hr->id) {
             abort(403, 'Unauthorized action.');
         }
 

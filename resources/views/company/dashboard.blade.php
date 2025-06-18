@@ -17,9 +17,9 @@
                     onerror="this.onerror=null; this.src='{{ Auth::user()->name }}';"
                     class="w-full h-72 md:h-96 object-cover rounded-lg shadow-sm border border-gray-300"
                     alt="Company Logo">
-                </div>
+            </div>
 
-                <!-- Company Info -->
+            <!-- Company Info -->
             <div class="md:w-1/2 p-8 space-y-4">
                 <!-- Name -->
                 <h1 class="text-4xl md:text-5xl font-semibold text-gray-800">
@@ -37,17 +37,18 @@
                 </div>
 
                 <!-- CTA -->
-                <button
-                class="px-6 py-2 bg-gray-800 text-white rounded-md text-sm font-medium hover:bg-gray-900 transition">
+                <a href="{{ route('profile.show') }}"
+                    class="inline-block px-6 py-2 bg-gray-800 text-white rounded-md text-sm font-medium hover:bg-gray-900 transition">
                     MANAGE PROFILE
-                </button>
+                </a>
             </div>
         </div>
 
         <!-- HR Table -->
         <div class="overflow-x-auto">
             <div class="min-w-full bg-gray-50 shadow-lg rounded-lg my-5">
-                <p class="text-sm text-gray-500 mb-4">Total Company's HR: {{ $hrs->filter(function($hr) { return $hr->user->roles === 'hr'; })->count() }}</p>
+                <p class="text-sm text-gray-500 mb-4">Total Company's HR:
+                    {{ $hrs->filter(function ($hr) {return $hr->user->roles === 'hr';})->count() }}</p>
 
                 <!-- Table Header -->
                 <div class="grid grid-cols-12 bg-gray-200 text-gray-700 font-semibold text-sm px-6 py-4 rounded-t-lg">
@@ -66,7 +67,7 @@
                     @endphp
 
                     @foreach ($hrs as $hr)
-                        @if($hr->user->roles === 'hr')
+                        @if ($hr->user->roles === 'hr')
                             <div class="grid grid-cols-12 items-center px-6 py-4 hover:bg-gray-50 transition">
                                 <div class="col-span-1 text-center text-gray-600 font-medium">
                                     {{ $index++ }}
@@ -90,9 +91,13 @@
 
                                 <div class="col-span-2 text-center">
                                     @if ($hr->user->roles == 'hr')
-                                        <span class="inline-block bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full">On Hiring</span>
+                                        <span
+                                            class="inline-block bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full">On
+                                            Hiring</span>
                                     @else
-                                        <span class="inline-block bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full">Off Hiring</span>
+                                        <span
+                                            class="inline-block bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full">Off
+                                            Hiring</span>
                                     @endif
                                 </div>
 
@@ -101,8 +106,10 @@
                                         onsubmit="return confirm('Ubah HR ini menjadi Applier?')">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-full transition">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <button type="submit"
+                                            class="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-full transition">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M6 18L18 6M6 6l12 12" />
                                             </svg>
@@ -117,62 +124,66 @@
         </div>
 
 
-<!-- User Account Section -->
-<div class="bg-gray-50 shadow-lg rounded-lg my-5">
-    <div class="p-6">
-        <p class="text-sm text-gray-500 mb-4">Total users eligible to become HR: {{ $applier->count() }}</p>
-        <!-- User Table -->
-        <div class="bg-white rounded-xl shadow overflow-y-auto overflow-x-auto max-h-[500px]">
+        <!-- User Account Section -->
+        <div class="bg-gray-50 shadow-lg rounded-lg my-5">
+            <div class="p-6">
+                <p class="text-sm text-gray-500 mb-4">Total users eligible to become HR: {{ $applier->count() }}</p>
+                <!-- User Table -->
+                <div class="bg-white rounded-xl shadow overflow-y-auto overflow-x-auto max-h-[500px]">
                     <!-- Title and Search Bar Row -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gray-200 p-4 rounded-t-lg">
-            <h1 class="text-xl font-semibold text-gray-700">User Account</h1>
-            <div class="w-full md:w-96">
-                <div class="relative">
-                    <input type="text" id="searchInput" placeholder="Search ..."
-                        class="w-full pl-10 pr-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-none">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-4.35-4.35M10.5 17a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
-                        </svg>
+                    <div
+                        class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gray-200 p-4 rounded-t-lg">
+                        <h1 class="text-xl font-semibold text-gray-700">User Account</h1>
+                        <div class="w-full md:w-96">
+                            <div class="relative">
+                                <input type="text" id="searchInput" placeholder="Search ..."
+                                    class="w-full pl-10 pr-4 py-2 text-sm rounded-full bg-gray-100 text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 border-none">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-4.35-4.35M10.5 17a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Total Info -->
+                    <table class="min-w-full text-sm text-left text-gray-700">
+                        <thead class="sticky top-0 z-10 bg-gray-200 text-gray-700 font-semibold text-sm">
+                            <tr>
+                                <th class="px-6 py-3">Name</th>
+                                <th class="px-6 py-3">Email</th>
+                                <th class="px-6 py-3">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTable" class="divide-y divide-gray-200">
+                            @foreach ($applier as $user)
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap td-name">{{ $user->name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap td-email">{{ $user->email }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <form method="POST"
+                                            action="{{ route('company.users.updateRole', $user->id) }}">
+                                            @csrf
+                                            @method('PUT')
+                                            <select name="roles" onchange="this.form.submit()" required
+                                                class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                                <option value="applier"
+                                                    {{ $user->roles === 'applier' ? 'selected' : '' }}>Applier</option>
+                                                <option value="hr" {{ $user->roles === 'hr' ? 'selected' : '' }}>HR
+                                                </option>
+                                            </select>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-
-        <!-- Total Info -->
-            <table class="min-w-full text-sm text-left text-gray-700">
-                <thead class="sticky top-0 z-10 bg-gray-200 text-gray-700 font-semibold text-sm">
-                    <tr>
-                        <th class="px-6 py-3">Name</th>
-                        <th class="px-6 py-3">Email</th>
-                        <th class="px-6 py-3">Role</th>
-                    </tr>
-                </thead>
-                <tbody id="userTable" class="divide-y divide-gray-200">
-                    @foreach ($applier as $user)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap td-name">{{ $user->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap td-email">{{ $user->email }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <form method="POST" action="{{ route('company.users.updateRole', $user->id) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <select name="roles" onchange="this.form.submit()" required
-                                        class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                        <option value="applier" {{ $user->roles === 'applier' ? 'selected' : '' }}>Applier</option>
-                                        <option value="hr" {{ $user->roles === 'hr' ? 'selected' : '' }}>HR</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 
 

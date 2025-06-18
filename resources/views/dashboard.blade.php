@@ -451,7 +451,7 @@
         <div class="bg-white rounded-lg shadow overflow-y-auto max-h-[500px]">
             <div class="sticky top-0 bg-white z-10 py-4 px-6 border-b">
                 <h2 class="text-2xl font-semibold">Account List</h2>
-                <a href="#" class="text-blue-500 text-sm">View More..</a>
+                <a href="{{ route('admin.users.main') }}" class="text-blue-500 text-sm">View More..</a>
             </div>
             <table class="min-w-full bg-white text-left table-auto">
                 <thead class="sticky top-[90px] bg-white text-gray-700 text-sm uppercase">

@@ -23,7 +23,7 @@ class Post extends Model
 
     public function hr()
     {
-        return $this->belongsTo(Hr::class);
+        return $this->belongsTo(Hr::class, 'hr_id');
     }
 
     public function company()

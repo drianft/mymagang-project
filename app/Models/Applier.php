@@ -25,7 +25,7 @@ class Applier extends Model
 
     public function applications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Application::class, 'applier_id');
     }
 
     public function bookmarkedPosts()

@@ -31,12 +31,17 @@ class InterviewController extends Controller
     public function store(Request $request, $applicationId)
     {
         $request->validate([
-        'interview_time' => 'required|date',
-        'location' => 'required|string|max:255',
+            'interview_time' => 'required|date',
+            'location' => 'required|string|max:255',
         ]);
 
         $application = Application::findOrFail($applicationId);
 
+        // Cek apakah HR nya ada
+        $hr = Auth::user()->hr;
+        if (!$hr) {
+            return back()->with('error', 'HR profile not found.');
+        }
 
         // Cek apakah sudah ada interview sebelumnya
         $existing = Interview::where('application_id', $applicationId)->first();
@@ -44,18 +49,21 @@ class InterviewController extends Controller
             return back()->with('error', 'Interview already set.');
         }
 
+        // Simpan interview baru
         Interview::create([
             'application_id' => $application->id,
-            'hr_id' => Auth::id(),
+            'hr_id' => $hr->id, // ini yg bener! integer ID nya
             'interview_time' => $request->interview_time,
             'location' => $request->location,
         ]);
+
+        // Update status application
         $application->application_status = 'interview';
         $application->save();
 
         return redirect()->back()->with('success', 'Interview successfully scheduled.');
-
     }
+
 
     /**
      * Display the specified resource.

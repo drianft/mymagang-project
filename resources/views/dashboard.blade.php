@@ -59,9 +59,10 @@
 
         @guest
             <div class="lg:col-span-4 bg-gray-200 rounded-xl p-6 flex flex-col h-full items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 mb-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 19c-4 0-7-1.79-7-4v-1a4 4 0 018 0v1c0 2.21-3 4-7 4z" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 mb-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 4h10l3 3v13a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 4v4h4" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M9 16h6" />
                 </svg>
                 <p class="mb-4 text-gray-600 text-center">Log in or sign up to check the status of your job application.</p>
 
@@ -103,7 +104,7 @@
                 <div class="swiper-wrapper">
                     @foreach($bookmarkedPosts as $post)
                         @php
-                            $bookmarked = auth()->user()->applier->bookmarkedPosts->contains($post->id);
+                            $bookmarked = Auth::user()->applier->bookmarkedPosts->contains($post->id);
                         @endphp
 
                         <div class="swiper-slide bg-gray-100 rounded-xl p-4 border shadow hover:shadow-md transition-all h-80 flex flex-col justify-between relative">
@@ -111,7 +112,7 @@
                             <a href="{{ route('jobs.show', $post->id) }}">
                                 <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
                                     @if ($post->image_post_url)
-                                        <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
+                                        <img src="{{ asset('storage/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
                                     @else
                                         <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
                                     @endif
@@ -197,7 +198,7 @@
             <div class="swiper-wrapper">
                 @foreach($posts as $post)
                     @php
-                        $bookmarked = auth()->check() && auth()->user()->applier->bookmarkedPosts->contains($post->id);
+                        $bookmarked = Auth::check() && Auth::user()->applier->bookmarkedPosts->contains($post->id);
                     @endphp
 
                     @auth
@@ -211,7 +212,7 @@
                         <a href="{{ auth()->check() ? route('jobs.show', $post->id) : route('warnguest', ['page' => 'postdesc']) }}">
                             <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-2 overflow-hidden">
                                 @if ($post->image_post_url)
-                                    <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
+                                    <img src="{{ asset('storage/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
                                 @else
                                     <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
                                 @endif
@@ -278,10 +279,10 @@
     <div class="flex justify-between items-center mb-2">
       <h2 class="font-semibold text-lg">Explore Companies</h2>
       @auth
-        <a href="{{ route('companies') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Companies →</a>
+        <a href="{{ route('companies') }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">View Other Companies →</a>
       @endauth
       @guest
-        <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out text-sm">View Other Companies →</a>
+        <a href="{{ route('warnguest', ['page' => 'viewother']) }}" class="text-sm text-neutral-700 hover:text-black hover:font-semibold transition duration-150 ease-in-out">View Other Companies →</a>
       @endguest
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
@@ -398,10 +399,10 @@
   </div>
 
 {{-- Cek jika user adalah admin --}}
-@elseif(auth()->user()->roles == 'admin')
+@elseif(Auth::user()->roles == 'admin')
 
 {{-- Konten Utama --}}
-<main class="flex-1 p-8">
+<main class="flex-1 p-5">
 
     {{-- Header --}}
     <h1 class="text-4xl font-bold mb-8">Welcome to the Dashboard</h1>
@@ -488,7 +489,7 @@
 
             @foreach($posts as $post)
             <div class="bg-[#e4e7ec] rounded-[25px] flex items-center px-6 py-4 mt-5">
-                <img src="{{ $post->image_post_url != null ? asset('storage/job-images/' . $post->image_post_url) : asset('images/post_img_null.jpg') }}" class="w-50 h-20 rounded-md mr-6 shrink-0"></img>
+                <img src="{{ $post->image_post_url != null ? asset('storage/' . $post->image_post_url) : asset('images/post_img_null.jpg') }}" class="w-50 h-20 rounded-md mr-6 shrink-0"></img>
                 <div class="flex-1">
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ $post->job_title }}</h3>
                     <span class="text-sm px-3 py-1 rounded-md

@@ -14,6 +14,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\HRController;
+use App\Http\Controllers\InterviewController;
+use App\Http\Middleware\RoleMiddleware;
+
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -37,6 +41,9 @@ Route::middleware([
 
     // Dashboard untuk company (pakai .home biar sesuai dengan Blade view)
     Route::get('/company/jobs', [CompanyController::class, 'showJobs'])->name('company.jobs');
+
+    //Dashboard untuk Hr
+    Route::get('/hr/dashboard', [DashboardController::class, 'showHrDashboard'])->name('hr.index');
 });
 
 // Halaman guest dan public
@@ -60,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
 // Grup Route untuk Admin
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/user', [AdminController::class, 'showUsers'])->name('users');
+    Route::get('/userAdmin', [AdminController::class, 'showUsers'])->name('users.main');
     Route::put('/users/{id}/update-status', [UserController::class, 'updateStatus'])->name('users.updateStatus');
     Route::put('/users/{id}/update-role', [UserController::class, 'updateRole'])->name('users.updateRole');
 
@@ -74,11 +81,44 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // Routing khusus perusahaan
 Route::get('/company-dashboard', [DashboardController::class, 'showCompanyDashboard'])->name('company.dashboard');
 Route::put('/users/{id}/update-role', [UserController::class, 'updateRole'])->name('admin.users.updateRole');
-Route::get('/companyjobs', [PageController::class, 'showJobs'])->name('companyjobs');
+Route::get('/companyjobs', [PageController::class, 'showCompanyJobs'])->name('posts.show');
 Route::post('/company-admins', [DashboardController::class, 'storeAdmin'])->name('company-admins.store');
 Route::put('/admin/hr/{id}/demote', [CompanyController::class, 'demoteHrToApplier'])->name('admin.hr.demote');
 Route::get('/admin/user', [CompanyController::class, 'searchUsers'])->name('admin.users');
 Route::put('/users/{id}/update-role', [UserController::class, 'updateRole'])->name('admin.users.updateRole');
 Route::post('/company/hr/store', [CompanyController::class, 'storeHR'])->name('company.storeHR');
 Route::put('/company/users/update-role/{id}', [CompanyController::class, 'updateUserRole'])->name('company.users.updateRole');
-Route::put('/company/users/update-role/{id}', [CompanyController::class, 'updateUserRole'])->name('company.users.updateRole');
+
+
+// HR Routes
+Route::prefix('hr')->middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    RoleMiddleware::class . ':hr'
+     // Pastikan hanya HR yang bisa mengakses route ini
+])->group(function () {
+    Route::get('/applicants', [HRController::class, 'showApplicants'])->name('hr-dashboard');
+    Route::get('/company', [HRController::class, 'showCompany'])->name('company');
+
+    // CRUD Jobs khusus HR
+    Route::get('/jobs', [HRController::class, 'jobIndex'])->name('jobs.index');
+    Route::get('/hr/post/{id}/edit', [HRController::class, 'editPost'])->name('hr-post.edit');
+    Route::put('/hr/post/{id}', [HRController::class, 'updatePost'])->name('hr-post.update');
+    Route::delete('/jobs/{id}', [HRController::class, 'destroyJob'])->name('jobs.destroy');
+    Route::get('/posts', [HRController::class, 'showPost'])->name('hr-posts');
+
+    Route::get('/hr/post/create', [HRController::class, 'JobCreate'])->name('hr-post.create');
+    Route::post('/hr/post/store', [HRController::class, 'store'])->name('hr-post.store');
+
+
+
+
+    // routes/web.php
+    Route::post('/interview/set/{application}', [InterviewController::class, 'store'])->name('interview.store');
+
+
+});
+
+Route::get('/application/{id}', [ApplicationController::class, 'show'])->name('application.show');
+Route::put('/application/{id}', [ApplicationController::class, 'updateHr'])->name('application.update');

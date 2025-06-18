@@ -63,7 +63,7 @@ class PageController extends Controller
 
     public function showJobDetail($id)
     {
-        $post = Post::with(['company.user', 'hr.user'])->findOrFail($id);
+        $post = Post::with(['company', 'hr'])->findOrFail($id);
 
         // Cek apakah user sudah bookmark
         $user = Auth::user();
@@ -76,6 +76,7 @@ class PageController extends Controller
         return view('detailpost', [
             'post' => $post,
             'bookmarked' => $bookmarked,
+            'user' => $user,
         ]);
     }
 
@@ -86,5 +87,22 @@ class PageController extends Controller
         ->findOrFail($id);
 
         return view('companydetail', compact('user'));
+    }
+
+    public function showCompanyJobs(Request $request)
+    {
+        // Ambil user yang lagi login
+        $user = Auth::user();
+
+        // Pastikan usernya role 'company'
+        if ($user->roles !== 'company') {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Ambil semua jobs yang punya company_id sesuai dengan user login
+        $jobs = Post::where('company_id', $user->company->id)->get();
+
+        // Kirim datanya ke view
+        return view('company.jobs', compact('jobs'));
     }
 }

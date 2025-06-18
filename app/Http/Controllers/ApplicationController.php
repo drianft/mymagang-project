@@ -122,4 +122,24 @@ class ApplicationController extends Controller
         return back()->with('success', 'Application updated successfully.');
     }
 
+    public function updateHr(Request $request, $id)
+    {
+         $application = Application::findOrFail($id);
+
+        $request->validate([
+            'application_status' => 'required|in:Accepted,Rejected',
+        ]);
+
+        $application->application_status = $request->application_status;
+        $application->save();
+
+        return redirect()->back()->with('success', 'Application status updated.');
+    }
+
+    public function show($id)
+    {
+        $application = Application::with(['applier.user', 'job'])->findOrFail($id);
+        return view('applications.show', compact('application'));
+    }
+
 }

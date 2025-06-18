@@ -11,6 +11,8 @@ class Post extends Model
 
     protected $fillable = [
         'job_title',
+        'hr_id',
+        'company_id',
         'job_description',
         'working-hours',
         'salary',

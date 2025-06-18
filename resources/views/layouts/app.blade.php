@@ -33,7 +33,7 @@
             $user = Auth::user();
         @endphp
 
-        <div class="flex flex-col min-h-screen {{ (!$user) ? 'min-h-screen bg-white' : ($user->roles == 'admin' ? 'flex min-h-screen bg-gray-100' : 'min-h-screen bg-white') }}">
+        <div class="{{ (!$user) ? 'flex flex-col min-h-screen bg-white' : ($user->roles == 'admin' ? 'flex min-h-screen bg-gray-100' : 'min-h-screen bg-white') }}">
 
             @if(!$user || $user && $user->roles == 'applier')
                 @include('components.navbar')
@@ -41,6 +41,8 @@
                 @include('components.admin-sidebar')
             @elseif($user && $user->roles == 'company')
                 @include('components.navbarCompany')
+            @elseif($user && $user->roles == 'hr')
+                @include('components.navbarHr')
             @endif
 
             <!-- Page Content -->

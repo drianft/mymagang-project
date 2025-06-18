@@ -18,7 +18,7 @@ class PostFactory extends Factory
             'company_id' => Company::factory(),
             'job_title' => $this->faker->jobTitle,
             'job_description' => $this->faker->paragraph,
-            'working_hour' => '9-5',
+            'working_hour' => '9',
             'salary' => $this->faker->numberBetween(3000000, 15000000),
             'status' => 'open',
             'job_type' => $this->faker->randomElement(['full-time', 'part-time', 'freelance']),

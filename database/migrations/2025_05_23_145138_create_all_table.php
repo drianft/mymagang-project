@@ -45,7 +45,7 @@ return new class extends Migration
             $table->text('job_title');
 
             $table->text('job_description');
-            $table->string('working_hour')->nullable();
+            $table->integer('working_hour')->nullable();
             $table->decimal('salary', 12, 2)->nullable();
             $table->enum('status', ['open', 'closed', 'draft'])->default('open');
             $table->enum('job_type', ['full-time', 'part-time', 'freelance'])->default('freelance');

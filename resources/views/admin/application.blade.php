@@ -12,16 +12,13 @@
   <!-- Sidebar -->
 @include('components.admin-sidebar')
 
-
-        <!-- Main Content -->
-           <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
-               <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
+           <main class="flex-1 p-6 bg-[#E8EBEE] overflow-y-auto">
+               <div class="mt-4 p-6 rounded-lg shadow-md bg-[#E8EBEE]">
                  <h1 class="text-2xl font-semibold text-gray-900">Recent Application</h1>
                   </div>
 
-
-             <main class="flex-1 p-6 bg-gray-100 bg-[#E8EBEE] overflow-y-auto">
-               <div class="mt-4 p-6 bg-white rounded-lg shadow-md bg-[#E8EBEE]">
+             <main class="flex-1 p-6 bg-[#E8EBEE] overflow-y-auto">
+               <div class="mt-4 p-6 rounded-lg shadow-md bg-[#E8EBEE]">
                   <div class="overflow-x-auto">
                <table class="min-w-full divide-y divide-gray-200">
               <thead>
@@ -53,7 +50,7 @@
                 </span>
                 </td>
                   <td class="py-4 text-sm text-gray-600">
-                    {{ $application->applied_at }}
+                    {{ $application->created_at->format('d M Y') }}
                       </td>
                 @endforeach
                 </tbody>

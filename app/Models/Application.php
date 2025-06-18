@@ -13,12 +13,14 @@ class Application extends Model
         'applier_id',
         'post_id',
         'application_status',
+        'created_at',
     ];
 
     public function applier()
     {
-        return $this->belongsTo(User::class, 'applier_id');
+        return $this->belongsTo(Applier::class, 'applier_id');
     }
+
 
     public function post()
     {

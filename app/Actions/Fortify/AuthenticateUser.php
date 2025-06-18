@@ -16,7 +16,7 @@ class AuthenticateUser
         }
 
         if ($user->role === 'hr') {
-            return redirect()->route('hr.dashboard');
+            return redirect()->route('hr.index');
         }
 
         return redirect()->intended('/dashboard');

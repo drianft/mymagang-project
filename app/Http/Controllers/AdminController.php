@@ -126,7 +126,4 @@ public function index(Request $request)
     return view('admin.application', compact('application'));
 
     }
-
-    
-
 }

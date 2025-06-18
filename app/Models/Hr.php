@@ -29,7 +29,7 @@ class Hr extends Model
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'hr_id');
     }
 
     public function interviews()

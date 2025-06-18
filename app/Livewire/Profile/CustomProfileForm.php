@@ -16,6 +16,7 @@ class CustomProfileForm extends Component
     public $education;
     public $cv_url;
     public $cv_file;
+    public $position;
     public $industry;
     public $company_description;
     public $address;
@@ -37,6 +38,10 @@ class CustomProfileForm extends Component
             $this->cv_url = $user->applier->cv_url;
         }
 
+        if ($user->roles === 'hr' && $user->hr) {
+            $this->position = $user->hr->position;
+        }
+
         if ($user->roles === 'company' && $user->company) {
             $this->industry = $user->company->industry;
             $this->company_description = $user->company->company_description;
@@ -56,6 +61,12 @@ class CustomProfileForm extends Component
                 'religion' => 'nullable|string|max:50',
                 'education' => 'nullable|string|max:100',
                 'cv_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            ];
+        }
+
+        if (Auth::user()->roles === 'hr') {
+            $rules = [
+                'position' => 'nullable|string|max:100',
             ];
         }
 
@@ -106,6 +117,11 @@ class CustomProfileForm extends Component
             }
         }
 
+        if ($user->roles === 'hr' && $user->hr) {
+            $user->hr->update([
+                'position' => $this->position,
+            ]);
+        }   
 
         if ($user->roles === 'company' && $user->company) {
             $user->company->update([
@@ -114,7 +130,7 @@ class CustomProfileForm extends Component
             ]);
         }
 
-        session()->flash('message', 'Profile updated successfully.');
+        $this->dispatch('saved');
     }
 
     public function deleteCV()

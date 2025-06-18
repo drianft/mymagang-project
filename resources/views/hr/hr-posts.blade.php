@@ -126,12 +126,12 @@
 
                         <!-- Category -->
                         <div class="grid grid-cols-12 gap-4 items mt-4">
-                            <label for="job_category" class="col-span-3 text-sm font-medium text-gray-700">
+                            <label for="job_type" class="col-span-3 text-sm font-medium text-gray-700">
                                 Category :
                             </label>
                             <div class="col-span-9">
-                                <select id="job_category"
-                                        name="job_category"
+                                <select id="job_type"
+                                        name="job_type"
                                         class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 w-auto">
                                     <option value="Full-Time" selected>Full-Time</option>
                                     <option value="Part-Time">Part-Time</option>

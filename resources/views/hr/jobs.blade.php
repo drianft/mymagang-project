@@ -32,7 +32,7 @@
                             <!-- Job Title and Company -->
                             <div class="mb-3">
                                 <h3 class="font-semibold text-gray-800 text-lg mb-1">{{ $job->job_title }}</h3>
-                                <p class="text-sm text-gray-600">{{ $job->company_name }}</p>
+                                <p class="text-sm text-gray-600">{{ $job->company->user->name }}</p>
                             </div>
 
                             <!-- Job Type Badge -->

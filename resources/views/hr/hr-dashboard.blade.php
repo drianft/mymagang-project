@@ -24,7 +24,7 @@
             <div class="flex items-center gap-2 w-full sm:w-auto">
                 <select name="status"
                     class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                    <option value="">All Statuses</option>
+                    <option value="">All Status</option>
                     <option value="accepted" {{ request('application_status') == 'Accepted' ? 'selected' : '' }}>Accepted</option>
                     <option value="rejected" {{ request('application_status') == 'Rejected' ? 'selected' : '' }}>Declined</option>
                     <option value="Interview Scheduled" {{ request('appliaction_status') == 'Interview Scheduled' ? 'selected' : '' }}>Interview Scheduled</option>

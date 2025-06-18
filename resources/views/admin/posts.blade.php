@@ -56,9 +56,15 @@
                     <tr class="border-b border-gray-200 hover:bg-gray-50">
                         <td class="w-60 px-4 py-2">{{ $post->job_title }}</td>
                         <td class="w-60 px-4 py-2">
+<<<<<<< HEAD
                             <a href="{{ $post->image != null ? asset('storage/job-images/' . $post->image) : asset('images/post_img_null.jpg') }}" target="_blank">
                                 @if ($post->image != null)
                                      <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="w-32 h-20 object-cover rounded shadow">
+=======
+                            <a href="{{ $post->image_post_url != null ? asset('storage/job-images/' . $post->image_post_url) : asset('images/post_img_null.jpg') }}" target="_blank">
+                                @if ($post->image_post_url != null)
+                                     <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="w-32 h-20 object-cover rounded shadow">
+>>>>>>> bd9fd533e0861a527edf01130ccda941fb5e2824
                                 @else
                                      <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="w-32 h-20 object-cover rounded shadow">
                                 @endif

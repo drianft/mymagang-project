@@ -149,8 +149,6 @@ class CompanyController extends Controller
         return view('company.dashboard', compact('hrs', 'applier', 'posts', 'company'));
     }
 
-
-
     public function showCompanyHome()
     {
         $user = Auth::user();
@@ -196,5 +194,5 @@ class CompanyController extends Controller
         }
 
         return back()->with('error', 'Role tidak dikenali.');
-    }   
+    }
 }

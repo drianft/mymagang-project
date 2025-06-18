@@ -23,12 +23,21 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                         @foreach ($posts as $post)
+<<<<<<< HEAD
                         <a href="{{ route('posts.show', $post->id) }}" class="block hover:transform hover:scale-105 transition-transform duration-200">
                             <div class="bg-white rounded-xl p-4 border shadow hover:shadow-lg transition-all h-80 flex flex-col justify-between">
                                 <div>
                                     <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-4 overflow-hidden rounded-lg">
                                         @if ($post->image)
                                             <img src="{{ asset('storage/job-images/' . $post->image) }}" alt="Job Image" class="object-cover w-full h-full">
+=======
+                        <a href="{{ route('jobs.show', $post->id) }}" class="block hover:transform hover:scale-105 transition-transform duration-200">
+                            <div class="bg-white rounded-xl p-4 border shadow hover:shadow-lg transition-all h-80 flex flex-col justify-between">
+                                <div>
+                                    <div class="h-40 w-full bg-gray-100 flex items-center justify-center mb-4 overflow-hidden rounded-lg">
+                                        @if ($post->image_post_url)
+                                            <img src="{{ asset('storage/job-images/' . $post->image_post_url) }}" alt="Job Image" class="object-cover w-full h-full">
+>>>>>>> bd9fd533e0861a527edf01130ccda941fb5e2824
                                         @else
                                             <img src="{{ asset('images/post_img_null.jpg') }}" alt="Default Image" class="object-cover w-full h-full">
                                         @endif

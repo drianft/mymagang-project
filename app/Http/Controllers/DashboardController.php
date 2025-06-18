@@ -36,12 +36,12 @@ class DashboardController extends Controller
         $companies = User::with('company')->where('roles', 'company')->take(4)->get();
         $posts = Post::latest()->take(10)->get();
         $latestApplications = Application::with('post.company.user')
-            ->where('applier_id', $applier->id) // pake id user login
-            ->latest()
-            ->take(5)
-            ->get();
-
-        return view('dashboard', compact('companies', 'posts', 'latestApplications'));
+        ->where('applier_id', $applier->id) // pake id user login
+        ->latest()
+        ->take(5)
+        ->get();
+        $bookmarkedPosts = $user->applier->bookmarkedPosts()->latest()->take(10)->get();
+        return view('dashboard', compact('companies', 'posts', 'latestApplications','bookmarkedPosts'));
 
     }
 
@@ -108,35 +108,41 @@ class DashboardController extends Controller
         ));
     }
 
+public function showHRDashboard()
+{
+    $user = Auth::user();
 
-    public function showHRDashboard()
-    {
-        $user = Auth::user();
-
-        if ($user->roles !== 'hr') {
-            abort(403, 'Unauthorized.');
-        }
-
-        // Ambil semua job yang dimiliki HR yang sedang login
-        $userId = Auth::id();
-        $jobs = Post::with(['hr', 'applications.applier'])
-            ->where('hr_id', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $applicantCount = Application::whereHas('post', function($query) use ($userId) {
-            $query->where('hr_id', $hrId = Auth::user()->hr->id);
-        })->count();
-        $acceptedCount = Application::whereHas('post', function($query) use ($userId) {
-            $query->where('hr_id', $hrId = Auth::user()->hr->id);
-        })->where('application_status', 'Accepted')->count();
-        $rejectedCount = Application::whereHas('post', function($query) use ($userId) {
-            $query->where('hr_id', $hrId = Auth::user()->hr->id);
-        })->where('application_status', 'Rejected')->count();
-        $interviewCount = Application::whereHas('post', function($query) use ($userId) {
-            $query->where('hr_id', $hrId    = Auth::user()->hr->id);
-        })->where('application_status', 'Interview')->count();
-
-        return view('hr.hr-home', compact('jobs' , 'userId', 'applicantCount', 'acceptedCount', 'rejectedCount', 'interviewCount'));
+    if ($user->roles !== 'hr') {
+        abort(403, 'Unauthorized.');
     }
+
+    // Ambil data HR
+    $hr = $user->hr;
+
+    // Ambil semua job yang dimiliki HR yang sedang login
+    $jobs = Post::with(['hr', 'applications.applier'])
+        ->where('hr_id', $hr->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    // Hitung jumlah applicant
+    $applicantCount = Application::whereHas('post', function($query) use ($hr) {
+        $query->where('hr_id', $hr->id);
+    })->count();
+
+    $acceptedCount = Application::whereHas('post', function($query) use ($hr) {
+        $query->where('hr_id', $hr->id);
+    })->where('application_status', 'Accepted')->count();
+
+    $rejectedCount = Application::whereHas('post', function($query) use ($hr) {
+        $query->where('hr_id', $hr->id);
+    })->where('application_status', 'Rejected')->count();
+
+    $interviewCount = Application::whereHas('post', function($query) use ($hr) {
+        $query->where('hr_id', $hr->id);
+    })->where('application_status', 'Interview')->count();
+
+    return view('hr.hr-home', compact('jobs', 'applicantCount', 'acceptedCount', 'rejectedCount', 'interviewCount'));
+}
+
 }

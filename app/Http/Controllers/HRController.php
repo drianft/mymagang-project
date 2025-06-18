@@ -33,19 +33,26 @@ class HRController extends Controller
 
     // Tampilkan daftar semua job milik HR ini
 
-    public function jobIndex()
-    {
-        $userId = Auth::id();
-        $address = Auth::user()->address; // Ambil alamat dari user yang sedang login
-        $jobs = Post::with('hr')
-            ->where('hr_id', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->with(['applications.applier.user']) // Eager load applier dan user
-            ->paginate(8); // Tambahkan pagination jika diperlukan
-        // dd($jobs->first());
+public function jobIndex()
+{
+    $userId = Auth::id();
+    $address = Auth::user()->address;
 
-        return view('hr.jobs', compact('jobs', 'userId', 'address'));
+    $hr = Auth::user()->hr; // Ambil HR yang lagi login
+
+    if (!$hr) {
+        return redirect()->back()->with('error', 'HR profile not found.');
     }
+
+    $jobs = Post::with('hr.user')
+        ->where('hr_id', $hr->id) // Ini yang bener
+        ->orderBy('created_at', 'desc')
+        ->with(['applications.user'])
+        ->paginate(8);
+
+    return view('hr.jobs', compact('jobs', 'userId', 'address'));
+}
+
 
 
     public function JobCreate()
@@ -67,7 +74,7 @@ class HRController extends Controller
         $request->validate([
             'job_title' => 'required|string|max:255',
             'job_description' => 'required|string',
-            'working_hour' => 'required|string',
+            'working_hour' => 'required|integer|min:1',
             'salary' => 'required|string',
             'job_category' => 'required|string',
             'image_post_url' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
@@ -132,7 +139,7 @@ class HRController extends Controller
         $request->validate([
             'job_title' => 'required|string|max:255',
             'job_description' => 'required|string',
-            'working_hour' => 'required|string',
+            'working_hour' => 'required|integer|min:1',
             'salary' => 'required|string',
             'job_category' => 'required|string',
             'image_post_url' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
